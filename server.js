@@ -1,0 +1,10 @@
+"use strict";
+exports.__esModule = true;
+var express = require('express');
+var app = express();
+var port = process.env.PORT || 4000;
+app.use(express.static("public"));
+app.use(express.json());
+var secret_1 = require("./secret");
+console.log(secret_1.secret);
+app.listen(port, function () { console.log('Server listen on port', port); });
