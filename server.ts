@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const port:number|string = process.env.PORT || 4000;
 
-app.use(express.static("public"));
+app.use(express.static("client/build"));
 app.use(express.json());
 
 import {secret} from './secret';

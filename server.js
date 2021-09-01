@@ -3,7 +3,7 @@ exports.__esModule = true;
 var express = require('express');
 var app = express();
 var port = process.env.PORT || 4000;
-app.use(express.static("public"));
+app.use(express.static("client/build"));
 app.use(express.json());
 var secret_1 = require("./secret");
 console.log(secret_1.secret);
