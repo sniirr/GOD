@@ -1,10 +1,8 @@
-"use strict";
-exports.__esModule = true;
 var express = require('express');
 var app = express();
 var port = process.env.PORT || 4000;
-app.use(express.static("client/build"));
+var path = require('path');
 app.use(express.json());
-var secret_1 = require("./secret");
-console.log(secret_1.secret);
+app.use(express.static(path.join(__dirname, "client", "build")));
+console.log(path.join(__dirname, "client", "build"));
 app.listen(port, function () { console.log('Server listen on port', port); });
