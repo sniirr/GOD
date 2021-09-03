@@ -11,9 +11,9 @@ export async function handleLogin(ev: any) {
         if (!(username && password)) throw new Error("no user name or password");
 
         console.log(username, password)
-        const res = await axios.post('/user/login',{username, password});
-        // if(error) throw new Error(error);
-        console.log(res);
+        const {data} = await axios.post('/user/login',{username, password});
+      
+       console.log(data)
 
     } catch (err) {
         console.error(err)
