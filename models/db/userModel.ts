@@ -4,9 +4,17 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-  name: String,
+  id:String,
+  displayName: String,
+  name:{ givenName: String, familyName: String},
+  email_verified: Boolean,
+  language: String,
+  locale:String,
+  email:String,
+  picture:String,
   last_entered: Date
 });
+
 
 const UserModel = mongoose.model('UserModel',UserSchema)
 

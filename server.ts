@@ -20,6 +20,8 @@ app.use(express.static(path.join(__dirname, 'client', 'build')));
 
 import userRoutes from './routes/userRoute';
 app.use('/user', userRoutes);
+import questionRoutes from './routes/questionRoute';
+app.use('/question', questionRoutes);
 
 //passport settings
 const PASSPORT_SECRET = process.env.PASSPORT_SECRET;
@@ -33,27 +35,37 @@ require('./controlers/auth')// get google authentication
 
 require('./controlers/db') //connect to mongoDB
 
-import {db} from './controlers/db'
-
-import UserModel from './models/db/user';
+import UserModel from './models/db/userModel';
 
 app.get('/auth', passport.authenticate('google', { scope: ['email', 'profile'] }),);
 app.get('/google/callback', passport.authenticate('google', {
     // successRedirect: 'http://localhost:3000/ready',
     failureRedirect: 'http://localhost:3000/fail'
-}), async (req, res) =>{
-      
-    const user = req.user;
-    user.role = 'public';
-    const userJWT = jwt.encode(user, JWT_SECRET);
+}), async (req, res) => {
+    try {
+        const user = req.user;
 
-   
-    const userDB = new UserModel({name:'Tal', last_entered:new Date()});
-    const data = await userDB.save();
-    console.log(data)
+        user.role = 'public';
+        user.last_entered = new Date();
+        console.log(`user ${user.displayName} logged in`);
+        const userJWT = jwt.encode({id:user.id}, JWT_SECRET);
 
-    res.cookie('user', userJWT, {httpOnly:true, maxAge:1000*60*60*24*2})
-    res.redirect('http://localhost:3000/ready')
+
+
+        // Try to update user
+        const userDB = await UserModel.findOneAndUpdate({ id: user.id }, user);
+        
+        if (!userDB) {
+            const newUser = new UserModel(user);
+            const userData = await newUser.save();
+            console.log(userData);
+        }
+
+        res.cookie('user', userJWT, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 2 })
+        res.redirect('http://localhost:3000/ready')
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
 });
 
 
