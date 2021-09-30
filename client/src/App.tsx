@@ -14,9 +14,11 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import Button from '@mui/material/Button';
-import { handleSecret,handleLogout } from './controlers/user/user';
+import { handleSecret, handleLogout } from './controlers/user/user';
 
+//components
 import Login from './views/pages/Login/Login';
+import CreateQuestion from './views/pages/CreateQuestion/CreateQuestion';
 
 import { theme } from './style/Theme';
 
@@ -36,6 +38,9 @@ function App() {
               <li>
                 <Link to="/ready">Ready</Link>
               </li>
+              <li>
+                <Link to='/create_question'>Create Question</Link>
+              </li>
 
             </ul>
           </nav>
@@ -45,6 +50,9 @@ function App() {
           <Switch>
             <Route path="/login">
               <Login />
+            </Route>
+            <Route path='/create_question'>
+              <CreateQuestion />
             </Route>
             <Route path="/ready">
               <Ready />
