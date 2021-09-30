@@ -1,3 +1,4 @@
+import isLoggedIn from '../middlewares/isLoggedIn';
 
 const router = require('express').Router();
 
@@ -9,12 +10,3 @@ router
 
 export default router;
 
-function isLoggedIn(req, res, next) {
-    if (req.user) {
-        console.log(req.user);
-        next();
-    } else {
-        console.log('no user');
-        res.sendStatus(401);
-    }
-}
