@@ -29,17 +29,29 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(session({ secret: PASSPORT_SECRET, resave: false, saveUninitialized: false }));
 
-require('./controlers/auth')
+require('./controlers/auth')// get google authentication
+
+require('./controlers/db') //connect to mongoDB
+
+import {db} from './controlers/db'
+
+import UserModel from './models/db/user';
 
 app.get('/auth', passport.authenticate('google', { scope: ['email', 'profile'] }),);
 app.get('/google/callback', passport.authenticate('google', {
     // successRedirect: 'http://localhost:3000/ready',
     failureRedirect: 'http://localhost:3000/fail'
-}), (req, res) =>{
+}), async (req, res) =>{
       
     const user = req.user;
     user.role = 'public';
-    const userJWT = jwt.encode(user, JWT_SECRET)
+    const userJWT = jwt.encode(user, JWT_SECRET);
+
+   
+    const userDB = new UserModel({name:'Tal', last_entered:new Date()});
+    const data = await userDB.save();
+    console.log(data)
+
     res.cookie('user', userJWT, {httpOnly:true, maxAge:1000*60*60*24*2})
     res.redirect('http://localhost:3000/ready')
 });
