@@ -36,12 +36,11 @@ app.get('/google/callback', passport.authenticate('google', {
     // successRedirect: 'http://localhost:3000/ready',
     failureRedirect: 'http://localhost:3000/fail'
 }), (req, res) =>{
-    
-    console.log(req.user)
+      
     const user = req.user;
     user.role = 'public';
     const userJWT = jwt.encode(user, JWT_SECRET)
-    res.cookie('user', userJWT, {httpOnly:true, maxAge:300000})
+    res.cookie('user', userJWT, {httpOnly:true, maxAge:1000*60*60*24*2})
     res.redirect('http://localhost:3000/ready')
 });
 
@@ -50,6 +49,7 @@ app.get('/google/callback', passport.authenticate('google', {
 
 app.get('/logout', (req: any, res: any) => {
     req.logout();
+    res.clearCookie("user");
     res.send({ login: false })
 })
 

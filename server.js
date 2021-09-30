@@ -26,15 +26,15 @@ app.get('/google/callback', passport.authenticate('google', {
     // successRedirect: 'http://localhost:3000/ready',
     failureRedirect: 'http://localhost:3000/fail'
 }), function (req, res) {
-    console.log(req.user);
     var user = req.user;
     user.role = 'public';
     var userJWT = jwt.encode(user, JWT_SECRET);
-    res.cookie('user', userJWT, { httpOnly: true, maxAge: 300000 });
+    res.cookie('user', userJWT, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 2 });
     res.redirect('http://localhost:3000/ready');
 });
 app.get('/logout', function (req, res) {
     req.logout();
+    res.clearCookie("user");
     res.send({ login: false });
 });
 app.listen(port, function () { console.log('Server listen on port', port); });
