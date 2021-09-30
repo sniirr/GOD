@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.login = void 0;
+exports.secret = exports.login = void 0;
 var userSchema_1 = require("../models/userSchema");
 function login(req, res) {
     try {
@@ -18,3 +18,13 @@ function login(req, res) {
     }
 }
 exports.login = login;
+function secret(req, res) {
+    try {
+        res.send({ secret: true });
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).send(err.message);
+    }
+}
+exports.secret = secret;
