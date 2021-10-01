@@ -6,6 +6,8 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 import './style/App.scss';
 
@@ -27,46 +29,48 @@ import { theme } from './style/Theme';
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <Router>
-        <div>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/ready">Ready</Link>
-              </li>
-              <li>
-                <Link to='/create_question'>Create Question</Link>
-              </li>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <div>
+            <nav>
+              <ul>
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
+                <li>
+                  <Link to="/ready">Ready</Link>
+                </li>
+                <li>
+                  <Link to='/create_question'>Create Question</Link>
+                </li>
 
-            </ul>
-          </nav>
+              </ul>
+            </nav>
 
-          {/* A <Switch> looks through its children <Route>s and
+            {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
-          <Switch>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path='/create_question'>
-              <CreateQuestion />
-            </Route>
-            <Route path="/ready">
-              <Ready />
-            </Route>
-            <Route path="/fail">
-              <Fail />
-            </Route>
-            <Route path="/">
-              <Login />
-            </Route>
-          </Switch>
-        </div>
-      </Router>
-    </ThemeProvider>
+            <Switch>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route path='/create_question'>
+                <CreateQuestion />
+              </Route>
+              <Route path="/ready">
+                <Ready />
+              </Route>
+              <Route path="/fail">
+                <Fail />
+              </Route>
+              <Route path="/">
+                <Login />
+              </Route>
+            </Switch>
+          </div>
+        </Router>
+      </ThemeProvider>
+    </Provider>
   );
 }
 
