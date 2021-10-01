@@ -1,11 +1,10 @@
 import Button from '@mui/material/Button';
 import { Link, useRouteMatch } from 'react-router-dom';
 
-export interface IAppProps {
-}
+import {createQuestionProps} from './CreateQuestion';
 
-function CreateQuestion0(props: IAppProps) {
-    let { path } = useRouteMatch();
+function CreateQuestion0(props: createQuestionProps) {
+    let { path } = props;
 
     return (
         <div>

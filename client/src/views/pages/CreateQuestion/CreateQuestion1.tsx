@@ -6,18 +6,19 @@ import {
   selectTitle,
   setTitle
 } from '../../../redux/reducers/createQuestionReducer';
-import { createQuestionProps } from './CreateQuestion';
+
 //matrial UI
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
+import {createQuestionProps} from './CreateQuestion';
 
 
 const CreateQuestion1: FC<createQuestionProps> = (props: createQuestionProps) => {
   const count = useAppSelector(selectCount);
   const title = useAppSelector(selectTitle);
   const dispatch = useAppDispatch();
-  let { path } = useRouteMatch();
+  let { path } = props;
 
   return (
     <div>

@@ -33,14 +33,18 @@ export const counterSlice = createSlice({
     },
     setTitle: (state, action: PayloadAction<string>)=>{
       state.title = action.payload;
+    },
+    setDescription:(state, action: PayloadAction<string>)=>{
+      state.description = action.payload;
     }
   },
 })
 
-export const { increment, decrement, incrementByAmount,setTitle } = counterSlice.actions
+export const { increment, decrement, incrementByAmount,setTitle,setDescription } = counterSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectCount = (state: RootState) => state.counter.value
-export const selectTitle = (state:RootState) => state.counter.title
+export const selectCount = (state: RootState) => state.counter.value;
+export const selectTitle = (state:RootState) => state.counter.title;
+export const selectDescription = (state:RootState) => state.counter.description;
 
 export default counterSlice.reducer

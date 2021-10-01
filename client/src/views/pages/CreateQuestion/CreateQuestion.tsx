@@ -14,7 +14,7 @@ import CreateQuestion4 from './CreateQuestion4';
 import TopIndecator from '../../components/TopIndicator/TopIndecator';
 
 export interface createQuestionProps {
-
+    path: string;
 }
 
 
@@ -30,23 +30,23 @@ const CreateQuestion: FC = () => {
             <Switch >
                 <Route exact path={path}>
 
-                    <CreateQuestion0 />
+                    <CreateQuestion0 path={path} />
                 </Route>
                 <Route exact path={`${path}/1`}>
                     <TopIndecator pages={pages} path={path} />
-                    <CreateQuestion1 />
+                    <CreateQuestion1 path={path} />
                 </Route>
                 <Route exact path={`${path}/2`}>
-                    <TopIndecator pages={pages}  path={path} />
-                    <CreateQuestion2 />
+                    <TopIndecator pages={pages} path={path} />
+                    <CreateQuestion2 path={path}/>
                 </Route>
                 <Route exact path={`${path}/3`}>
-                    <TopIndecator pages={pages}  path={path} />
-                    <CreateQuestion3 />
+                    <TopIndecator pages={pages} path={path} />
+                    <CreateQuestion3 path={path} />
                 </Route>
                 <Route exact path={`${path}/4`}>
-                    <TopIndecator pages={pages}  path={path} />
-                    <CreateQuestion4 />
+                    <TopIndecator pages={pages} path={path} />
+                    <CreateQuestion4 path={path} />
                 </Route>
             </Switch>
 

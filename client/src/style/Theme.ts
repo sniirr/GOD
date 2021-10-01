@@ -32,6 +32,14 @@ export const theme = createTheme({
             borderRadius:100,
             a_textDecoration: 'none'
           },
+        },
+        {
+          props: { variant: 'outlined' },
+          style: {
+            textTransform: 'uppercase',
+            borderRadius:100,
+            a_textDecoration: 'none'
+          },
         }
       ]
     },
