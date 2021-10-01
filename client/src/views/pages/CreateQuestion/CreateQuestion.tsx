@@ -43,8 +43,17 @@ const CreateQuestion: FC = () => {
                 <Route exact path={path}>
                     <h3>Please select a topic.</h3>
                 </Route>
-                <Route path={`${path}/:topicId`}>
-                    <Topic />
+                <Route exact path={`${path}/1`}>
+                    <CreateQuestion1 position={position} setPosition={setPosition} />
+                </Route>
+                <Route exact path={`${path}/2`}>
+                    <CreateQuestion2 position={position} setPosition={setPosition} />
+                </Route>
+                <Route exact path={`${path}/3`}>
+                    <CreateQuestion3 position={position} setPosition={setPosition} />
+                </Route>
+                <Route exact path={`${path}/4`}>
+                    <CreateQuestion4 position={position} setPosition={setPosition} />
                 </Route>
             </Switch>
         </div>
@@ -52,12 +61,7 @@ const CreateQuestion: FC = () => {
 }
 
 const Topic: FC = () => {
-    // The <Route> that rendered this component has a
-    // path of `/topics/:topicId`. The `:topicId` portion
-    // of the URL indicates a placeholder that we can
-    // get from `useParams()`.
-    //
-    // eslint-disable-next-line
+  
     let { topicId } = useParams<{ topicId: string }>();
 
     return (

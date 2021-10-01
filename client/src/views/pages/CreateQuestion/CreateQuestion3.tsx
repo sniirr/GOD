@@ -7,7 +7,7 @@ const CreateQuestion3:FC<createQuestionProps> = (props: createQuestionProps)=> {
 
   return (
     <div>
-      <h1>CreateQuestion {position}</h1>
+      <h1>CreateQuestion 3</h1>
       <Button onClick={()=>{setPosition(position+1)}}>Next</Button>
     </div>
   );
