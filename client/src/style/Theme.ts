@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material/styles';
-import { blue, orange } from '@mui/material/colors';
+import { blue } from '@mui/material/colors';
 
 export { };
 

@@ -1,8 +1,7 @@
 import { FC } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
 import {
-  selectCount,
   selectTitle,
   setTitle
 } from '../../../redux/reducers/createQuestionReducer';
@@ -10,12 +9,13 @@ import {
 //matrial UI
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 import {createQuestionProps} from './CreateQuestion';
 
 
 const CreateQuestion1: FC<createQuestionProps> = (props: createQuestionProps) => {
-  const count = useAppSelector(selectCount);
+ 
   const title = useAppSelector(selectTitle);
   const dispatch = useAppDispatch();
   let { path } = props;
@@ -29,7 +29,7 @@ const CreateQuestion1: FC<createQuestionProps> = (props: createQuestionProps) =>
       </div>
       <div className="bottomNavButtons">
         <Link to={`${path}/2`}>
-          <Button variant="contained">Next</Button>
+          <Button variant="contained" endIcon={<ArrowForwardIosIcon />}>Next</Button>
         </Link>
       </div>
     </div>

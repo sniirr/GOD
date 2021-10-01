@@ -1,14 +1,15 @@
 import { FC } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
 import {
-  selectCount,
   selectDescription,
   setDescription
 } from '../../../redux/reducers/createQuestionReducer';
 
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 import { createQuestionProps } from './CreateQuestion';
 
@@ -35,11 +36,12 @@ const CreateQuestion2: FC<createQuestionProps> = (props: createQuestionProps) =>
           onChange={e => dispatch(setDescription(e.target.value))} />
       </div>
       <div className="bottomNavButtons">
-        <Link to={`${path}/2`}>
-          <Button variant="contained">Next</Button>
-        </Link>
+      
         <Link to={`${path}/1`}>
-          <Button variant="outlined">Back</Button>
+          <Button variant="outlined" startIcon={<ArrowBackIosIcon />}>Back</Button>
+        </Link>
+        <Link to={`${path}/2`}>
+          <Button variant="contained" endIcon={<ArrowForwardIosIcon />}>Next</Button>
         </Link>
       </div>
     </div>
