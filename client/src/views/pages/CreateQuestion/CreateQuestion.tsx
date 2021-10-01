@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import {
     Switch,
     Route,
@@ -13,13 +13,12 @@ import CreateQuestion3 from './CreateQuestion3';
 import CreateQuestion4 from './CreateQuestion4';
 
 export interface createQuestionProps {
-    position: number;
-    setPosition: React.Dispatch<React.SetStateAction<number>>;
+   
 }
 
 
 const CreateQuestion: FC = () => {
-    const [position, setPosition] = useState(1);
+ 
     let { path, url } = useRouteMatch();
 
     return (
@@ -44,16 +43,16 @@ const CreateQuestion: FC = () => {
                     <CreateQuestion0 />
                 </Route>
                 <Route exact path={`${path}/1`}>
-                    <CreateQuestion1 position={position} setPosition={setPosition} />
+                    <CreateQuestion1 />
                 </Route>
                 <Route exact path={`${path}/2`}>
-                    <CreateQuestion2 position={position} setPosition={setPosition} />
+                    <CreateQuestion2  />
                 </Route>
                 <Route exact path={`${path}/3`}>
-                    <CreateQuestion3 position={position} setPosition={setPosition} />
+                    <CreateQuestion3  />
                 </Route>
                 <Route exact path={`${path}/4`}>
-                    <CreateQuestion4 position={position} setPosition={setPosition} />
+                    <CreateQuestion4 />
                 </Route>
             </Switch>
 

@@ -24,20 +24,15 @@ export const theme = createTheme({
   components: {
     // Name of the component
     MuiButton: {
-      styleOverrides: {
-        // Name of the slot
-        root: {
-          // Some CSS
-          fontSize: '2rem',
-          color:'#ffffff',
-          backgroundColor: orange[500],
-          '&:hover':{ 
-            backgroundColor: orange[600],
+      variants: [
+        {
+          props: { variant: 'contained' },
+          style: {
+            textTransform: 'uppercase',
+            borderRadius:100
           },
-          borderRadius:'30px'
-          
-        },
-      },
+        }
+      ]
     },
   },
 });
