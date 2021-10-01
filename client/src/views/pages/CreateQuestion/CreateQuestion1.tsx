@@ -2,9 +2,9 @@ import { FC } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
 import {
-  decrement,
-  increment,
   selectCount,
+  selectTitle,
+  setTitle
 } from '../../../redux/reducers/createQuestionReducer';
 import { createQuestionProps } from './CreateQuestion';
 //matrial UI
@@ -15,15 +15,16 @@ import TextField from '@mui/material/TextField';
 
 const CreateQuestion1: FC<createQuestionProps> = (props: createQuestionProps) => {
   const count = useAppSelector(selectCount);
+  const title = useAppSelector(selectTitle);
   const dispatch = useAppDispatch();
   let { path } = useRouteMatch();
 
   return (
     <div>
       <div className="wrapper">
-        <h1>What is the Issue/problem/question you would like to present?</h1>
-        <p>This will be the header, which will appear at the top. Keep the description short and to the point.</p>
-        < TextField id="standard-basic" label="User name" variant="standard" type="text" name='username' />
+        <h1>What is the Issue / problem / question you would like to present?</h1>
+        <p>This will be the title, which will appear at the top. Keep the description short and to the point.</p>
+        < TextField id="standard-basic" defaultValue={title} label="Question Title" multiline rows={3} variant="outlined" fullWidth type="text" name='username' onChange={e => dispatch(setTitle(e.target.value))} />
       </div>
       <div className="bottomNavButtons">
         <Link to={`${path}/2`}>

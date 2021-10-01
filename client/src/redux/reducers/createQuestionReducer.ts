@@ -3,12 +3,16 @@ import type { RootState } from '../store';
 
 // Define a type for the slice state
 interface CounterState {
-  value: number
+  value: number,
+  title: string,
+  description:string
 }
 
 // Define the initial state using that type
 const initialState = {
   value: 1,
+  title:'',
+  description:''
 } as CounterState;
 
 export const counterSlice = createSlice({
@@ -27,12 +31,16 @@ export const counterSlice = createSlice({
     incrementByAmount: (state, action: PayloadAction<number>) => {
       state.value += action.payload
     },
+    setTitle: (state, action: PayloadAction<string>)=>{
+      state.title = action.payload;
+    }
   },
 })
 
-export const { increment, decrement, incrementByAmount } = counterSlice.actions
+export const { increment, decrement, incrementByAmount,setTitle } = counterSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectCount = (state: RootState) => state.counter.value
+export const selectTitle = (state:RootState) => state.counter.title
 
 export default counterSlice.reducer
