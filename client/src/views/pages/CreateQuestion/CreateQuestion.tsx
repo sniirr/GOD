@@ -6,7 +6,7 @@ import {
     useParams,
     useRouteMatch
 } from "react-router-dom";
-import { PageTransition } from '@steveeeie/react-page-transition';
+
 
 import CreateQuestion1 from './CreateQuestion1';
 import CreateQuestion2 from './CreateQuestion2';
@@ -39,34 +39,25 @@ const CreateQuestion: FC = () => {
                     <Link to={`${url}/4`}>4</Link>
                 </li>
             </ul>
-            <Route
-                render={({ location }) => {
-                    return (
-                        <PageTransition
-                            preset="moveToLeftFromRight"
-                            transitionKey={location.pathname}
-                        >
-                            <Switch location={location}>
-                                <Route exact path={path}>
-                                    <h3>Please select a topic.</h3>
-                                </Route>
-                                <Route exact path={`${path}/1`}>
-                                    <CreateQuestion1 position={position} setPosition={setPosition} />
-                                </Route>
-                                <Route exact path={`${path}/2`}>
-                                    <CreateQuestion2 position={position} setPosition={setPosition} />
-                                </Route>
-                                <Route exact path={`${path}/3`}>
-                                    <CreateQuestion3 position={position} setPosition={setPosition} />
-                                </Route>
-                                <Route exact path={`${path}/4`}>
-                                    <CreateQuestion4 position={position} setPosition={setPosition} />
-                                </Route>
-                            </Switch>
-                        </PageTransition>
-                    );
-                }}
-           />
+
+            <Switch >
+                <Route exact path={path}>
+                    <h3>Please select a topic.</h3>
+                </Route>
+                <Route exact path={`${path}/1`}>
+                    <CreateQuestion1 position={position} setPosition={setPosition} />
+                </Route>
+                <Route exact path={`${path}/2`}>
+                    <CreateQuestion2 position={position} setPosition={setPosition} />
+                </Route>
+                <Route exact path={`${path}/3`}>
+                    <CreateQuestion3 position={position} setPosition={setPosition} />
+                </Route>
+                <Route exact path={`${path}/4`}>
+                    <CreateQuestion4 position={position} setPosition={setPosition} />
+                </Route>
+            </Switch>
+
         </div >
     );
 }
