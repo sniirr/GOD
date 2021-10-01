@@ -18,40 +18,29 @@ html {
   color: $main_text;
   font-size: 15px;
 }
-
+// texts
 h1 {
-  color: main_header;
+  color: $main_header;
+}
+h2{
+  color: $main_subHeader;
+}
+.question{
+  font-style: italic;
+  color:$main_subHeader;
 }
 
-.message {
-  max-width: 500px;
-  padding: $reg_padding;
-  background-color: $main;
+.wrapper{
+  max-width:550px;
+  margin:auto;
+}
 
-  &--error {
-    background-color: $error;
-    color: white;
+.warnings{
+  &--text{
+    background-color:red;
   }
 }
 
-button {
-  width: fit-content;
-  min-width: 100px;
-  padding: 10px;
-  border-radius: 40px;
-  border: 1px solid;
-  background: none;
-  text-transform: uppercase;
-}
 
-.form {
-  &__inputs {
-    &--flex {
-      display: grid;
-      gap: 5px;
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-}
 
 //colors

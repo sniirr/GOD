@@ -6,7 +6,7 @@ import {
     useRouteMatch
 } from "react-router-dom";
 
-
+import CreateQuestion0 from './CreateQuestion0';
 import CreateQuestion1 from './CreateQuestion1';
 import CreateQuestion2 from './CreateQuestion2';
 import CreateQuestion3 from './CreateQuestion3';
@@ -41,7 +41,7 @@ const CreateQuestion: FC = () => {
 
             <Switch >
                 <Route exact path={path}>
-                    <h3>Please select a topic.</h3>
+                    <CreateQuestion0 />
                 </Route>
                 <Route exact path={`${path}/1`}>
                     <CreateQuestion1 position={position} setPosition={setPosition} />
