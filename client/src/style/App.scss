@@ -115,7 +115,7 @@ h2 {
 
   hr {
     position: absolute;
-    width: 100%;
+    width: 98%;
     top: 50%;
     transform: translateY(-1px);
     margin: 0px;
@@ -140,6 +140,17 @@ h2 {
       text-align: center;
       justify-content: center;
     }
+  }
+  &--current{
+    background-color:#0F344F !important;
+    color:white !important;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .indicator {
+    margin: 0rem 2rem;
+    width: calc(100vw - 6rem);
   }
 }
 
