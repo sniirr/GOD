@@ -1,4 +1,9 @@
 import React, { FC, ReactElement, useState } from 'react';
+<<<<<<< HEAD
+=======
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import { PageTransition } from '@steveeeie/react-page-transition'
+>>>>>>> dev2
 
 import CreateQuestion1 from './CreateQuestion1';
 import CreateQuestion2 from './CreateQuestion2';
