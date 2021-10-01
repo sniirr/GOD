@@ -1,4 +1,5 @@
 import Button from '@mui/material/Button';
+import {Link} from 'react-router-dom';
 
 export interface IAppProps {
 }
@@ -27,7 +28,9 @@ function CreateQuestion0(props: IAppProps) {
                 </div>
             </div>
             <div className="bottomNavButtons">
+                <Link to=''>
                 <Button variant="contained">Lets Start</Button>
+                </Link>
             </div>
         </div>
     );

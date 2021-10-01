@@ -29,7 +29,8 @@ export const theme = createTheme({
           props: { variant: 'contained' },
           style: {
             textTransform: 'uppercase',
-            borderRadius:100
+            borderRadius:100,
+            a_textDecoration: 'none'
           },
         }
       ]
