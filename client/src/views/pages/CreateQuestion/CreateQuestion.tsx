@@ -11,47 +11,41 @@ import CreateQuestion1 from './CreateQuestion1';
 import CreateQuestion2 from './CreateQuestion2';
 import CreateQuestion3 from './CreateQuestion3';
 import CreateQuestion4 from './CreateQuestion4';
+import TopIndecator from '../../components/TopIndicator/TopIndecator';
 
 export interface createQuestionProps {
-   
+
 }
 
 
 const CreateQuestion: FC = () => {
- 
-    let { path, url } = useRouteMatch();
+
+    let { path } = useRouteMatch();
+    const pages = ['1', '2', '3', '4'];
 
     return (
         <div>
-            <ul>
-                <li>
-                    <Link to={`${url}/1`}>1</Link>
-                </li>
-                <li>
-                    <Link to={`${url}/2`}>2</Link>
-                </li>
-                <li>
-                    <Link to={`${url}/3`}>3</Link>
-                </li>
-                <li>
-                    <Link to={`${url}/4`}>4</Link>
-                </li>
-            </ul>
+
 
             <Switch >
                 <Route exact path={path}>
+
                     <CreateQuestion0 />
                 </Route>
                 <Route exact path={`${path}/1`}>
+                    <TopIndecator pages={pages} path={path} />
                     <CreateQuestion1 />
                 </Route>
                 <Route exact path={`${path}/2`}>
-                    <CreateQuestion2  />
+                    <TopIndecator pages={pages}  path={path} />
+                    <CreateQuestion2 />
                 </Route>
                 <Route exact path={`${path}/3`}>
-                    <CreateQuestion3  />
+                    <TopIndecator pages={pages}  path={path} />
+                    <CreateQuestion3 />
                 </Route>
                 <Route exact path={`${path}/4`}>
+                    <TopIndecator pages={pages}  path={path} />
                     <CreateQuestion4 />
                 </Route>
             </Switch>

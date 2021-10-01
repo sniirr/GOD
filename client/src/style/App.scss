@@ -49,27 +49,28 @@ h2 {
 
 @media only screen and (max-width: 550px) {
   .wrapper {
-    margin:0rem 2rem;
+    margin: 0rem 2rem;
   }
 }
 
-.bottomNavButtons{
- display: flex;
- justify-content: center;
- margin-top:3rem;
- background-color:none;
- a{
-   text-decoration:none;
- }
+.bottomNavButtons {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+  background-color: none;
+
+  a {
+    text-decoration: none;
+  }
 }
 
 @media only screen and (max-width: 550px) {
   .bottomNavButtons {
-    position:fixed;
-    bottom:0px;
-    left:0px;
-    background-color:$main;
-    width:100%;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    background-color: $main;
+    width: 100%;
     justify-content: center;
     display: flex;
     min-height: 4rem;
@@ -103,6 +104,45 @@ h2 {
   }
 }
 
+.indicator {
+  width: 100%;
+  background-color: $main;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  max-width: 550px;
+  margin: auto;
+
+  hr {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-1px);
+    margin: 0px;
+    // z-index: -1;
+  }
+
+  a {
+    width:fit-content;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+
+    div {
+      background-color: white;
+      border: 1px solid gray;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 3rem;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+    }
+  }
+}
+
 
 //colors
 .warnings {
@@ -111,5 +151,3 @@ h2 {
     font-weight: 600;
   }
 }
-
-

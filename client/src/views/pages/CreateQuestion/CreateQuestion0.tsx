@@ -1,10 +1,12 @@
 import Button from '@mui/material/Button';
-import {Link} from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 
 export interface IAppProps {
 }
 
 function CreateQuestion0(props: IAppProps) {
+    let { path } = useRouteMatch();
+
     return (
         <div>
             <div className="wrapper">
@@ -28,8 +30,8 @@ function CreateQuestion0(props: IAppProps) {
                 </div>
             </div>
             <div className="bottomNavButtons">
-                <Link to=''>
-                <Button variant="contained">Lets Start</Button>
+                <Link to={`${path}/1`}>
+                    <Button variant="contained">Lets Start</Button>
                 </Link>
             </div>
         </div>

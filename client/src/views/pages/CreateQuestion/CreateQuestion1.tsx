@@ -1,23 +1,35 @@
-import {FC}  from 'react';
+import { FC } from 'react';
+import { Link, useRouteMatch } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
 import {
   decrement,
   increment,
-   selectCount,
+  selectCount,
 } from '../../../redux/reducers/createQuestionReducer';
-import {createQuestionProps} from './CreateQuestion';
-
+import { createQuestionProps } from './CreateQuestion';
+//matrial UI
 import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
-const CreateQuestion1:FC<createQuestionProps> = (props: createQuestionProps)=> {
-      const count = useAppSelector(selectCount);
+
+
+const CreateQuestion1: FC<createQuestionProps> = (props: createQuestionProps) => {
+  const count = useAppSelector(selectCount);
   const dispatch = useAppDispatch();
+  let { path } = useRouteMatch();
 
   return (
     <div>
-      <h1>CreateQuestion 1</h1>
-      <Button onClick={()=>{dispatch(increment())}}>Next {count}</Button>
-      <Button onClick={()=>{dispatch(decrement())}}>Back {count}</Button>
+      <div className="wrapper">
+        <h1>What is the Issue/problem/question you would like to present?</h1>
+        <p>This will be the header, which will appear at the top. Keep the description short and to the point.</p>
+        < TextField id="standard-basic" label="User name" variant="standard" type="text" name='username' />
+      </div>
+      <div className="bottomNavButtons">
+        <Link to={`${path}/2`}>
+          <Button variant="contained">Next</Button>
+        </Link>
+      </div>
     </div>
   );
 }
