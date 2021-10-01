@@ -1,9 +1,8 @@
-import React, { FC, ReactElement, useState } from 'react';
+import React, { FC, useState } from 'react';
 import {
     Switch,
     Route,
     Link,
-    useParams,
     useRouteMatch
 } from "react-router-dom";
 
