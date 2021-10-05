@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import {createQuestionProps} from './CreateQuestion';
 
 function CreateQuestion0(props: createQuestionProps) {
-    let { path } = props;
+    const { path } = props;
 
     return (
         <div>

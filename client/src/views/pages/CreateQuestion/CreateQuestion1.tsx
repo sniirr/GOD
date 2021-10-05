@@ -18,7 +18,7 @@ const CreateQuestion1: FC<createQuestionProps> = (props: createQuestionProps) =>
  
   const title = useAppSelector(selectTitle);
   const dispatch = useAppDispatch();
-  let { path } = props;
+  const { path } = props;
 
   return (
     <div>

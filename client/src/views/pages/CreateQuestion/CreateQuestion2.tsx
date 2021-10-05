@@ -40,7 +40,7 @@ const CreateQuestion2: FC<createQuestionProps> = (props: createQuestionProps) =>
         <Link to={`${path}/1`}>
           <Button variant="outlined" startIcon={<ArrowBackIosIcon />}>Back</Button>
         </Link>
-        <Link to={`${path}/2`}>
+        <Link to={`${path}/3`}>
           <Button variant="contained" endIcon={<ArrowForwardIosIcon />}>Next</Button>
         </Link>
       </div>

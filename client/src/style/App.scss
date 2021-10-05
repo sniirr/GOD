@@ -1,7 +1,7 @@
 // colors
 $primary_color: blue;
 $primary_text: white;
-$accent:orange;
+$accent:#39B6FA;
 $main:white;
 $main_header:rgba(0, 0, 0, 0.78);
 $main_subHeader:rgba(0, 0, 0, 0.72);
@@ -13,6 +13,7 @@ $warning: #FA3E3E;
 //sizes
 $max_wrapper:600px;
 $reg_padding:20px;
+$border_radius:10px;
 
 body,
 html {
@@ -156,10 +157,27 @@ h2 {
 }
 
 
+.uploadPanel{
+  border:2px dashed $accent;
+  border-radius:$border_radius ;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 8rem;
+  cursor: pointer;
+  user-select: none;
+  color:$accent;
+}
+
 //colors
 .warnings {
   &--text {
     color: $warning;
     font-weight: 600;
   }
+}
+
+.accent{
+  color: $accent;
 }
