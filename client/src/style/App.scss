@@ -22,9 +22,32 @@ html {
   font-family: 'Open Sans', sans-serif;
 }
 
+@media only screen and (max-width: 550px) {
+
+  body,
+  html {
+    font-size: 18px;
+  }
+}
+
 // texts
 h1 {
   color: $main_header;
+  font-size: 1.6rem;
+}
+
+h1 {
+  color: $main_header;
+  font-size: 1.4rem;
+}
+@media only screen and (max-width: 550px) {
+
+ h1{
+    font-size: 1.3rem;
+  }
+  h2{
+    font-size: 1.15rem;
+  }
 }
 
 h2 {
@@ -125,11 +148,12 @@ h2 {
   }
 
   a {
-    width:fit-content;
+    width: fit-content;
     text-decoration: none;
     display: flex;
     justify-content: center;
     z-index: 1;
+    user-select: none;
 
     div {
       background-color: white;
@@ -141,11 +165,13 @@ h2 {
       align-items: center;
       text-align: center;
       justify-content: center;
+      user-select: none;
     }
   }
-  &--current{
-    background-color:#0F344F !important;
-    color:white !important;
+
+  &--current {
+    background-color: #0F344F !important;
+    color: white !important;
   }
 }
 
@@ -157,17 +183,17 @@ h2 {
 }
 
 
-.uploadPanel{
-  border:2px dashed $accent;
-  border-radius:$border_radius ;
+.uploadPanel {
+  border: 2px dashed $accent;
+  border-radius: $border_radius;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 8rem;
+  min-height: 10rem;
   cursor: pointer;
   user-select: none;
-  color:$accent;
+  color: $accent;
 }
 
 //colors
@@ -178,6 +204,6 @@ h2 {
   }
 }
 
-.accent{
+.accent {
   color: $accent;
 }
