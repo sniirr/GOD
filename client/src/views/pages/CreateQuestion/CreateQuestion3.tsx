@@ -1,8 +1,15 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
+//redux
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { uploadFileThunk, selectLoader, selectImage } from '../../../redux/reducers/createQuestionReducer';
+
 //controls
-import {uploadAsset} from '../../../controlers/assets';
+
+//componens
+import Loader from '../../components/Loader/Loader'
+
 
 //material UI components
 import Button from '@mui/material/Button';
@@ -13,15 +20,17 @@ import ImageIcon from '@mui/icons-material/Image';
 import { createQuestionProps } from './CreateQuestion';
 
 //Cloudaniry
-import {AdvancedImage} from '@cloudinary/react';
-import {Cloudinary} from "@cloudinary/url-gen";
-
-// Import any actions required for transformations.
-import {fill} from "@cloudinary/url-gen/actions/resize";
+import { AdvancedImage } from '@cloudinary/react';
+import { Cloudinary } from "@cloudinary/url-gen";
+import { fill } from "@cloudinary/url-gen/actions/resize";
+import { image } from '@cloudinary/url-gen/qualifiers/source';
 
 // https://www.youtube.com/watch?v=Y-VgaRwWS3o
 
 const CreateQuestion3: FC<createQuestionProps> = (props: createQuestionProps) => {
+  const dispatch = useAppDispatch();
+  const loader = useAppSelector(selectLoader);
+  const image = useAppSelector(selectImage);
   const { path } = props;
 
   const cld = new Cloudinary({
@@ -29,11 +38,18 @@ const CreateQuestion3: FC<createQuestionProps> = (props: createQuestionProps) =>
       cloudName: 'god-delib'
     }
   });
+  let imagePublicId: string  = '';
+  let myImage;
+  if (image.public_id) {
+    imagePublicId = image.public_id;
+    myImage = cld.image(imagePublicId);
+    myImage.resize(fill().height(250));
 
-  const myImage = cld.image('sample'); 
+  }
 
-  myImage.resize(fill().width(250).height(250));
+  
 
+  
 
 
 
@@ -42,20 +58,35 @@ const CreateQuestion3: FC<createQuestionProps> = (props: createQuestionProps) =>
       <div className="wrapper">
         <h1>Cover photo</h1>
         <p>Upload cover photo</p>
-        <input
-          accept="image/*"
-          style={{ display: 'none' }}
-          id="uploadImageCover"
-          multiple
-          type="file"
-          onChange={uploadAsset}
-        />
-        <label htmlFor="uploadImageCover">
-          <div className="uploadPanel">
-            <ImageIcon className='accent' />
-            <p>UPLOAD HERE</p>
-          </div>
-        </label >
+        <div className="uploadPanel__wrapper">
+          {myImage ?
+             <AdvancedImage cldImg={myImage} />
+            :
+            <>
+              <input
+                accept="image/*"
+                style={{ display: 'none' }}
+                id="uploadImageCover"
+                multiple
+                type="file"
+                onChange={uploadFile}
+              />
+              <label htmlFor="uploadImageCover">
+                <div className="uploadPanel">
+                  <ImageIcon className='accent' />
+                  <p>UPLOAD HERE</p>
+                </div>
+              </label >
+            </>
+          }
+          {loader ?
+            <div className="uploadPanel__loader">
+              <Loader />
+            </div>
+            :
+            null
+          }
+        </div>
         <div className="bottomNavButtons">
           <Link to={`${path}/2`}>
             <Button variant="outlined" startIcon={<ArrowBackIosIcon />}>Back</Button>
@@ -67,6 +98,13 @@ const CreateQuestion3: FC<createQuestionProps> = (props: createQuestionProps) =>
       </div>
     </div >
   );
+
+  //helpers functions
+  function uploadFile(ev: any) {
+    const file = ev.target.files[0];
+    dispatch(uploadFileThunk(file));
+  }
 }
 
 export default CreateQuestion3;
+
