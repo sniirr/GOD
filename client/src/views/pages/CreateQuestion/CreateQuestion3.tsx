@@ -56,7 +56,7 @@ const CreateQuestion3: FC<createQuestionProps> = (props: createQuestionProps) =>
   return (
     <div>
       <div className="wrapper">
-        <h1>Cover photo</h1>
+        <h1>Cover photo (optional)</h1>
         <p>Upload cover photo</p>
         <div className="uploadPanel__wrapper">
           {myImage ?
