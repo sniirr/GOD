@@ -1,9 +1,11 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
 import {
   selectDescription,
-  setDescription
+  selectEnableMoveTo3,
+  setDescription,
+  setEnableMoveTo3
 } from '../../../redux/reducers/createQuestionReducer';
 
 import Button from '@mui/material/Button';
@@ -16,8 +18,14 @@ import { createQuestionProps } from './CreateQuestion';
 const CreateQuestion2: FC<createQuestionProps> = (props: createQuestionProps) => {
 
   const description = useAppSelector(selectDescription);
+  const enableNext = useAppSelector(selectEnableMoveTo3);
   const dispatch = useAppDispatch();
   let { path } = props;
+
+  //state
+  const maxChar = 500;
+  const [charCount, setCharCount] = useState(description.length);
+  const [charClass, setCharClass] = useState('charCount--min');
 
   return (
     <div>
@@ -33,19 +41,43 @@ const CreateQuestion2: FC<createQuestionProps> = (props: createQuestionProps) =>
           fullWidth
           type="text"
           name='username'
-          onChange={e => dispatch(setDescription(e.target.value))} />
+          onChange={handleChange} />
+          <div className={`charCount ${charClass}`}>({charCount}/{maxChar})</div>
       </div>
       <div className="bottomNavButtons">
       
         <Link to={`${path}/1`}>
           <Button variant="outlined" startIcon={<ArrowBackIosIcon />}>Back</Button>
         </Link>
+        {enableNext?
         <Link to={`${path}/3`}>
           <Button variant="contained" endIcon={<ArrowForwardIosIcon />}>Next</Button>
         </Link>
+        :
+        <Button variant="contained" endIcon={<ArrowForwardIosIcon />} disabled={true}>Next</Button>
+}
       </div>
     </div>
   );
+
+  function handleChange(ev: any) {
+    const charCountVar = ev.target.value.length;
+    setCharCount(ev.target.value.length);
+
+    if (charCountVar > 6 && charCountVar < maxChar) {
+      setCharClass('charCount--ok');
+      dispatch(setDescription(ev.target.value));
+      dispatch(setEnableMoveTo3(true))
+    } else if (charCountVar <= 6) {
+      setCharClass('charCount--min');
+      dispatch(setEnableMoveTo3(false))
+    } else {
+      
+      ev.target.value = ev.target.value.slice(0, -1);
+    }
+
+
+  }
 }
 
 export default CreateQuestion2;

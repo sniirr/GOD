@@ -2,13 +2,12 @@ import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
 //redux 
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import {  useAppSelector } from '../../../redux/hooks';
 import { selectTitle, selectDescription, selectImage } from '../../../redux/reducers/createQuestionReducer';
 
 //material UI components
 import Button from '@mui/material/Button';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import SaveIcon from '@mui/icons-material/Save';
 import WhatsappIcon from '@mui/icons-material/WhatsApp';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';

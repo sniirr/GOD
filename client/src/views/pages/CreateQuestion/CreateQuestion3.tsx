@@ -23,7 +23,7 @@ import { createQuestionProps } from './CreateQuestion';
 import { AdvancedImage } from '@cloudinary/react';
 import { Cloudinary } from "@cloudinary/url-gen";
 import { fill } from "@cloudinary/url-gen/actions/resize";
-import { image } from '@cloudinary/url-gen/qualifiers/source';
+
 
 // https://www.youtube.com/watch?v=Y-VgaRwWS3o
 

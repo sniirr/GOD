@@ -16,13 +16,13 @@ const TopIndecator: FC<TopIndecatorProps> = (props:TopIndecatorProps) => {
     let { url } = useRouteMatch();
     let urlSplit = url.split('/');
     let pageFromUrl = urlSplit[urlSplit.length-1];
- console.log(pageFromUrl);
+
  
     return (
         <div className="indicator">
             <hr></hr>
             {pages.map((page, i)=>{
-                console.log(page===pageFromUrl)
+            
                 return(<Link key={i} to={`${path}/${page}`}><div className={page===pageFromUrl ?'indicator--current':undefined}>{i+1}</div></Link>);
             })}
             

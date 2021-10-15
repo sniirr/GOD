@@ -9,6 +9,7 @@ $main_text:rgba(0, 0, 0, 0.575);
 $accent_text:white;
 $error:red;
 $warning: #FA3E3E;
+$success: #0ccf05;
 
 //sizes
 $max_wrapper:600px;
@@ -239,6 +240,17 @@ h2 {
     p{
       font-size: .7rem;
     }
+  }
+}
+
+.charCount{
+  font-size:.8rem;
+  color: $success;
+  &--ok{
+    color:$success;
+  }
+  &--min, &--max{
+    color: $error;
   }
 }
 

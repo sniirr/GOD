@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import type { RootState } from '../store';
 import { uploadFile } from '../../controlers/assets';
-import { EnumNumberMember } from '@babel/types';
+
 
 interface Image {
   asset_id: string;
@@ -43,7 +43,9 @@ interface CounterState {
   image: Image,
   status: string,
   description: string,
-  loader: boolean
+  loader: boolean,
+  enableMoveTo2:boolean,
+  enableMoveTo3:boolean
 }
 
 // Define the initial state using that type
@@ -53,7 +55,9 @@ const initialState = {
   description: '',
   image: {},
   status: '',
-  loader: false
+  loader: false,
+  enableMoveTo2:false,
+  enableMoveTo3:false,
 } as CounterState;
 
 export const counterSlice = createSlice({
@@ -80,6 +84,12 @@ export const counterSlice = createSlice({
     },
     setImage: (state, action) => {
       state.image = action.payload;
+    },
+    setEnableMoveTo2:(state, action)=>{
+      state.enableMoveTo2 =action.payload;
+    },
+    setEnableMoveTo3:(state, action)=>{
+      state.enableMoveTo3 =action.payload;
     }
   },
   extraReducers: builder => {
@@ -101,7 +111,7 @@ export const counterSlice = createSlice({
   }
 })
 
-export const { increment, decrement, incrementByAmount, setTitle, setDescription } = counterSlice.actions
+export const { increment, decrement, incrementByAmount, setTitle, setDescription,setEnableMoveTo2,setEnableMoveTo3 } = counterSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectCount = (state: RootState) => state.counter.value;
@@ -109,5 +119,7 @@ export const selectTitle = (state: RootState) => state.counter.title;
 export const selectDescription = (state: RootState) => state.counter.description;
 export const selectLoader = (state: RootState) => state.counter.loader;
 export const selectImage = (state: RootState) => state.counter.image;
+export const selectEnableMoveTo2 = (state:RootState)=> state.counter.enableMoveTo2;
+export const selectEnableMoveTo3 = (state:RootState)=> state.counter.enableMoveTo3;
 
 export default counterSlice.reducer
