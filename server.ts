@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, 'client', 'build')));
 import userRoutes from './routes/userRoute';
 app.use('/user', userRoutes);
 import questionRoutes from './routes/questionRoute';
-app.use('/question', questionRoutes);
+app.use('/questions', questionRoutes);
 
 //passport settings
 const PASSPORT_SECRET = process.env.PASSPORT_SECRET;

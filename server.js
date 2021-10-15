@@ -51,7 +51,7 @@ app.use(express.static(path.join(__dirname, 'client', 'build')));
 var userRoute_1 = require("./routes/userRoute");
 app.use('/user', userRoute_1["default"]);
 var questionRoute_1 = require("./routes/questionRoute");
-app.use('/question', questionRoute_1["default"]);
+app.use('/questions', questionRoute_1["default"]);
 //passport settings
 var PASSPORT_SECRET = process.env.PASSPORT_SECRET;
 var passport = require('passport');

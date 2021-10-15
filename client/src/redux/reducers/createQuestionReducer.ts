@@ -1,30 +1,9 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import type { RootState } from '../store';
 import { uploadFile } from '../../controlers/assets';
+import {Image} from '../../model/image'
 
 
-interface Image {
-  asset_id: string;
-  public_id: string;
-  version: number;
-  version_id: string;
-  signature: string;
-  widthuploadfile: number;
-  heightuploadfile: number;
-  formatuploadfile: string;
-  resource_typeuploadfile: string;
-  created_atuploadfile: string;
-  tags: [];
-  bytes: number;
-  type: string;
-  etag: string;
-  placeholder: boolean;
-  url: string;
-  secure_url: string;
-  access_mode: string;
-  original_filename: string;
-  original_extension: string;
-}
 
 //thunk for upload image
 export const uploadFileThunk = createAsyncThunk(
@@ -37,7 +16,7 @@ export const uploadFileThunk = createAsyncThunk(
 )
 
 // Define a type for the slice state
-interface CounterState {
+export interface QuestionSchema {
   value: number,
   title: string,
   image: Image,
@@ -58,7 +37,7 @@ const initialState = {
   loader: false,
   enableMoveTo2:false,
   enableMoveTo3:false,
-} as CounterState;
+} as QuestionSchema;
 
 export const counterSlice = createSlice({
   name: 'newQuestion',
@@ -114,6 +93,7 @@ export const counterSlice = createSlice({
 export const { increment, decrement, incrementByAmount, setTitle, setDescription,setEnableMoveTo2,setEnableMoveTo3 } = counterSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
+export const selectQuestion = (state:RootState) => state.counter
 export const selectCount = (state: RootState) => state.counter.value;
 export const selectTitle = (state: RootState) => state.counter.title;
 export const selectDescription = (state: RootState) => state.counter.description;

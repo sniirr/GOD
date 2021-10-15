@@ -1,9 +1,10 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 //redux 
-import {  useAppSelector } from '../../../redux/hooks';
-import { selectTitle, selectDescription, selectImage } from '../../../redux/reducers/createQuestionReducer';
+import { useAppSelector } from '../../../redux/hooks';
+import {selectQuestion, selectTitle, selectDescription, selectImage } from '../../../redux/reducers/createQuestionReducer';
 
 //material UI components
 import Button from '@mui/material/Button';
@@ -20,12 +21,23 @@ import { fill } from "@cloudinary/url-gen/actions/resize";
 //components
 import { createQuestionProps } from './CreateQuestion';
 
+
 const CreateQuestion4: FC<createQuestionProps> = (props: createQuestionProps) => {
     const { path } = props;
+
+
 
     const title = useAppSelector(selectTitle);
     const description = useAppSelector(selectDescription);
     const image = useAppSelector(selectImage);
+   
+
+    useEffect(() => {
+        //save question as draft 
+        axios.post('/questions/create',{title, description, image}).then(data=>{console.log(data);});
+        console.log(title, description, image);
+
+    }, [])
 
     const cld = new Cloudinary({
         cloud: {
