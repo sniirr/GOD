@@ -1,9 +1,10 @@
 "use strict";
 exports.__esModule = true;
+exports.UserSchema = void 0;
 var mongoose = require('mongoose');
 //Define a schema
 var Schema = mongoose.Schema;
-var UserSchema = new Schema({
+exports.UserSchema = new Schema({
     id: String,
     displayName: String,
     name: { givenName: String, familyName: String },
@@ -14,5 +15,5 @@ var UserSchema = new Schema({
     picture: String,
     last_entered: Date
 });
-var UserModel = mongoose.model('UserModel', UserSchema);
-exports["default"] = UserModel;
+// const UserModel = mongoose.model('UserModel',UserSchema)
+// export default UserModel;

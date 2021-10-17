@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-import UserModel from './UserModel';
+import {UserSchema} from './UserModel';
 
 
 //Define a schema
@@ -22,12 +22,12 @@ const QuestionSchema = new Schema({
     description: String,
     files: [FileSchema],
     coverImage: String,
-    members:[UserModel],
-    creators:[UserModel],
-    admins:[UserModel],
+    members:[UserSchema],
+    creators:[UserSchema],
+    admins:[UserSchema],
     last_entered: Date,
     role:String,
-    // image:Image
+    image:Map
 });
 
 const QuestionModel = mongoose.model('QuestionModel', QuestionSchema);

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 //Define a schema
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema({
+export const UserSchema = new Schema({
   id:String,
   displayName: String,
   name:{ givenName: String, familyName: String},
@@ -16,6 +16,6 @@ const UserSchema = new Schema({
 });
 
 
-const UserModel = mongoose.model('UserModel',UserSchema)
+// const UserModel = mongoose.model('UserModel',UserSchema)
 
-export default UserModel;
+// export default UserModel;

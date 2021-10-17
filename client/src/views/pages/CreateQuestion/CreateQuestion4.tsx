@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 //redux 
-import { useAppSelector } from '../../../redux/hooks';
-import {selectQuestion, selectTitle, selectDescription, selectImage } from '../../../redux/reducers/createQuestionReducer';
+import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
+import { selectQuestionId, selectTitle, selectDescription, selectImage, setQuestionId } from '../../../redux/reducers/createQuestionReducer';
 
 //material UI components
 import Button from '@mui/material/Button';
@@ -26,15 +26,26 @@ const CreateQuestion4: FC<createQuestionProps> = (props: createQuestionProps) =>
     const { path } = props;
 
 
-
+    const dispatch = useAppDispatch();
+    const questionId = useAppSelector(selectQuestionId);
     const title = useAppSelector(selectTitle);
     const description = useAppSelector(selectDescription);
     const image = useAppSelector(selectImage);
-   
+
 
     useEffect(() => {
         //save question as draft 
-        axios.post('/questions/create',{title, description, image}).then(data=>{console.log(data);});
+        axios.post('/questions/create', { title, description, image, questionId })
+            .then(({ data }) => {
+                const { questionId } = data;
+                if (questionId) { //only updae in the first time
+                    dispatch(setQuestionId(questionId));
+                }
+
+            })
+            .catch(err => {
+                console.error(err)
+            });
         console.log(title, description, image);
 
     }, [])

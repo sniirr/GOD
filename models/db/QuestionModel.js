@@ -17,11 +17,12 @@ var QuestionSchema = new Schema({
     description: String,
     files: [FileSchema],
     coverImage: String,
-    members: [UserModel_1["default"]],
-    creators: [UserModel_1["default"]],
-    admins: [UserModel_1["default"]],
+    members: [UserModel_1.UserSchema],
+    creators: [UserModel_1.UserSchema],
+    admins: [UserModel_1.UserSchema],
     last_entered: Date,
-    role: String
+    role: String,
+    image: Map
 });
 var QuestionModel = mongoose.model('QuestionModel', QuestionSchema);
 exports["default"] = QuestionModel;
