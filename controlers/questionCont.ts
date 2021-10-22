@@ -41,12 +41,12 @@ export async function createQuestion(req: any, res: any) {
 
 export async function activateQuestion(req: any, res: any): Promise<void> {
     try {
-        const { active, questionId } = req.body;
-        if (typeof active === 'boolean' && typeof questionId === 'string') {
-            const result = await Question.updateOne({ _id: new ObjectId(questionId) }, { active })
+        const { activate, questionId } = req.body;
+        if (typeof activate === 'boolean' && typeof questionId === 'string') {
+            const result = await Question.updateOne({ _id: new ObjectId(questionId) }, { activate })
             res.send({result, ok:true});
         } else {
-            throw new Error(`Active should be bollean but was ${typeof active}`);
+            throw new Error(`activate should be bollean but was ${typeof activate}`);
         }
 
     } catch (error) {

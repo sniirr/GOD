@@ -25,7 +25,8 @@ export interface QuestionSchema {
   description: string,
   loader: boolean,
   enableMoveTo2:boolean,
-  enableMoveTo3:boolean
+  enableMoveTo3:boolean,
+  activate: boolean
 }
 
 // Define the initial state using that type
@@ -39,6 +40,7 @@ const initialState = {
   loader: false,
   enableMoveTo2:false,
   enableMoveTo3:false,
+  activate: false
 } as QuestionSchema;
 
 export const counterSlice = createSlice({
@@ -74,6 +76,10 @@ export const counterSlice = createSlice({
     },
     setEnableMoveTo3:(state, action)=>{
       state.enableMoveTo3 =action.payload;
+    },
+    setActivate:(state, action)=>{
+      console.log(action)
+      state.activate = action.payload;
     }
   },
   extraReducers: builder => {
@@ -95,7 +101,7 @@ export const counterSlice = createSlice({
   }
 })
 
-export const { increment, decrement, incrementByAmount,setQuestionId, setTitle, setDescription,setEnableMoveTo2,setEnableMoveTo3 } = counterSlice.actions
+export const { increment, decrement, incrementByAmount,setQuestionId, setTitle, setDescription,setEnableMoveTo2,setEnableMoveTo3,setActivate} = counterSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectQuestion = (state:RootState) => state.counter

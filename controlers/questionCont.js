@@ -79,19 +79,19 @@ function createQuestion(req, res) {
 exports.createQuestion = createQuestion;
 function activateQuestion(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, active, questionId, result, error_2;
+        var _a, activate, questionId, result, error_2;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
                     _b.trys.push([0, 4, , 5]);
-                    _a = req.body, active = _a.active, questionId = _a.questionId;
-                    if (!(typeof active === 'boolean' && typeof questionId === 'string')) return [3 /*break*/, 2];
-                    return [4 /*yield*/, Question.updateOne({ _id: new ObjectId(questionId) }, { active: active })];
+                    _a = req.body, activate = _a.activate, questionId = _a.questionId;
+                    if (!(typeof activate === 'boolean' && typeof questionId === 'string')) return [3 /*break*/, 2];
+                    return [4 /*yield*/, Question.updateOne({ _id: new ObjectId(questionId) }, { activate: activate })];
                 case 1:
                     result = _b.sent();
                     res.send({ result: result, ok: true });
                     return [3 /*break*/, 3];
-                case 2: throw new Error("Active should be bollean but was " + typeof active);
+                case 2: throw new Error("activate should be bollean but was " + typeof activate);
                 case 3: return [3 /*break*/, 5];
                 case 4:
                     error_2 = _b.sent();

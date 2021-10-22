@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 //redux 
 import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
-import { selectQuestionId, selectTitle, selectDescription, selectImage, setQuestionId } from '../../../redux/reducers/createQuestionReducer';
+import { selectQuestionId, selectTitle, selectDescription, selectImage, setQuestionId, setActivate } from '../../../redux/reducers/createQuestionReducer';
 
 //material UI components
 import Button from '@mui/material/Button';
@@ -22,7 +22,7 @@ import { fill } from "@cloudinary/url-gen/actions/resize";
 import { createQuestionProps } from './CreateQuestion';
 
 //functions
-import { createUpdateQuestion } from '../../../controlers/questions/questions'
+import { createUpdateQuestion, acitvateQuestion } from '../../../controlers/questions/questions'
 
 
 const CreateQuestion4: FC<createQuestionProps> = (props: createQuestionProps) => {
@@ -42,7 +42,7 @@ const CreateQuestion4: FC<createQuestionProps> = (props: createQuestionProps) =>
             console.log(questionId)
             dispatch(setQuestionId(questionId));
         })
-        
+
     }, [])
 
     const cld = new Cloudinary({
@@ -87,13 +87,31 @@ const CreateQuestion4: FC<createQuestionProps> = (props: createQuestionProps) =>
                     <Button variant="outlined" startIcon={<ArrowBackIosIcon />}>Back</Button>
                 </Link>
 
-                <Button variant="contained" endIcon={<CheckCircleIcon />}>finish</Button>
+                <Button variant="contained" endIcon={<CheckCircleIcon />} onClick={handleFinish}>finish</Button>
 
 
             </div>
         </div>
 
     );
+    function handleFinish() {
+        try {
+
+            console.log("finish", questionId)
+            if (typeof questionId === 'string') {
+                acitvateQuestion(true, questionId).then(activate=>{
+                    console.log(activate);
+                    dispatch(setActivate(activate));
+                })
+            } else {
+                console.info(questionId)
+                throw new Error('question Id is not of type string')
+            }
+        } catch (err:any) {
+            console.error(err.message)
+        }
+
+    }
 }
 
 export default CreateQuestion4;
