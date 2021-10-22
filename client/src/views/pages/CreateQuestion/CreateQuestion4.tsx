@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 
 //redux 
 import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
@@ -21,6 +21,9 @@ import { fill } from "@cloudinary/url-gen/actions/resize";
 //components
 import { createQuestionProps } from './CreateQuestion';
 
+//functions
+import { createUpdateQuestion } from '../../../controlers/questions/questions'
+
 
 const CreateQuestion4: FC<createQuestionProps> = (props: createQuestionProps) => {
     const { path } = props;
@@ -35,19 +38,11 @@ const CreateQuestion4: FC<createQuestionProps> = (props: createQuestionProps) =>
 
     useEffect(() => {
         //save question as draft 
-        axios.post('/questions/create', { title, description, image, questionId })
-            .then(({ data }) => {
-                const { questionId } = data;
-                if (questionId) { //only updae in the first time
-                    dispatch(setQuestionId(questionId));
-                }
-
-            })
-            .catch(err => {
-                console.error(err)
-            });
-        console.log(title, description, image);
-
+        createUpdateQuestion(title, description, image).then(questionId => {
+            console.log(questionId)
+            dispatch(setQuestionId(questionId));
+        })
+        
     }, [])
 
     const cld = new Cloudinary({

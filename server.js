@@ -40,6 +40,7 @@ var express = require('express');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var jwt = require('jwt-simple');
+var mongoose = require('mongoose');
 var app = express();
 app.use(cookieParser());
 var port = process.env.PORT || 4000;
@@ -63,10 +64,9 @@ require('./controlers/db'); //connect to mongoDB
 var userModel_1 = require("./models/db/userModel");
 app.get('/auth', passport.authenticate('google', { scope: ['email', 'profile'] }));
 app.get('/google/callback', passport.authenticate('google', {
-    // successRedirect: 'http://localhost:3000/ready',
     failureRedirect: 'http://localhost:3000/fail'
 }), function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, userJWT, userDB, newUser, userData, err_1;
+    var user, userJWT, UserModel, userDB, newUser, userData, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -76,11 +76,12 @@ app.get('/google/callback', passport.authenticate('google', {
                 user.last_entered = new Date();
                 console.log("user " + user.displayName + " logged in");
                 userJWT = jwt.encode({ id: user.id }, JWT_SECRET);
-                return [4 /*yield*/, userModel_1["default"].findOneAndUpdate({ id: user.id }, user)];
+                UserModel = mongoose.model('UserModel', userModel_1.UserSchema);
+                return [4 /*yield*/, UserModel.findOneAndUpdate({ id: user.id }, user)];
             case 1:
                 userDB = _a.sent();
                 if (!!userDB) return [3 /*break*/, 3];
-                newUser = new userModel_1["default"](user);
+                newUser = new UserModel(user);
                 return [4 /*yield*/, newUser.save()];
             case 2:
                 userData = _a.sent();

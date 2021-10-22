@@ -17,17 +17,18 @@ const Image = new Schema({
 })
 
 
-const QuestionSchema = new Schema({
+export const QuestionSchema = new Schema({
     title: String,
     description: String,
     files: [FileSchema],
     coverImage: String,
     members:[UserSchema],
-    creators:[UserSchema],
+    creatorId:String,
     admins:[UserSchema],
     last_entered: Date,
     role:String,
-    image:Map
+    image:Map,
+    active:Boolean
 });
 
 const QuestionModel = mongoose.model('QuestionModel', QuestionSchema);

@@ -2,10 +2,11 @@ import isLoggedIn from '../middlewares/isLoggedIn';
 
 const router = require('express').Router();
 
-import { createQuestion } from '../controlers/questionCont';
+import { activateQuestion, createQuestion } from '../controlers/questionCont';
 
 router
-    .post('/create',isLoggedIn, createQuestion);
+    .post('/create',isLoggedIn, createQuestion)
+    .post('/activate', isLoggedIn, activateQuestion);
     
 
 export default router;

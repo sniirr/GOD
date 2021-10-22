@@ -36,37 +36,39 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.createQuestion = void 0;
+exports.activateQuestion = exports.createQuestion = void 0;
 var QuestionModel_1 = require("../models/db/QuestionModel");
+var ObjectId = require('mongoose').Types.ObjectId;
+var mongoose = require('mongoose');
+var Question = mongoose.model('Question', QuestionModel_1.QuestionSchema);
 function createQuestion(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var question, newQuestion, response, results, _id, error_1;
+        var question, response, results, _id, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 5, , 6]);
                     question = req.body;
-                    newQuestion = (0, QuestionModel_1["default"])(question);
+                    question.creatorId = req.user.id;
                     if (!question.questionId) return [3 /*break*/, 2];
-                    //update
-                    console.log('update2...........', question.questionId);
-                    return [4 /*yield*/, newQuestion.updateOne({ _id: question.questionId }, question)];
+                    return [4 /*yield*/, Question.find({ _id: new ObjectId(question.questionId) })];
                 case 1:
                     response = _a.sent();
-                    console.log(response);
-                    res.send(response);
+                    res.send({ update: true, response: response });
                     return [3 /*break*/, 4];
-                case 2: return [4 /*yield*/, newQuestion.save()];
+                case 2:
+                    //create new question
+                    question.active = false;
+                    return [4 /*yield*/, Question.create(question)];
                 case 3:
                     results = _a.sent();
-                    console.log(results);
                     _id = results._id;
                     res.send({ questionId: _id });
                     _a.label = 4;
                 case 4: return [3 /*break*/, 6];
                 case 5:
                     error_1 = _a.sent();
-                    console.log(error_1);
+                    console.error(error_1);
                     res.status(500).send({ error: error_1.message });
                     return [3 /*break*/, 6];
                 case 6: return [2 /*return*/];
@@ -75,3 +77,29 @@ function createQuestion(req, res) {
     });
 }
 exports.createQuestion = createQuestion;
+function activateQuestion(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, active, questionId, result, error_2;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    _b.trys.push([0, 4, , 5]);
+                    _a = req.body, active = _a.active, questionId = _a.questionId;
+                    if (!(typeof active === 'boolean' && typeof questionId === 'string')) return [3 /*break*/, 2];
+                    return [4 /*yield*/, Question.updateOne({ _id: new ObjectId(questionId) }, { active: active })];
+                case 1:
+                    result = _b.sent();
+                    res.send({ result: result, ok: true });
+                    return [3 /*break*/, 3];
+                case 2: throw new Error("Active should be bollean but was " + typeof active);
+                case 3: return [3 /*break*/, 5];
+                case 4:
+                    error_2 = _b.sent();
+                    res.send({ error: error_2.message });
+                    return [3 /*break*/, 5];
+                case 5: return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.activateQuestion = activateQuestion;

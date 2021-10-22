@@ -1,28 +1,32 @@
-import QuestionModel from '../models/db/QuestionModel';
+import { QuestionSchema } from '../models/db/QuestionModel';
+var ObjectId = require('mongoose').Types.ObjectId;
+const mongoose = require('mongoose');
 
-export async function createQuestion(req, res) {
+const Question = mongoose.model('Question', QuestionSchema);
+
+export async function createQuestion(req: any, res: any) {
     try {
 
         //get question
         const question = req.body;
-        
-        //get user _id
-        // save to user
+        question.creatorId = req.user.id;
 
-        const newQuestion = QuestionModel(question);
+
+
 
         if (question.questionId) {
             //update
-            console.log('update2...........',question.questionId)
-            const response = await newQuestion.updateOne({_id:question.questionId}, question);
-            console.log(response)
-            res.send(response)
+
+            const response = await Question.find({ _id: new ObjectId(question.questionId) });
+
+            res.send({ update: true, response })
+
         } else {
             //create new question
+            question.active = false;
+            const results = await Question.create(question);
 
-            
-            const results = await newQuestion.save();
-            console.log(results);
+
             const { _id } = results;
 
             res.send({ questionId: _id });
@@ -30,7 +34,24 @@ export async function createQuestion(req, res) {
 
 
     } catch (error) {
-        console.log(error)
+        console.error(error)
         res.status(500).send({ error: error.message })
     }
+}
+
+export async function activateQuestion(req: any, res: any): Promise<void> {
+    try {
+        const { active, questionId } = req.body;
+        if (typeof active === 'boolean' && typeof questionId === 'string') {
+            const result = await Question.updateOne({ _id: new ObjectId(questionId) }, { active })
+            res.send({result, ok:true});
+        } else {
+            throw new Error(`Active should be bollean but was ${typeof active}`);
+        }
+
+    } catch (error) {
+        res.send({ error: error.message });
+    }
+
+
 }
