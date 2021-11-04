@@ -9,10 +9,6 @@ var FileSchema = new Schema({
     fileName: String,
     fileUrl: String
 });
-var Image = new Schema({
-    title: String,
-    description: String
-});
 exports.QuestionSchema = new Schema({
     title: String,
     description: String,

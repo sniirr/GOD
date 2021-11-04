@@ -1,8 +1,14 @@
 //Import the mongoose module
 const mongoose = require('mongoose');
 
+const a = 5;
+
 //Set up default mongoose connection
-const mongoDB = 'mongodb://127.0.0.1/my_database';
+//local:
+// const mongoDB = 'mongodb://127.0.0.1/my_database'; 
+//atlas:
+const mongoDB = 'mongodb+srv://tal1:9jNgEw4y7l9wjkkI@tal-test1.m39if.mongodb.net/god?retryWrites=true&w=majority';
+
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
 
 //Get the default connection
