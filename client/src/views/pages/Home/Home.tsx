@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import "../../../style/Home.scss";
+
 
 //material-ui styles
 import AddIcon from "@mui/icons-material/Add";
