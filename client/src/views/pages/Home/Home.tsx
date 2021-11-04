@@ -37,7 +37,6 @@ const Home: FC = () => {
               />
             }
           >
-            {" "}
             Create
           </Button>
         </div>
