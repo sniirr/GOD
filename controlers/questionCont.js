@@ -63,7 +63,7 @@ function createQuestion(req, res) {
                 case 3:
                     results = _a.sent();
                     _id = results._id;
-                    res.send({ questionId: _id });
+                    res.send({ questionId: _id, results: results });
                     _a.label = 4;
                 case 4: return [3 /*break*/, 6];
                 case 5:

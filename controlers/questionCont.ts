@@ -29,7 +29,7 @@ export async function createQuestion(req: any, res: any) {
 
             const { _id } = results;
 
-            res.send({ questionId: _id });
+            res.send({ questionId: _id, results });
         }
 
 
