@@ -1,25 +1,61 @@
-.home-page {
-  position: absolute;
-  background: #103450;
-  height: 90vh;
-  width: 100%;
-  top: 0;
+.home {
+  &__page {
+    position: absolute;
+    background: #103450;
+    height: 90vh;
+    width: 100%;
+    top: 0;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    background: white;
+    height: 70px;
+
+    &__add {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 150px;
+    }
+
+    &__logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 150px;
+
+      img {
+        width: 66px;
+        height: 50px;
+      }
+    }
+
+   
+  }
+
+
+
+  &__main {
+    max-width: 600px;
+    margin: auto;
+  }
+  &__learnMore{
+    padding: 50px;
+    text-align: center;
+  }
 }
-.buttons {
-  display: flex;
-  justify-content: space-between;
-  background: white;
-  height: 10vh;
-}
+
 
 // create button icon
 .css-1d6wzja-MuiButton-startIcon {
-    margin-right: 4px !important;
-    margin-left: -10px !important;
+  margin-right: 4px !important;
+  margin-left: -10px !important;
 }
-.logo {
-  margin: 0.5em 0 0.5em 1em;
-}
+
+
+
 .home-title {
   color: white;
   font-weight: 600;
@@ -27,6 +63,7 @@
   margin: 3em 0 1em;
   font-size: 1em;
 }
+
 .para-home {
   color: #c3c2c2;
   font-size: 0.8em;
@@ -34,6 +71,7 @@
   margin-bottom: 0.5em;
   font-family: sans-serif;
 }
+
 .home-img {
   width: 90%;
   position: relative;
