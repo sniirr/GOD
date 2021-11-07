@@ -10,11 +10,6 @@ const FileSchema = new Schema({
     fileUrl:String
 });
 
-const Image = new Schema({
-    title: String,
-    description: String,
-    // image:String
-})
 
 
 export const QuestionSchema = new Schema({
