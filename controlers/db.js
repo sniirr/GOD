@@ -7,7 +7,7 @@ console.log(a);
 var mongoose = require('mongoose');
 //Set up default mongoose connection
 //local:
-// const mongoDB = 'mongodb://127.0.0.1/my_database'; 
+// const mongoDB = 'mongodb://127.0.0.1/global_online'; 
 //atlas:
 var mongoDB = 'mongodb+srv://tal1:9jNgEw4y7l9wjkkI@tal-test1.m39if.mongodb.net/global_online?retryWrites=true&w=majority';
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
