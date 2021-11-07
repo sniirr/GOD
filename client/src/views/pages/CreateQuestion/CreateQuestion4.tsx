@@ -43,7 +43,7 @@ const CreateQuestion4: FC<createQuestionProps> = (props: createQuestionProps) =>
             dispatch(setQuestionId(questionId));
         })
 
-    }, [])
+    })
 
     const cld = new Cloudinary({
         cloud: {

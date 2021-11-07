@@ -1,5 +1,4 @@
-@import '../views/pages/Home/Home.scss';
-@import '../views/components/ButtonAppBar/ButtonAppBar.scss';
+
 
 // colors
 $primary_color: blue;
@@ -18,6 +17,9 @@ $success: #0ccf05;
 $max_wrapper:600px;
 $reg_padding:20px;
 $border_radius:10px;
+
+@import '../views/pages/Home/Home.scss';
+@import '../views/components/ButtonAppBar/ButtonAppBar.scss';
 
 body,
 html {

@@ -1,9 +1,6 @@
 import axios from 'axios';
 
-interface Question {
-    questionId: string;
-    title?: string;
-}
+
 
 export async function acitvateQuestion(activate: boolean, questionId: string): Promise<boolean> {
     try {

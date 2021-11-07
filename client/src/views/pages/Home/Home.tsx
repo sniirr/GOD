@@ -34,9 +34,9 @@ const Home: FC = () => {
 
       <div className="home__main">
         <h3 className="home-title">Ask. Discuss. Vote. Agree.</h3>
-        <div className="para-home">Learn About The Decision-Making Tool</div>
-        <div className="para-home">How It Works And How Your Vote</div>
-        <div className="para-home">Can Make A Difference</div>
+        <div className="home__para">Learn About The Decision-Making Tool</div>
+        <div className="home__para">How It Works And How Your Vote</div>
+        <div className="home__para">Can Make A Difference</div>
 
         <img
           className="home-img"

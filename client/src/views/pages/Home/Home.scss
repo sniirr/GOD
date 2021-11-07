@@ -31,7 +31,14 @@
         height: 50px;
       }
     }
-
+    &__para {
+      // color: #c3c2c2;
+      color:$primary_text;
+      font-size: 0.8em;
+      text-align: center;
+      margin-bottom: 0.5em;
+      font-family: sans-serif;
+    }
    
   }
 
@@ -64,13 +71,7 @@
   font-size: 1em;
 }
 
-.para-home {
-  color: #c3c2c2;
-  font-size: 0.8em;
-  text-align: center;
-  margin-bottom: 0.5em;
-  font-family: sans-serif;
-}
+
 
 .home-img {
   width: 90%;
