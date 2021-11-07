@@ -7,7 +7,7 @@ import { Button } from "@mui/material";
 
 const Vote: FC = () => {
   return (
-    <div className="vote-page">
+    <>
       <div className="buttons">
         <img
           className="logo"
@@ -41,27 +41,30 @@ const Vote: FC = () => {
         </div>
       </div>
 
-      <>
+      <div className="vote-list">
+
+
         <div className="card">
           <div className="card__image">
+            <div className="card__status"></div>
+            <img src={process.env.PUBLIC_URL + "https://picsum.photos/350/200"}></img>
 
-          </div>
-          <div className="card__title">
+            <div className="card__title">
 
-          </div>
-          <div className="card__status">
 
+
+            </div>
           </div>
           <div className="card__info">
+
+
 
           </div>
 
         </div>
 
-
-
-      </>
-    </div>
+      </div>
+    </>
   );
 };
 export default Vote;
