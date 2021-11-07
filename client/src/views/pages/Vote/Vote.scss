@@ -1,0 +1,26 @@
+.vote-page {
+  position: absolute;
+  background: #103450;
+  height: 90vh;
+  width: 100%;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  background: white;
+  height: 10vh;
+
+  .logo {
+    height: 30px;
+    alt: "no image";
+    margin: 0.5em 0 0.5em 1em;
+  }
+}
+
+.card {
+  background-color: #103450;
+  width: 100vw;
+  height: 100hw;
+  margin: 0 auto;
+}

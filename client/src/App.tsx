@@ -25,7 +25,7 @@ import CreateQuestion from './views/pages/CreateQuestion/CreateQuestion';
 import { theme } from './style/Theme';
 import Home from './views/pages/Home/Home';
 import ButtonAppBar from './views/components/ButtonAppBar/ButtonAppBar';
-
+import Vote from './views/pages/Vote/Vote';
 
 
 
@@ -56,6 +56,9 @@ function App() {
               <Route path="/login">
                 <Login />
               </Route>
+              <Route path='/vote'>
+                <Vote />
+              </Route>
               <Route path='/create_question'>
                 <CreateQuestion />
               </Route>
@@ -69,7 +72,7 @@ function App() {
                 <Home />
               </Route>
             </Switch>
-            <ButtonAppBar/>
+            <ButtonAppBar />
           </div>
         </Router>
       </ThemeProvider>
