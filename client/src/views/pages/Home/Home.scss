@@ -6,6 +6,22 @@
     width: 100%;
     top: 0;
   }
+  &__para {
+    color: #c3c2c2;
+    // color:$primary_text;
+   
+    text-align: center;
+    margin-bottom: 0.5em;
+   
+  }
+
+  &__title {
+    color: $primary_text;
+    font-weight: 600;
+    text-align: center;
+    margin: 3em 0 1em;
+    font-size: 1.1em;
+  }
 
   &__header {
     display: flex;
@@ -31,14 +47,7 @@
         height: 50px;
       }
     }
-    &__para {
-      // color: #c3c2c2;
-      color:$primary_text;
-      font-size: 0.8em;
-      text-align: center;
-      margin-bottom: 0.5em;
-      font-family: sans-serif;
-    }
+  
    
   }
 
@@ -62,14 +71,6 @@
 }
 
 
-
-.home-title {
-  color: white;
-  font-weight: 600;
-  text-align: center;
-  margin: 3em 0 1em;
-  font-size: 1em;
-}
 
 
 

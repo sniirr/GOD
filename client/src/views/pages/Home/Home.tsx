@@ -1,11 +1,14 @@
 import React, { FC } from "react";
-
+import { useHistory } from "react-router-dom";
 
 //material-ui styles
 import AddIcon from "@mui/icons-material/Add";
 import { Button } from "@mui/material";
 
 const Home: FC = () => {
+  const history = useHistory();
+
+
   return (
     <div className="home__page">
       <div className="home__header">
@@ -22,10 +25,9 @@ const Home: FC = () => {
               backgroundColor: "rgb(204 146 58)",
             }}
             startIcon={
-              <AddIcon
-                style={{ fontSize: "1.2em", padding: "0 0 0.1em 0.5em" }}
-              />
+              <AddIcon />
             }
+            onClick={()=>{history.push('/create_question')}}
           >
             Create
           </Button>
@@ -33,7 +35,7 @@ const Home: FC = () => {
       </div>
 
       <div className="home__main">
-        <h3 className="home-title">Ask. Discuss. Vote. Agree.</h3>
+        <h3 className="home__title">Ask. Discuss. Vote. Agree.</h3>
         <div className="home__para">Learn About The Decision-Making Tool</div>
         <div className="home__para">How It Works And How Your Vote</div>
         <div className="home__para">Can Make A Difference</div>
