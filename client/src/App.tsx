@@ -23,6 +23,8 @@ import Login from './views/pages/Login/Login';
 import CreateQuestion from './views/pages/CreateQuestion/CreateQuestion';
 
 import { theme } from './style/Theme';
+import Home from './views/pages/Home/Home';
+import ButtonAppBar from './views/components/ButtonAppBar/ButtonAppBar';
 
 
 
@@ -64,9 +66,10 @@ function App() {
                 <Fail />
               </Route>
               <Route path="/">
-                <Login />
+                <Home />
               </Route>
             </Switch>
+            <ButtonAppBar/>
           </div>
         </Router>
       </ThemeProvider>
