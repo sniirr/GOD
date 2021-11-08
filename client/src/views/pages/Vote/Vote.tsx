@@ -1,11 +1,14 @@
 import React, { FC } from "react";
 
 
+
 //material-ui styles
 import AddIcon from "@mui/icons-material/Add";
-import { Button } from "@mui/material";
+import { Button, Tabs, Tab } from "@mui/material";
+
 
 const Vote: FC = () => {
+  const hendelTapTab = () => { }
   return (
     <>
       <div className="buttons">
@@ -41,28 +44,25 @@ const Vote: FC = () => {
         </div>
       </div>
 
-      <div className="vote-list">
+      <div className="TabsWrapper">
+        <Tabs value={0} onChange={hendelTapTab}>
+          <Tab label="My Questions" />
+          <Tab label="Ongoing" />
+          <Tab label="Pending" />
+          <Tab label="Past" />
+        </Tabs>
+      </div>
 
+      <div className="vote-list">
 
         <div className="card">
           <div className="card__image">
-            <div className="card__status"></div>
+            <div className="card__title">Rainforest global responsibility</div>
+            <div className="card__status"> Draft </div>
             <img src={process.env.PUBLIC_URL + "https://picsum.photos/350/200"}></img>
-
-            <div className="card__title">
-
-
-
-            </div>
           </div>
-          <div className="card__info">
-
-
-
-          </div>
-
+          <div className="card__info">Back to Edit</div>
         </div>
-
       </div>
     </>
   );
