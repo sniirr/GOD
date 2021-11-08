@@ -5,10 +5,15 @@ import React, { FC } from "react";
 //material-ui styles
 import AddIcon from "@mui/icons-material/Add";
 import { Button, Tabs, Tab } from "@mui/material";
+import VoteCard from "../../components/VoteCard/VoteCard";
 
 
 const Vote: FC = () => {
-  const hendelTapTab = () => { }
+  const [selectedTab, setSelectedTab] = React.useState(0);
+  const hendelTapTab = (event: React.SyntheticEvent, newValue: number) => {
+    setSelectedTab(newValue);
+  };
+
   return (
     <>
       <div className="buttons">
@@ -45,25 +50,27 @@ const Vote: FC = () => {
       </div>
 
       <div className="TabsWrapper">
-        <Tabs value={0} onChange={hendelTapTab}>
+        <Tabs value={selectedTab} onChange={hendelTapTab}>
           <Tab label="My Questions" />
           <Tab label="Ongoing" />
           <Tab label="Pending" />
           <Tab label="Past" />
         </Tabs>
+
+      </div >
+      <div className="voteListWrapper">
+        {selectedTab === 0 && <div className="vote-list">
+
+          <VoteCard />
+          <VoteCard />
+          <VoteCard />
+
+        </div>}
+        {selectedTab === 1 && <div>Ongoing</div>}
+        {selectedTab === 2 && <div>Pending</div>}
+        {selectedTab === 3 && <div>Past</div>}
       </div>
 
-      <div className="vote-list">
-
-        <div className="card">
-          <div className="card__image">
-            <div className="card__title">Rainforest global responsibility</div>
-            <div className="card__status"> Draft </div>
-            <img src={process.env.PUBLIC_URL + "https://picsum.photos/350/200"}></img>
-          </div>
-          <div className="card__info">Back to Edit</div>
-        </div>
-      </div>
     </>
   );
 };

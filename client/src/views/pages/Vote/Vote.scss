@@ -1,88 +1,3 @@
-.vote-list {
-  position: absolute;
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border: solid 1px #000000;
-  align-items: center;
-
-  .card {
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    height: 150px;
-    width: 400px;
-    background: rgb(204, 146, 58);
-    border-radius: 0.5em;
-    box-shadow: 0 0.5em 1em -0.5em rgba(0, 0, 0, 0.5);
-    padding: 0;
-    margin: 2em;
-    overflow: hidden;
-
-    .card__info {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      width: 100%;
-      padding: 0;
-      margin: 0;
-      overflow: hidden;
-      background-color: rgb(55, 204, 55);
-      color: rgb(255, 255, 255);
-
-
-    }
-
-    .card__image {
-      position: relative;
-      height: 100%;
-      overflow: hidden;
-
-
-
-
-      .card__status {
-        position: absolute;
-        float: left;
-        font-weight: bold;
-        background-color: rgb(15, 52, 79);
-        text-align: center;
-        border-radius: 15px;
-        height: 20px;
-        width: 100px;
-        box-shadow: 0 0.5em 1em -0.5em rgba(0, 0, 0, 0.5);
-        top: 15px;
-        left: -25px;
-        padding: 5px;
-        color: rgb(255, 255, 255);
-
-      }
-
-      .card__title {
-        position: absolute;
-        float: left;
-        border-radius: 5px;
-        height: 30px;
-        width: 230px;
-        font-size: 1em;
-        background-color: #ffffff;
-        text-align: center;
-        margin: 0;
-        padding: 5px;
-        top: 120px;
-        left: -5px;
-        color: rgb(15, 52, 79);
-        font-weight: bold;
-      }
-    }
-
-
-  }
-}
-
 .TabsWrapper {
   display: flex;
   flex-direction: row;
@@ -92,7 +7,32 @@
   width: 100%;
   padding: 0;
   margin: 0;
-  overflow: hidden;
+
+
+}
+
+
+.voteListWrapper {
+
+  height: 60vh;
+  width: 100%;
+  margin: 0;
+  overflow: scroll;
+  scroll-behavior: smooth;
+  justify-content: center;
+  align-items: center;
+}
+
+.vote-list {
+  position: relative;
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  // border: solid 1px #000000;
+  align-items: center;
+  margin-left: 3%;
+
 }
 
 .buttons {
