@@ -12,6 +12,30 @@ import VoteCard from "../../components/VoteCard/VoteCard";
 // });
 
 
+export interface Group{
+  status: string;
+  votes: number;
+  title: string;
+  questionId: string;
+}
+
+const mockGroups:Array<Group> = [{
+  status: "Draft",
+  votes: 0,
+  title: "Rainforest global responsibility",
+  questionId: '1'
+}, {
+  status: "Draft",
+  votes: 0,
+  title: "Rainforest global responsibility",
+  questionId: '2'
+}, {
+  status: "Published",
+  votes: 55,
+  title: "Inequality During Pandemic",
+  questionId: '3'
+}]
+
 
 const Vote: FC = () => {
   const [selectedTab, setSelectedTab] = React.useState(0);
@@ -30,22 +54,7 @@ const Vote: FC = () => {
     return myColor;
   }
 
-  const props = [{
-    status: "Draft",
-    votes: 0,
-    title: "Rainforest global responsibility",
-    questionId: 1
-  }, {
-    status: "Draft",
-    votes: 0,
-    title: "Rainforest global responsibility",
-    questionId: 2
-  }, {
-    status: "Published",
-    votes: 55,
-    title: "Inequality During Pandemic",
-    questionId: 3
-  }]
+
 
   return (
     <>
@@ -98,7 +107,7 @@ const Vote: FC = () => {
       </div >
       <div className="voteListWrapper">
         {selectedTab === 0 && <div className="voteList">
-          {props.map(item => <VoteCard />)}
+          {mockGroups.map((item) => <VoteCard info={item} />)}
 
         </div>}
         {selectedTab === 1 && <div className="inProgress">Ongoing Page</div>}

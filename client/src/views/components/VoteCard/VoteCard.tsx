@@ -1,22 +1,22 @@
 import React, { FC } from "react";
 import './VoteCard.scss';
 import HowToVoteIcon from '@mui/icons-material/HowToVote';
+//models
+import { Group } from '../../pages/Vote/Vote'
+
 export interface VoteCardProps {
-  status: string;
-  votes: number;
-  title: string;
-  questionId: string;
+  info: Group
 }
 
-const VoteCard: FC = (props: VoteCardProps) => {
-  console.log(props.status + "child");
-  if (props.status == "Draft") {
+function VoteCard (props: VoteCardProps) {
+ const {info} = props;
+  if (info.status == "Draft") {
     return (
 
       <div className="card">
         <div className="card__image">
-          <div className="card__title"> {props.status}The Place for The Title </div>
-          <div className="card__status"> {props.status} Draft  </div>
+          <div className="card__title"> {info.status}The Place for The Title </div>
+          <div className="card__status"> {info.status} Draft  </div>
           <img src={process.env.PUBLIC_URL + "https://picsum.photos/350/200"}></img>
         </div>
 
@@ -30,8 +30,8 @@ const VoteCard: FC = (props: VoteCardProps) => {
 
       <div className="card">
         <div className="card__image">
-          <div className="card__title"> {props.status}The Place for Title </div>
-          <div className="card__status"> {props.status} Published  </div>
+          <div className="card__title"> {info.status}The Place for Title </div>
+          <div className="card__status"> {info.status} Published  </div>
           <img src={process.env.PUBLIC_URL + "https://picsum.photos/350/200"}></img>
         </div>
         <div className="card__info">
@@ -43,7 +43,7 @@ const VoteCard: FC = (props: VoteCardProps) => {
             </i>
 
             <div className="card__info__voteCount__number">
-              {props.voteCount}  65 {props.votes}
+              {info.votes}
             </div>
 
           </div>
