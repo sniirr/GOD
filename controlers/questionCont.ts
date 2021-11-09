@@ -17,7 +17,7 @@ export async function createQuestion(req: any, res: any) {
         if (question.questionId) {
             //update
 
-            const response = await Question.find({ _id: new ObjectId(question.questionId) });
+            const response = await Question.findOneAndUpdate({ _id: new ObjectId(question.questionId) }, question);
 
             res.send({ update: true, response })
 

@@ -51,7 +51,7 @@ function createQuestion(req, res) {
                     question = req.body;
                     question.creatorId = req.user.id;
                     if (!question.questionId) return [3 /*break*/, 2];
-                    return [4 /*yield*/, Question.find({ _id: new ObjectId(question.questionId) })];
+                    return [4 /*yield*/, Question.findOneAndUpdate({ _id: new ObjectId(question.questionId) }, question)];
                 case 1:
                     response = _a.sent();
                     res.send({ update: true, response: response });
