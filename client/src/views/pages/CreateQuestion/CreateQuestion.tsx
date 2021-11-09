@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
+import axios from 'axios';
 import {
     Switch,
     Route,
@@ -18,6 +19,15 @@ export interface createQuestionProps {
 
 
 const CreateQuestion: FC = () => {
+
+    useEffect(()=>{
+        axios.post('/questions/get-all',{})
+        .then(data=>{
+          console.log(data)
+        }).catch(e=>{
+          console.error(e)
+        })
+      })
 
     let { path } = useRouteMatch();
     const pages = ['1', '2', '3', '4'];
