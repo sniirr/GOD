@@ -1,13 +1,63 @@
 import React, { FC } from "react";
-
-
-//material-ui styles
 import AddIcon from "@mui/icons-material/Add";
-import { Button } from "@mui/material";
+import { Button, Tabs, Tab, makeStyles } from "@mui/material";
+import VoteCard from "../../components/VoteCard/VoteCard";
+
+
+// const useStyles = makeStyles({
+//   div: {
+//     color: "blue",
+
+//   }
+// });
+
+
+export interface Group{
+  status: string;
+  votes: number;
+  title: string;
+  questionId: string;
+}
+
+const mockGroups:Array<Group> = [{
+  status: "Draft",
+  votes: 0,
+  title: "Rainforest global responsibility",
+  questionId: '1'
+}, {
+  status: "Draft",
+  votes: 0,
+  title: "Rainforest global responsibility",
+  questionId: '2'
+}, {
+  status: "Published",
+  votes: 55,
+  title: "Inequality During Pandemic",
+  questionId: '3'
+}]
+
 
 const Vote: FC = () => {
+  const [selectedTab, setSelectedTab] = React.useState(0);
+  const hendelTapTab = (event: React.SyntheticEvent, newValue: number) => {
+    setSelectedTab(newValue);
+  };
+  const myColor = () => {
+    let myColor = "";
+    if (selectedTab === 0) {
+      myColor = "blue";
+    } else if (selectedTab === 1) {
+      myColor = "red";
+    } else {
+      myColor = "green";
+    }
+    return myColor;
+  }
+
+
+
   return (
-    <div className="vote-page">
+    <>
       <div className="buttons">
         <img
           className="logo"
@@ -41,27 +91,31 @@ const Vote: FC = () => {
         </div>
       </div>
 
-      <>
-        <div className="card">
-          <div className="card__image">
+      <div className="TabsWrapper">
+        <Tabs  value={selectedTab} onChange={hendelTapTab} TabIndicatorProps={{
+          style: {
+            backgroundColor: "#21DCA2",
+          }
+        }} >
+          <Tab label={<span style={{ color: 'rgb(15,52,79)', textTransform: "none" }}>My Questions</span>} />
+          <Tab label={<span style={{ color: 'rgb(15,52,79)', textTransform: "none" }}>Ongoing</span>} />
+          <Tab label={<span style={{ color: 'rgb(15,52,79)', textTransform: "none" }}>Pending</span>} />
+          <Tab label={<span style={{ color: 'rgb(15,52,79)', textTransform: "none" }}>Past</span>} />
 
-          </div>
-          <div className="card__title">
+        </Tabs>
 
-          </div>
-          <div className="card__status">
+      </div >
+      <div className="voteListWrapper">
+        {selectedTab === 0 && <div className="voteList">
+          {mockGroups.map((item, i) => <VoteCard key={i} info={item} />)}
 
-          </div>
-          <div className="card__info">
+        </div>}
+        {selectedTab === 1 && <div className="inProgress">Ongoing Page</div>}
+        {selectedTab === 2 && <div className="inProgress">Pending Page</div>}
+        {selectedTab === 3 && <div className="inProgress">Past Pages</div>}
+      </div>
 
-          </div>
-
-        </div>
-
-
-
-      </>
-    </div>
+    </>
   );
 };
 export default Vote;
