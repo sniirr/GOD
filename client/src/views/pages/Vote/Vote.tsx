@@ -1,11 +1,16 @@
 import React, { FC } from "react";
-
-
-
-//material-ui styles
 import AddIcon from "@mui/icons-material/Add";
-import { Button, Tabs, Tab } from "@mui/material";
+import { Button, Tabs, Tab, makeStyles } from "@mui/material";
 import VoteCard from "../../components/VoteCard/VoteCard";
+
+
+// const useStyles = makeStyles({
+//   div: {
+//     color: "blue",
+
+//   }
+// });
+
 
 
 const Vote: FC = () => {
@@ -13,6 +18,18 @@ const Vote: FC = () => {
   const hendelTapTab = (event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
   };
+  const myColor = () => {
+    let myColor = "";
+    if (selectedTab === 0) {
+      myColor = "blue";
+    } else if (selectedTab === 1) {
+      myColor = "red";
+    } else {
+      myColor = "green";
+    }
+    return myColor;
+  }
+
   const props = [{
     status: "Draft",
     votes: 0,
@@ -29,8 +46,6 @@ const Vote: FC = () => {
     title: "Inequality During Pandemic",
     questionId: 3
   }]
-
-
 
   return (
     <>
@@ -68,16 +83,21 @@ const Vote: FC = () => {
       </div>
 
       <div className="TabsWrapper">
-        <Tabs value={selectedTab} onChange={hendelTapTab}>
-          <Tab label="My Questions" />
-          <Tab label="Ongoing" />
-          <Tab label="Pending" />
-          <Tab label="Past" />
+        <Tabs  value={selectedTab} onChange={hendelTapTab} TabIndicatorProps={{
+          style: {
+            backgroundColor: "#21DCA2",
+          }
+        }} >
+          <Tab label={<span style={{ color: 'rgb(15,52,79)', textTransform: "none" }}>My Questions</span>} />
+          <Tab label={<span style={{ color: 'rgb(15,52,79)', textTransform: "none" }}>Ongoing</span>} />
+          <Tab label={<span style={{ color: 'rgb(15,52,79)', textTransform: "none" }}>Pending</span>} />
+          <Tab label={<span style={{ color: 'rgb(15,52,79)', textTransform: "none" }}>Past</span>} />
+
         </Tabs>
 
       </div >
       <div className="voteListWrapper">
-        {selectedTab === 0 && <div className="vote-list">
+        {selectedTab === 0 && <div className="voteList">
           {props.map(item => <VoteCard />)}
 
         </div>}
