@@ -1,3 +1,4 @@
+import { AnyTxtRecord } from 'dns';
 import { QuestionSchema } from '../models/db/QuestionModel';
 var ObjectId = require('mongoose').Types.ObjectId;
 const mongoose = require('mongoose');
@@ -17,7 +18,7 @@ export async function createQuestion(req: any, res: any) {
         if (question.questionId) {
             //update
 
-            const response = await Question.find({ _id: new ObjectId(question.questionId) });
+            const response = await Question.findOneAndUpdate({ _id: new ObjectId(question.questionId) }, question);
 
             res.send({ update: true, response })
 
@@ -54,4 +55,13 @@ export async function activateQuestion(req: any, res: any): Promise<void> {
     }
 
 
+}
+
+export async function getAllQuestions(req:any,res:any ):Promise<void>{
+    try {
+        const result = await Question.find({});
+        res.send({result, ok:true});
+    } catch (error) {
+        res.send({ error: error.message });
+    }
 }

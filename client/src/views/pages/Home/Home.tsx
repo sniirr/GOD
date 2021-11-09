@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 //material-ui styles
@@ -8,7 +8,7 @@ import { Button } from "@mui/material";
 const Home: FC = () => {
   const history = useHistory();
 
-
+  
   return (
     <div className="home__page">
       <div className="home__header">
