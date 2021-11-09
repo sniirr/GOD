@@ -13,6 +13,24 @@ const Vote: FC = () => {
   const hendelTapTab = (event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
   };
+  const props = [{
+    status: "Draft",
+    votes: 0,
+    title: "Rainforest global responsibility",
+    questionId: 1
+  }, {
+    status: "Draft",
+    votes: 0,
+    title: "Rainforest global responsibility",
+    questionId: 2
+  }, {
+    status: "Published",
+    votes: 55,
+    title: "Inequality During Pandemic",
+    questionId: 3
+  }]
+
+
 
   return (
     <>
@@ -60,15 +78,12 @@ const Vote: FC = () => {
       </div >
       <div className="voteListWrapper">
         {selectedTab === 0 && <div className="vote-list">
-
-          <VoteCard />
-          <VoteCard />
-          <VoteCard />
+          {props.map(item => <VoteCard />)}
 
         </div>}
-        {selectedTab === 1 && <div>Ongoing</div>}
-        {selectedTab === 2 && <div>Pending</div>}
-        {selectedTab === 3 && <div>Past</div>}
+        {selectedTab === 1 && <div className="inProgress">Ongoing Page</div>}
+        {selectedTab === 2 && <div className="inProgress">Pending Page</div>}
+        {selectedTab === 3 && <div className="inProgress">Past Pages</div>}
       </div>
 
     </>

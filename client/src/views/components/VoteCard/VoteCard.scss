@@ -3,71 +3,59 @@
   grid-template-columns: 3fr 1fr;
   height: 150px;
   width: 400px;
-  background: rgb(204, 146, 58);
   border-radius: 0.5em;
   box-shadow: 0 0.5em 1em -0.5em rgba(0, 0, 0, 0.5);
-  padding: 0;
-  margin: 2em;
+  margin: 1em;
   overflow: hidden;
+  text-align: center;
+  align-items: center;
 
-  .card__info {
+
+  &__info {
     display: flex;
     flex-direction: row;
-    justify-content: center;
     align-items: center;
     height: 100%;
     width: 100%;
-    padding: 0;
-    margin: 0;
+    padding: 5px;
     overflow: hidden;
     background-color: rgb(55, 204, 55);
     color: rgb(255, 255, 255);
-
-
+    font-size: 0.8em;
   }
 
-  .card__image {
+  &__image {
     position: relative;
     height: 100%;
     overflow: hidden;
-
-
-
-
-    .card__status {
-      position: absolute;
-      float: left;
-      font-weight: bold;
-      background-color: rgb(15, 52, 79);
-      text-align: center;
-      border-radius: 15px;
-      height: 20px;
-      width: 100px;
-      box-shadow: 0 0.5em 1em -0.5em rgba(0, 0, 0, 0.5);
-      top: 15px;
-      left: -25px;
-      padding: 5px;
-      color: rgb(255, 255, 255);
-
-    }
-
-    .card__title {
-      position: absolute;
-      float: left;
-      border-radius: 5px;
-      height: 30px;
-      width: 230px;
-      font-size: 1em;
-      background-color: #ffffff;
-      text-align: center;
-      margin: 0;
-      padding: 5px;
-      top: 120px;
-      left: -5px;
-      color: rgb(15, 52, 79);
-      font-weight: bold;
-    }
   }
 
+  &__status {
+    position: absolute;
+    float: left;
+    font-weight: bold;
+    background-color: rgb(15, 52, 79);
+    border-radius: 15px;
+    height: 20px;
+    width: 100px;
+    box-shadow: 0 0.5em 1em -0.5em rgba(0, 0, 0, 0.5);
+    top: 15px;
+    left: -25px;
+    padding: 5px;
+    color: rgb(255, 255, 255);
+  }
 
+  &__title {
+    position: absolute;
+    float: left;
+    border-radius: 5px;
+    height: 30px;
+    width: 230px;
+    background-color: #ffffff;
+    padding: 5px;
+    top: 120px;
+    left: -5px;
+    color: rgb(15, 52, 79);
+    font-weight: bold;
+  }
 }
