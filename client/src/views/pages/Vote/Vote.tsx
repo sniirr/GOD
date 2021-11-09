@@ -107,7 +107,7 @@ const Vote: FC = () => {
       </div >
       <div className="voteListWrapper">
         {selectedTab === 0 && <div className="voteList">
-          {mockGroups.map((item) => <VoteCard info={item} />)}
+          {mockGroups.map((item, i) => <VoteCard key={i} info={item} />)}
 
         </div>}
         {selectedTab === 1 && <div className="inProgress">Ongoing Page</div>}
