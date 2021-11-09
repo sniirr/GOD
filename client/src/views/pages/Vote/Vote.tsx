@@ -1,8 +1,8 @@
-import React, { FC } from "react";
+import React, { FC, useState, useEffect } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import { Button, Tabs, Tab, makeStyles } from "@mui/material";
 import VoteCard from "../../components/VoteCard/VoteCard";
-
+import axios from 'axios';
 
 // const useStyles = makeStyles({
 //   div: {
@@ -38,7 +38,8 @@ const mockGroups:Array<Group> = [{
 
 
 const Vote: FC = () => {
-  const [selectedTab, setSelectedTab] = React.useState(0);
+  const [selectedTab, setSelectedTab] = useState(0);
+  const [questions, setQuestions] =useState([]);
   const hendelTapTab = (event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
   };
@@ -54,6 +55,16 @@ const Vote: FC = () => {
     return myColor;
   }
 
+
+  useEffect(()=>{
+    axios.post('/questions/get-all',{})
+    .then(({data})=>{
+      console.log(data.result);
+      setQuestions(data.result);
+    }).catch(e=>{
+      console.error(e)
+    })
+  },[])
 
 
   return (
@@ -107,7 +118,7 @@ const Vote: FC = () => {
       </div >
       <div className="voteListWrapper">
         {selectedTab === 0 && <div className="voteList">
-          {mockGroups.map((item, i) => <VoteCard key={i} info={item} />)}
+          {questions.map((item, i) => <VoteCard key={i} info={item} />)}
 
         </div>}
         {selectedTab === 1 && <div className="inProgress">Ongoing Page</div>}

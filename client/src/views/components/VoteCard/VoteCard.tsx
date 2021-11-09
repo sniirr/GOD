@@ -1,14 +1,17 @@
 import React, { FC } from "react";
+
 import './VoteCard.scss';
 import HowToVoteIcon from '@mui/icons-material/HowToVote';
 //models
 import { Group } from '../../pages/Vote/Vote'
 
 export interface VoteCardProps {
-  info: Group
+  info: any
 }
 
-function VoteCard (props: VoteCardProps) {
+const VoteCard:FC<VoteCardProps> = (props: VoteCardProps)=> {
+
+
  const {info} = props;
   if (info.status == "Draft") {
     return (
