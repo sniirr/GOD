@@ -12,14 +12,14 @@ import axios from 'axios';
 // });
 
 
-export interface Group{
+export interface Group {
   status: string;
   votes: number;
   title: string;
   questionId: string;
 }
 
-const mockGroups:Array<Group> = [{
+const mockGroups: Array<Group> = [{
   status: "Draft",
   votes: 0,
   title: "Rainforest global responsibility",
@@ -39,7 +39,7 @@ const mockGroups:Array<Group> = [{
 
 const Vote: FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
-  const [questions, setQuestions] =useState([]);
+  const [questions, setQuestions] = useState([]);
   const hendelTapTab = (event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
   };
@@ -56,15 +56,15 @@ const Vote: FC = () => {
   }
 
 
-  useEffect(()=>{
-    axios.post('/questions/get-all',{})
-    .then(({data})=>{
-      console.log(data.result);
-      setQuestions(data.result);
-    }).catch(e=>{
-      console.error(e)
-    })
-  },[])
+  useEffect(() => {
+    axios.post('/questions/get-all', {})
+      .then(({ data }) => {
+        console.log(data.result);
+        setQuestions(data.result);
+      }).catch(e => {
+        console.error(e)
+      })
+  }, [])
 
 
   return (
@@ -103,7 +103,7 @@ const Vote: FC = () => {
       </div>
 
       <div className="TabsWrapper">
-        <Tabs  value={selectedTab} onChange={hendelTapTab} TabIndicatorProps={{
+        <Tabs value={selectedTab} onChange={hendelTapTab} TabIndicatorProps={{
           style: {
             backgroundColor: "#21DCA2",
           }
