@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import { useHistory } from "react-router-dom";
 
 //material-ui styles
@@ -15,7 +15,7 @@ const Home: FC = () => {
         <div className='home__header__logo'>
           <img
             src={process.env.PUBLIC_URL + "/logo.png"}
-            alt="no image"
+            alt="no one"
           ></img>
         </div>
         <div className="home__header__add">
@@ -44,7 +44,7 @@ const Home: FC = () => {
           className="home-img"
           src={process.env.PUBLIC_URL + "/home-image.png"}
           width="100%"
-          alt="no image"
+          alt="no one"
         ></img>
 
         <div className="home__learnMore">

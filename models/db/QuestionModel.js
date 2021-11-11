@@ -20,7 +20,8 @@ exports.QuestionSchema = new Schema({
     last_entered: Date,
     role: String,
     image: Map,
-    active: Boolean
+    active: Boolean,
+    draft: Boolean //draft or publish
 });
 var QuestionModel = mongoose.model('QuestionModel', exports.QuestionSchema);
 exports["default"] = QuestionModel;

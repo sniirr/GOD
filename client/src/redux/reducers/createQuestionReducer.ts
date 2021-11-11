@@ -1,9 +1,13 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import type { RootState } from '../store';
 import { uploadFile } from '../../controlers/assets';
-import {Image} from '../../model/image'
+import { acitvateQuestion } from '../../controlers/questions/questions';
+import { Image } from '../../model/image'
 
-
+export interface ActiveQuestionObject{
+  isActive:boolean;
+  questionId:string;
+}
 
 //thunk for upload image
 export const uploadFileThunk = createAsyncThunk(
@@ -15,6 +19,16 @@ export const uploadFileThunk = createAsyncThunk(
   }
 )
 
+//thunk for activate question
+// export const activateQuestionThunk = createAsyncThunk(
+//   'newQuestion/activateQuestion',
+//   async ( isActivateObj:ActiveQuestionObject) => {
+//     const {isActive, questionId} = isActivateObj;
+//     const isActivateDB = await acitvateQuestion(isActive, questionId);
+//     return isActivateDB;
+//   }
+// )
+
 // Define a type for the slice state
 export interface QuestionSchema {
   questionId: string | boolean;
@@ -24,22 +38,22 @@ export interface QuestionSchema {
   status: string,
   description: string,
   loader: boolean,
-  enableMoveTo2:boolean,
-  enableMoveTo3:boolean,
+  enableMoveTo2: boolean,
+  enableMoveTo3: boolean,
   activate: boolean
 }
 
 // Define the initial state using that type
 const initialState = {
-  questionId:false,
+  questionId: false,
   value: 1,
   title: '',
   description: '',
   image: {},
   status: '',
   loader: false,
-  enableMoveTo2:false,
-  enableMoveTo3:false,
+  enableMoveTo2: false,
+  enableMoveTo3: false,
   activate: false
 } as QuestionSchema;
 
@@ -71,13 +85,13 @@ export const counterSlice = createSlice({
     setImage: (state, action) => {
       state.image = action.payload;
     },
-    setEnableMoveTo2:(state, action)=>{
-      state.enableMoveTo2 =action.payload;
+    setEnableMoveTo2: (state, action) => {
+      state.enableMoveTo2 = action.payload;
     },
-    setEnableMoveTo3:(state, action)=>{
-      state.enableMoveTo3 =action.payload;
+    setEnableMoveTo3: (state, action) => {
+      state.enableMoveTo3 = action.payload;
     },
-    setActivate:(state, action)=>{
+    setActivate: (state, action) => {
       console.log(action)
       state.activate = action.payload;
     }
@@ -98,20 +112,34 @@ export const counterSlice = createSlice({
         state.status = 'failed';
         state.loader = false;
       })
+      // .addCase(activateQuestionThunk.pending, (state:any, action:any)=>{
+      //   state.status = 'pending';
+      //   state.loader = true;
+      // })
+      // .addCase(activateQuestionThunk.fulfilled, (state: any, action: any) => {
+      //   state.image = JSON.parse(action.payload);
+      //   state.status = 'success';
+      //   state.loader = false;
+      // })
+      // .addCase(activateQuestionThunk.rejected, (state: any, action: any) => {
+      //   state.image = action.payload;
+      //   state.status = 'failed';
+      //   state.loader = false;
+      // })
   }
 })
 
-export const { increment, decrement, incrementByAmount,setQuestionId, setTitle, setDescription,setEnableMoveTo2,setEnableMoveTo3,setActivate} = counterSlice.actions
+export const { increment, decrement, incrementByAmount, setQuestionId, setTitle, setDescription, setEnableMoveTo2, setEnableMoveTo3, setActivate } = counterSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectQuestion = (state:RootState) => state.counter
+export const selectQuestion = (state: RootState) => state.counter
 export const selectCount = (state: RootState) => state.counter.value;
 export const selectTitle = (state: RootState) => state.counter.title;
 export const selectDescription = (state: RootState) => state.counter.description;
 export const selectLoader = (state: RootState) => state.counter.loader;
 export const selectImage = (state: RootState) => state.counter.image;
-export const selectEnableMoveTo2 = (state:RootState)=> state.counter.enableMoveTo2;
-export const selectEnableMoveTo3 = (state:RootState)=> state.counter.enableMoveTo3;
-export const selectQuestionId = (state:RootState) => state.counter.questionId;
+export const selectEnableMoveTo2 = (state: RootState) => state.counter.enableMoveTo2;
+export const selectEnableMoveTo3 = (state: RootState) => state.counter.enableMoveTo3;
+export const selectQuestionId = (state: RootState) => state.counter.questionId;
 
 export default counterSlice.reducer
