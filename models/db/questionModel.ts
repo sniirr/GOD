@@ -23,7 +23,8 @@ export const QuestionSchema = new Schema({
     last_entered: Date,
     role:String,
     image:Map,
-    active:Boolean
+    active:Boolean, //ongoing or past
+    draft:Boolean  //draft or publish
 });
 
 const QuestionModel = mongoose.model('QuestionModel', QuestionSchema);

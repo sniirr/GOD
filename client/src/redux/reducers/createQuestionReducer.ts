@@ -20,14 +20,14 @@ export const uploadFileThunk = createAsyncThunk(
 )
 
 //thunk for activate question
-export const activateQuestionThunk = createAsyncThunk(
-  'newQuestion/activateQuestion',
-  async ( isActivateObj:ActiveQuestionObject) => {
-    const {isActive, questionId} = isActivateObj;
-    const isActivateDB = await acitvateQuestion(isActive, questionId);
-    return isActivateDB;
-  }
-)
+// export const activateQuestionThunk = createAsyncThunk(
+//   'newQuestion/activateQuestion',
+//   async ( isActivateObj:ActiveQuestionObject) => {
+//     const {isActive, questionId} = isActivateObj;
+//     const isActivateDB = await acitvateQuestion(isActive, questionId);
+//     return isActivateDB;
+//   }
+// )
 
 // Define a type for the slice state
 export interface QuestionSchema {
@@ -112,20 +112,20 @@ export const counterSlice = createSlice({
         state.status = 'failed';
         state.loader = false;
       })
-      .addCase(activateQuestionThunk.pending, (state:any, action:any)=>{
-        state.status = 'pending';
-        state.loader = true;
-      })
-      .addCase(activateQuestionThunk.fulfilled, (state: any, action: any) => {
-        state.image = JSON.parse(action.payload);
-        state.status = 'success';
-        state.loader = false;
-      })
-      .addCase(activateQuestionThunk.rejected, (state: any, action: any) => {
-        state.image = action.payload;
-        state.status = 'failed';
-        state.loader = false;
-      })
+      // .addCase(activateQuestionThunk.pending, (state:any, action:any)=>{
+      //   state.status = 'pending';
+      //   state.loader = true;
+      // })
+      // .addCase(activateQuestionThunk.fulfilled, (state: any, action: any) => {
+      //   state.image = JSON.parse(action.payload);
+      //   state.status = 'success';
+      //   state.loader = false;
+      // })
+      // .addCase(activateQuestionThunk.rejected, (state: any, action: any) => {
+      //   state.image = action.payload;
+      //   state.status = 'failed';
+      //   state.loader = false;
+      // })
   }
 })
 

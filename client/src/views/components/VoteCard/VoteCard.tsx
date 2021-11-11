@@ -11,14 +11,16 @@ export interface VoteCardProps {
 const VoteCard: FC<VoteCardProps> = (props: VoteCardProps) => {
   const { info } = props;
 
+  console.log(info)
+
   return (
     <div className="card">
-      <div className="card__image">
+      <div className="card__image" style={{backgroundImage:`url(${info.image.secure_url}`}}>
         <div className="card__title"> {info.status}The Place for The Title </div>
-        <div className="card__status"> {info.status} Draft  </div>
-        <img src={process.env.PUBLIC_URL + "https://picsum.photos/350/200"} alt="aaa"></img>
+        <div className="card__status"> {info.active ? "Published" : "Draft"}   </div>
+       
       </div>
-      {info.status === true ?
+      {!info.active ?
         <div className="card__edit">
           Back to Edit
         </div>
