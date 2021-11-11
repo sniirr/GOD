@@ -95,7 +95,7 @@
     background-color: rgb(15, 52, 79);
     border-radius: 15px;
     height: 20px;
-    width: 100px;
+    width: 110px;
     box-shadow: 0 0.5em 1em -0.5em rgba(0, 0, 0, 0.5);
     top: 15px;
     left: -25px;
@@ -114,10 +114,13 @@
     height: 30px;
     width: 230px;
     background-color: #ffffff;
-    padding: 5px;
-    top: 120px;
+    top: 123px;
     left: -5px;
     color: rgb(15, 52, 79);
     font-weight: bold;
+    text-align: start;
+    padding: 0px 5px 5px 15px;
+
+
   }
 }
