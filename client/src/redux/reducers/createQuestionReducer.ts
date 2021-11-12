@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import type { RootState } from '../store';
 import { uploadFile } from '../../controlers/assets';
-import { activateQuestion,getAllQuestions } from '../../controlers/questions/questions';
+import { activateQuestion } from '../../controlers/questions/questions';
 import { Image } from '../../model/image'
 
 export interface ActiveQuestionObject{
@@ -43,9 +43,7 @@ export interface QuestionSchema {
   loader: boolean,
   enableMoveTo2: boolean,
   enableMoveTo3: boolean,
-  activate: boolean,
-  questionsLoder:boolean,
-  questions:[]
+  activate: boolean
 }
 
 // Define the initial state using that type
@@ -59,9 +57,7 @@ const initialState = {
   loader: false,
   enableMoveTo2: false,
   enableMoveTo3: false,
-  activate: false,
-  questionsLoder:false,
-  questions:[]
+  activate: false
 } as QuestionSchema;
 
 export const questionsSlice = createSlice({
@@ -139,15 +135,15 @@ export const questionsSlice = createSlice({
 export const { increment, decrement, incrementByAmount, setQuestionId, setTitle, setDescription, setEnableMoveTo2, setEnableMoveTo3, setActivate } = questionsSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectQuestion = (state: RootState) => state.questions
-export const selectCount = (state: RootState) => state.questions.value;
-export const selectTitle = (state: RootState) => state.questions.title;
-export const selectDescription = (state: RootState) => state.questions.description;
-export const selectLoader = (state: RootState) => state.questions.loader;
-export const selectImage = (state: RootState) => state.questions.image;
-export const selectEnableMoveTo2 = (state: RootState) => state.questions.enableMoveTo2;
-export const selectEnableMoveTo3 = (state: RootState) => state.questions.enableMoveTo3;
-export const selectQuestionId = (state: RootState) => state.questions.questionId;
+export const selectQuestion = (state: RootState) => state.newQuestion
+export const selectCount = (state: RootState) => state.newQuestion.value;
+export const selectTitle = (state: RootState) => state.newQuestion.title;
+export const selectDescription = (state: RootState) => state.newQuestion.description;
+export const selectLoader = (state: RootState) => state.newQuestion.loader;
+export const selectImage = (state: RootState) => state.newQuestion.image;
+export const selectEnableMoveTo2 = (state: RootState) => state.newQuestion.enableMoveTo2;
+export const selectEnableMoveTo3 = (state: RootState) => state.newQuestion.enableMoveTo3;
+export const selectQuestionId = (state: RootState) => state.newQuestion.questionId;
 
 
 export default questionsSlice.reducer

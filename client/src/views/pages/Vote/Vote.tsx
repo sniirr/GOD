@@ -33,8 +33,9 @@ const Vote: FC = () => {
   };
 
   useEffect(() => {
+   
     dispatch(getQuestionsThunk());
-  }, [])
+  }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
 
   return (

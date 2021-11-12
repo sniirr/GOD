@@ -1,24 +1,26 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import type { RootState } from '../store';
-import { uploadFile } from '../../controlers/assets';
-import { activateQuestion, getAllQuestions } from '../../controlers/questions/questions';
-import { Image } from '../../model/image';
-
-import {QuestionSchema} from './createQuestionReducer';
+import { getAllQuestions } from '../../controlers/questions/questions';
 
 export const getQuestionsThunk = createAsyncThunk(
-    'newQuestion/getQuestions',
+    'questions/getQuestions',
     async (thunkAPI) => {
         const questions = await getAllQuestions();
         return questions
     }
 )
 
+interface QuestionsSchema {
+     
+    questionsLoder:boolean,
+    questions:[]
+}
+
 const initialState = {
    
     questionsLoder:false,
     questions:[]
-  } as QuestionSchema;
+  } as QuestionsSchema;
 
   export const questionsSlice = createSlice({
     name: 'questions',
