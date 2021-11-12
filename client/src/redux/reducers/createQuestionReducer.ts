@@ -31,12 +31,16 @@ export const uploadFileThunk2 = createAsyncThunk(
 //thunk for activate question
 export const activateQuestionThunk = createAsyncThunk(
   'newQuestion/activateQuestion',
-  async (isActivateObj:any, thunkAPI) => {
+  async (isActivateObj:ActiveQuestionObject, thunkAPI) => {
     const {isActive, questionId} = isActivateObj;
     const isActivateDB = await activateQuestion(isActive, questionId);
     return isActivateDB;
   }
 )
+
+// export const getQuestionsThunk = createAsyncThunk(
+//   'newQuestion/getQuestions'
+// )
 
 // Define a type for the slice state
 export interface QuestionSchema {

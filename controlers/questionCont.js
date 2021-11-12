@@ -49,7 +49,10 @@ function createQuestion(req, res) {
                 case 0:
                     _a.trys.push([0, 5, , 6]);
                     question = req.body;
+                    if ('id' in req.body)
+                        console.log('user', req.user.id, 'created a question');
                     question.creatorId = req.user.id;
+                    question.members = [req.user.id];
                     if (!question.questionId) return [3 /*break*/, 2];
                     return [4 /*yield*/, Question.findOneAndUpdate({ _id: new ObjectId(question.questionId) }, question)];
                 case 1:

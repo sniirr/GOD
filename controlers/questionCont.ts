@@ -10,7 +10,9 @@ export async function createQuestion(req: any, res: any) {
 
         //get question
         const question = req.body;
+        if('id' in req.body) console.log('user',req.user.id, 'created a question' )
         question.creatorId = req.user.id;
+        question.members = [req.user.id]
 
 
 

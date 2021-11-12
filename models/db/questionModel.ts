@@ -17,7 +17,7 @@ export const QuestionSchema = new Schema({
     description: String,
     files: [FileSchema],
     coverImage: String,
-    members:[UserSchema],
+    members:[String],
     creatorId:String,
     admins:[UserSchema],
     last_entered: Date,

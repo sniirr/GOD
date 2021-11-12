@@ -14,7 +14,7 @@ exports.QuestionSchema = new Schema({
     description: String,
     files: [FileSchema],
     coverImage: String,
-    members: [UserModel_1.UserSchema],
+    members: [String],
     creatorId: String,
     admins: [UserModel_1.UserSchema],
     last_entered: Date,
