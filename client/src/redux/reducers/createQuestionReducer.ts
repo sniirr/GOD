@@ -19,14 +19,6 @@ export const uploadFileThunk = createAsyncThunk(
   }
 )
 
-export const uploadFileThunk2 = createAsyncThunk(
-  'newQuestion/uploadQuestion',
-  async (file: File, thunkAPI) => {
-    console.log(file);
-    const fileData = await uploadFile(file);
-    return fileData;
-  }
-)
 
 //thunk for activate question
 export const activateQuestionThunk = createAsyncThunk(
@@ -58,7 +50,7 @@ export interface QuestionSchema {
   enableMoveTo2: boolean,
   enableMoveTo3: boolean,
   activate: boolean,
-  questionLoder:boolean,
+  questionsLoder:boolean,
   questions:[]
 }
 
@@ -71,10 +63,10 @@ const initialState = {
   image: {},
   status: '',
   loader: false,
-  questionLoder:false,
   enableMoveTo2: false,
   enableMoveTo3: false,
   activate: false,
+  questionsLoder:false,
   questions:[]
 } as QuestionSchema;
 
@@ -173,5 +165,6 @@ export const selectImage = (state: RootState) => state.counter.image;
 export const selectEnableMoveTo2 = (state: RootState) => state.counter.enableMoveTo2;
 export const selectEnableMoveTo3 = (state: RootState) => state.counter.enableMoveTo3;
 export const selectQuestionId = (state: RootState) => state.counter.questionId;
+export const allQuestions = (state: RootState) => state.counter.questions
 
 export default counterSlice.reducer

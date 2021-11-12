@@ -2,7 +2,11 @@ import React, { FC, useState, useEffect } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import { Button, Tabs, Tab } from "@mui/material";
 import VoteCard from "../../components/VoteCard/VoteCard";
-import axios from 'axios';
+
+
+//redux
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { getQuestionsThunk,allQuestions} from '../../../redux/reducers/createQuestionReducer';
 
 // const useStyles = makeStyles({
 //   div: {
@@ -20,14 +24,16 @@ export interface Group {
 }
 
 const Vote: FC = () => {
+  const dispatch = useAppDispatch();
+
   const [selectedTab, setSelectedTab] = useState(0);
-  const [questions, setQuestions] = useState([]);
+  const questions = useAppSelector(allQuestions)
   const hendelTapTab = (event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
   };
 
   useEffect(() => {
-   
+    dispatch(getQuestionsThunk());
   }, [])
 
 
@@ -82,8 +88,8 @@ const Vote: FC = () => {
 
       </div >
       <div className="voteListWrapper">
-        
-          {questions.map((item, i) => <VoteCard key={i} info={item} />)}
+
+        {questions.map((item, i) => <VoteCard key={i} info={item} />)}
         {/* {selectedTab === 1>Ongoing Page</div>}
         {selectedTab === 2 && <div className="inProgress">Pending Page</div>}
          {selectedTab === 3 && <div className="inProgress">Past Pages</div>} */}
