@@ -13,18 +13,19 @@ export const getQuestionsThunk = createAsyncThunk(
 interface QuestionsSchema {
      
     questionsLoder:boolean,
-    questions:[]
+    questions:[],
+    error:boolean | string
 }
 
 const initialState = {
    
     questionsLoder:false,
-    questions:[]
+    questions:[],
+    error:false
   } as QuestionsSchema;
 
   export const questionsSlice = createSlice({
     name: 'questions',
-    // `createSlice` will infer the state type from the `initialState` argument
     initialState,
     reducers: {
 
@@ -32,14 +33,14 @@ const initialState = {
     extraReducers: builder => {
       builder
         .addCase(getQuestionsThunk.pending, (state:any, action:any)=>{
-          state.loadingQuestions = true;
+          state.questionsLoder = true;
         })
         .addCase(getQuestionsThunk.fulfilled, (state:any, action:any)=>{
           state.questions = action.payload;
-          state.loadingQuestions = false;
+          state.questionsLoder = false;
         })
         .addCase(getQuestionsThunk.rejected, (state:any, action:any)=>{
-          state.loadingQuestions = false;
+          state.questionsLoder = false;
           state.error = action.payload;
         })
     }
