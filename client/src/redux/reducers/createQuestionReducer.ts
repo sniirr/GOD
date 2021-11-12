@@ -30,13 +30,7 @@ export const activateQuestionThunk = createAsyncThunk(
   }
 )
 
-export const getQuestionsThunk = createAsyncThunk(
-  'newQuestion/getQuestions',
-  async(thunkAPI)=>{
-    const questions = await getAllQuestions();
-    return questions
-  }
-)
+
 
 // Define a type for the slice state
 export interface QuestionSchema {
@@ -70,7 +64,7 @@ const initialState = {
   questions:[]
 } as QuestionSchema;
 
-export const counterSlice = createSlice({
+export const questionsSlice = createSlice({
   name: 'newQuestion',
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
@@ -139,32 +133,21 @@ export const counterSlice = createSlice({
         state.status = 'failed';
         state.loader = false;
       })
-      .addCase(getQuestionsThunk.pending, (state:any, action:any)=>{
-        state.loadingQuestions = true;
-      })
-      .addCase(getQuestionsThunk.fulfilled, (state:any, action:any)=>{
-        state.questions = action.payload;
-        state.loadingQuestions = false;
-      })
-      .addCase(getQuestionsThunk.rejected, (state:any, action:any)=>{
-        state.loadingQuestions = false;
-        state.error = action.payload;
-      })
   }
 })
 
-export const { increment, decrement, incrementByAmount, setQuestionId, setTitle, setDescription, setEnableMoveTo2, setEnableMoveTo3, setActivate } = counterSlice.actions
+export const { increment, decrement, incrementByAmount, setQuestionId, setTitle, setDescription, setEnableMoveTo2, setEnableMoveTo3, setActivate } = questionsSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectQuestion = (state: RootState) => state.counter
-export const selectCount = (state: RootState) => state.counter.value;
-export const selectTitle = (state: RootState) => state.counter.title;
-export const selectDescription = (state: RootState) => state.counter.description;
-export const selectLoader = (state: RootState) => state.counter.loader;
-export const selectImage = (state: RootState) => state.counter.image;
-export const selectEnableMoveTo2 = (state: RootState) => state.counter.enableMoveTo2;
-export const selectEnableMoveTo3 = (state: RootState) => state.counter.enableMoveTo3;
-export const selectQuestionId = (state: RootState) => state.counter.questionId;
-export const allQuestions = (state: RootState) => state.counter.questions
+export const selectQuestion = (state: RootState) => state.questions
+export const selectCount = (state: RootState) => state.questions.value;
+export const selectTitle = (state: RootState) => state.questions.title;
+export const selectDescription = (state: RootState) => state.questions.description;
+export const selectLoader = (state: RootState) => state.questions.loader;
+export const selectImage = (state: RootState) => state.questions.image;
+export const selectEnableMoveTo2 = (state: RootState) => state.questions.enableMoveTo2;
+export const selectEnableMoveTo3 = (state: RootState) => state.questions.enableMoveTo3;
+export const selectQuestionId = (state: RootState) => state.questions.questionId;
 
-export default counterSlice.reducer
+
+export default questionsSlice.reducer

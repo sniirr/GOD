@@ -6,7 +6,7 @@ import VoteCard from "../../components/VoteCard/VoteCard";
 
 //redux
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { getQuestionsThunk,allQuestions} from '../../../redux/reducers/createQuestionReducer';
+import { getQuestionsThunk,allQuestions} from '../../../redux/reducers/questionsReducers';
 
 // const useStyles = makeStyles({
 //   div: {

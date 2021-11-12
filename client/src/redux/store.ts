@@ -1,10 +1,12 @@
 import {ThunkAction, configureStore,Action } from '@reduxjs/toolkit';
-import counterSlice from './reducers/createQuestionReducer'
+import newQuestionSlice from './reducers/createQuestionReducer';
+import questionsSlice from './reducers/questionsReducers';
 
 const store = configureStore({
   reducer: {
   
-    counter:counterSlice
+    newQuestion:newQuestionSlice,
+    questions:questionsSlice
   },
 })
 
