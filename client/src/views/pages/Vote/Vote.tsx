@@ -1,15 +1,8 @@
 import React, { FC, useState, useEffect } from "react";
-import AddIcon from "@mui/icons-material/Add";
-import { Button, Tabs, Tab } from "@mui/material";
+import { Tabs, Tab } from "@mui/material";
 import VoteCard from "../../components/VoteCard/VoteCard";
 import axios from 'axios';
-
-// const useStyles = makeStyles({
-//   div: {
-//     color: "blue",
-
-//   }
-// });
+import Buttons from "../../components/Buttons/Buttons";
 
 
 export interface Group {
@@ -39,39 +32,7 @@ const Vote: FC = () => {
 
   return (
     <>
-      <div className="buttons">
-        <img
-          className="logo"
-          src={process.env.PUBLIC_URL + "/logo.png"}
-          alt="logo"
-
-        ></img>
-
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <Button
-            variant="contained"
-            style={{
-              borderRadius: 10,
-              backgroundColor: "rgb(204 146 58)",
-              textTransform: "capitalize",
-              fontFamily: "sans-serif",
-              height: "1.5em",
-              marginRight: "1em",
-              fontSize: "0.8em",
-              paddingTop: "0.7em",
-              letterSpacing: "0",
-              width: "6em",
-            }}
-            startIcon={
-              <AddIcon
-                style={{ fontSize: "1.2em", padding: "0 0 0.1em 0.5em" }}
-              />
-            }
-          >
-            Create
-          </Button>
-        </div>
-      </div>
+      <Buttons />
 
       <div className="TabsWrapper">
         <Tabs value={selectedTab} onChange={hendelTapTab} TabIndicatorProps={{

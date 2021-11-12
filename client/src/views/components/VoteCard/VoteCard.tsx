@@ -15,10 +15,10 @@ const VoteCard: FC<VoteCardProps> = (props: VoteCardProps) => {
 
   return (
     <div className="card">
-      <div className="card__image" style={{backgroundImage:`url(${info.image.secure_url}`}}>
+      <div className="card__image" style={{ backgroundImage: `url(${info.image.secure_url}` }}>
         <div className="card__title"> {info.status}The Place for The Title </div>
         <div className="card__status"> {info.active ? "Published" : "Draft"}   </div>
-       
+
       </div>
       {!info.active ?
         <div className="card__edit">
@@ -33,9 +33,7 @@ const VoteCard: FC<VoteCardProps> = (props: VoteCardProps) => {
               <HowToVoteIcon style={{ margin: "0 auto" }} />
             </i>
 
-            <div className="card__info__voteCount__number">
-              {info.__v}
-            </div>
+            <div>{info.__v}</div>
 
           </div>
           <div className="card__info__shere">Shere</div>

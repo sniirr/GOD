@@ -4,7 +4,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  // Link
 } from "react-router-dom";
 import { Provider } from 'react-redux';
 import store from './redux/store';
@@ -37,7 +37,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <Router>
           <div>
-            <nav>
+            {/* <nav>
               <ul>
                 <li>
                   <Link to="/">Home</Link>
@@ -50,7 +50,7 @@ function App() {
                 </li>
 
               </ul>
-            </nav>
+            </nav> */}
 
             {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import type { RootState } from '../store';
 import { uploadFile } from '../../controlers/assets';
-import { acitvateQuestion } from '../../controlers/questions/questions';
+// import { acitvateQuestion } from '../../controlers/questions/questions';
 import { Image } from '../../model/image'
 
 export interface ActiveQuestionObject{
