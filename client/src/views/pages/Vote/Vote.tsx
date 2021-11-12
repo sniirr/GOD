@@ -27,13 +27,7 @@ const Vote: FC = () => {
   };
 
   useEffect(() => {
-    axios.post('/questions/get-all', {})
-      .then(({ data }) => {
-        console.log(data.result);
-        setQuestions(data.result);
-      }).catch(e => {
-        console.error(e)
-      })
+   
   }, [])
 
 
@@ -88,13 +82,11 @@ const Vote: FC = () => {
 
       </div >
       <div className="voteListWrapper">
-        {selectedTab === 0 && <div className="voteList">
+        
           {questions.map((item, i) => <VoteCard key={i} info={item} />)}
-
-        </div>}
-        {selectedTab === 1 && <div className="inProgress">Ongoing Page</div>}
+        {/* {selectedTab === 1>Ongoing Page</div>}
         {selectedTab === 2 && <div className="inProgress">Pending Page</div>}
-        {selectedTab === 3 && <div className="inProgress">Past Pages</div>}
+         {selectedTab === 3 && <div className="inProgress">Past Pages</div>} */}
       </div>
 
     </>

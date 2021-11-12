@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import type { RootState } from '../store';
 import { uploadFile } from '../../controlers/assets';
-import { activateQuestion } from '../../controlers/questions/questions';
+import { activateQuestion,getAllQuestions } from '../../controlers/questions/questions';
 import { Image } from '../../model/image'
 
 export interface ActiveQuestionObject{
@@ -38,9 +38,13 @@ export const activateQuestionThunk = createAsyncThunk(
   }
 )
 
-// export const getQuestionsThunk = createAsyncThunk(
-//   'newQuestion/getQuestions'
-// )
+export const getQuestionsThunk = createAsyncThunk(
+  'newQuestion/getQuestions',
+  async(thunkAPI)=>{
+    const questions = await getAllQuestions();
+    return questions
+  }
+)
 
 // Define a type for the slice state
 export interface QuestionSchema {
@@ -53,7 +57,9 @@ export interface QuestionSchema {
   loader: boolean,
   enableMoveTo2: boolean,
   enableMoveTo3: boolean,
-  activate: boolean
+  activate: boolean,
+  questionLoder:boolean,
+  questions:[]
 }
 
 // Define the initial state using that type
@@ -65,9 +71,11 @@ const initialState = {
   image: {},
   status: '',
   loader: false,
+  questionLoder:false,
   enableMoveTo2: false,
   enableMoveTo3: false,
-  activate: false
+  activate: false,
+  questions:[]
 } as QuestionSchema;
 
 export const counterSlice = createSlice({
@@ -138,6 +146,17 @@ export const counterSlice = createSlice({
         state.image = action.payload;
         state.status = 'failed';
         state.loader = false;
+      })
+      .addCase(getQuestionsThunk.pending, (state:any, action:any)=>{
+        state.loadingQuestions = true;
+      })
+      .addCase(getQuestionsThunk.fulfilled, (state:any, action:any)=>{
+        state.questions = action.payload;
+        state.loadingQuestions = false;
+      })
+      .addCase(getQuestionsThunk.rejected, (state:any, action:any)=>{
+        state.loadingQuestions = false;
+        state.error = action.payload;
       })
   }
 })

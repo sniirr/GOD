@@ -37,3 +37,18 @@ export async function createUpdateQuestion(title: string, description: string, i
 
 
 }
+
+export function getAllQuestions(){
+    return new Promise((resolve, reject)=>{
+        axios.post('/questions/get-all', {})
+        .then(({ data }) => {
+          console.log(data)
+          console.log(data.result);
+          if(Array.isArray(data.result)) resolve(data.result);
+          else reject()
+        }).catch(e => {
+          console.error(e)
+          reject();
+        })
+    })
+}

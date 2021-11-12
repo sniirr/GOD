@@ -49,8 +49,6 @@ function createQuestion(req, res) {
                 case 0:
                     _a.trys.push([0, 5, , 6]);
                     question = req.body;
-                    if ('id' in req.body)
-                        console.log('user', req.user.id, 'created a question');
                     question.creatorId = req.user.id;
                     question.members = [req.user.id];
                     if (!question.questionId) return [3 /*break*/, 2];
@@ -108,14 +106,23 @@ function activateQuestion(req, res) {
 exports.activateQuestion = activateQuestion;
 function getAllQuestions(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var result, error_3;
+        var userId, result, i, error_3;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, Question.find({})];
+                    if (!{}.hasOwnProperty.call(req, 'user'))
+                        throw new Error('No user in request');
+                    userId = req.user.id;
+                    return [4 /*yield*/, Question.find({
+                            members: userId
+                        })];
                 case 1:
                     result = _a.sent();
+                    for (i in result) {
+                        result[i].members = [req.user.id];
+                        result[i].admins = [];
+                    }
                     res.send({ result: result, ok: true });
                     return [3 /*break*/, 3];
                 case 2:
