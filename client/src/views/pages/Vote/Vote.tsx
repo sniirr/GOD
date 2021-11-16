@@ -27,11 +27,13 @@ const Vote: FC = () => {
       <Buttons />
 
       <div className="TabsWrapper">
-        <Tabs value={selectedTab} onChange={hendelTapTab} TabIndicatorProps={{
-          style: {
-            backgroundColor: "#21DCA2",
-          }
-        }} >
+        <Tabs variant="scrollable" scrollButtons="auto"
+          value={selectedTab} onChange={hendelTapTab} TabIndicatorProps={{
+            style: {
+              backgroundColor: "#21DCA2",
+
+            }
+          }} >
           <Tab label={<span style={{ color: 'rgb(15,52,79)', textTransform: "none" }}>My Questions</span>} />
           <Tab label={<span style={{ color: 'rgb(15,52,79)', textTransform: "none" }}>Ongoing</span>} />
           <Tab label={<span style={{ color: 'rgb(15,52,79)', textTransform: "none" }}>Pending</span>} />
