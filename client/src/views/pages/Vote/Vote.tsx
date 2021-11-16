@@ -4,14 +4,6 @@ import VoteCard from "../../components/VoteCard/VoteCard";
 import axios from 'axios';
 import Buttons from "../../components/Buttons/Buttons";
 
-
-export interface Group {
-  status: string;
-  votes: number;
-  title: string;
-  questionId: string;
-}
-
 const Vote: FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [questions, setQuestions] = useState([]);
@@ -49,13 +41,21 @@ const Vote: FC = () => {
 
       </div >
       <div className="voteListWrapper">
+
         {selectedTab === 0 && <div className="voteList">
           {questions.map((item, i) => <VoteCard key={i} info={item} />)}
-
         </div>}
-        {selectedTab === 1 && <div className="inProgress">Ongoing Page</div>}
+
+        {selectedTab === 1 && <div className="voteList">
+          {questions.filter((item: any) => item.active).map((item, i) => <VoteCard key={i} info={item} />)}
+        </div>}
+
         {selectedTab === 2 && <div className="inProgress">Pending Page</div>}
-        {selectedTab === 3 && <div className="inProgress">Past Pages</div>}
+
+        {selectedTab === 3 && <div className="voteList">
+          {questions.filter((item: any) => !item.active).map((item, i) => <VoteCard key={i} info={item} />)}
+        </div>}
+
       </div>
 
     </>
