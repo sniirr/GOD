@@ -22,10 +22,10 @@ import { handleSecret, handleLogout } from './controlers/user/user';
 import Login from './views/pages/Login/Login';
 import CreateQuestion from './views/pages/CreateQuestion/CreateQuestion';
 import Home from './views/pages/Home/Home';
-
+import CardView from './views/pages/CardView/CardView';
+import Discussion from './views/pages/CardView/Discussion/Discussion';
 
 import { theme } from './style/Theme';
-// import Home from './views/pages/Home/Home';
 import ButtonAppBar from './views/components/ButtonAppBar/ButtonAppBar';
 import Vote from './views/pages/Vote/Vote';
 
@@ -60,6 +60,12 @@ function App() {
               </Route>
               <Route path='/vote'>
                 <Vote />
+              </Route>
+              <Route path='/card_view'>
+                <CardView />
+              </Route>
+              <Route path='/discussion'>
+                <Discussion />
               </Route>
               <Route path='/create_question'>
                 <CreateQuestion />
