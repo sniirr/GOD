@@ -1,6 +1,7 @@
 import React, { FC } from "react";
+import { useHistory } from "react-router-dom";
 
-import './VoteCard.scss';
+import './QuestionCard.scss';
 import HowToVoteIcon from '@mui/icons-material/HowToVote';
 //models
 
@@ -11,11 +12,17 @@ export interface VoteCardProps {
 const VoteCard: FC<VoteCardProps> = (props: VoteCardProps) => {
   const { info } = props;
 
-  console.log(info)
+  const history = useHistory();
+
+  function handleRedirect(question:any) {
+    console.log(question)
+    history.push(`/question/${info._id}`)
+  }
 
   return (
     <div className="card">
-      <div className="card__image" style={{ backgroundImage: `url(${info.image.secure_url}` }}>
+      <div className="card__image" style={{ backgroundImage: `url(${info.image.secure_url}` }}
+        onClick={() => handleRedirect(info)}>
         <div className="card__title"> {info.title} </div>
         <div className="card__status"> {info.active ? "Published" : "Draft"}   </div>
 

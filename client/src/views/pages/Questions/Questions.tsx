@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from "react";
 import { Tabs, Tab } from "@mui/material";
-import VoteCard from "../../components/VoteCard/VoteCard";
+import VoteCard from "../../components/QuestionCard/QuestionCard";
 import axios from 'axios';
 import Buttons from "../../components/Header/Header";
 
