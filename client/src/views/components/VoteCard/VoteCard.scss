@@ -2,27 +2,23 @@
   display: grid;
   grid-template-columns: 3fr 1fr;
   height: 150px;
-  width: 400px;
+  width: 40%;
+  min-width: 300px;
   border-radius: 0.5em;
   box-shadow: -1px 0em 1em 0em rgba(0, 0, 0, 0.5);
   margin: 1em;
   overflow: hidden;
   text-align: center;
   align-items: center;
+  color: rgb(255, 255, 255);
+
 
   &__edit {
     display: grid;
-    grid-template-rows: 1fr;
     align-items: center;
-    justify-items: center;
     height: 100%;
-    width: 100%;
-    overflow: hidden;
     background-color: rgb(204, 146, 58);
-    color: rgb(255, 255, 255);
-    font-size: 0.8em;
   }
-
 
   &__info {
     display: grid;
@@ -32,12 +28,6 @@
     width: 100%;
     overflow: hidden;
     background-color: rgb(204, 146, 58);
-    color: rgb(255, 255, 255);
-    font-size: 0.8em;
-
-
-
-
 
     &__votes {
       background-color: rgb(255, 255, 255);
@@ -49,19 +39,10 @@
       align-items: center;
       gap: 0.5em;
 
-      &__number {
-        font-size: 1.5em;
-        font-weight: bold;
-        margin-right: 0.5em;
-        margin: 6px;
-
-      }
-
       &__icon {
         font-size: 1.5em;
         margin-right: 0.5em;
         margin: 6px;
-
       }
     }
 
@@ -70,9 +51,7 @@
       height: 100%;
       display: grid;
       align-items: center;
-
     }
-
 
     &__views {
       background-color: rgb(57, 182, 250);
@@ -85,9 +64,7 @@
   &__image {
     position: relative;
     height: 100%;
-    overflow: hidden;
-    background-size:cover;
-   
+    background-size: cover;
   }
 
   &__status {
@@ -95,34 +72,23 @@
     float: left;
     font-weight: bold;
     background-color: rgb(15, 52, 79);
-    border-radius: 15px;
-    height: 20px;
-    width: 110px;
+    border-radius: 0px 15px 15px 0px;
     box-shadow: 0 0.5em 1em -0.5em rgba(0, 0, 0, 0.5);
     top: 15px;
-    left: -25px;
-    padding: 5px 15px 5px 5px;
-    color: rgb(255, 255, 255);
+    padding: 5px 20px 5px 20px;
     display: grid;
-    align-items: center;
-    text-align: end;
     font-size: 0.9em;
   }
 
   &__title {
     position: absolute;
     float: left;
-    border-radius: 5px;
-    height: 30px;
-    width: 230px;
+    border-radius: 0px 5px 0px 0px;
     background-color: #ffffff;
-    top: 123px;
-    left: -5px;
+    top: 81%;
     color: rgb(15, 52, 79);
     font-weight: bold;
     text-align: start;
-    padding: 0px 5px 5px 15px;
-
-
+    padding: 5px 5px 5px 5px;
   }
 }

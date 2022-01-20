@@ -1,11 +1,14 @@
+
+
 .TabsWrapper {
   display: flex;
   justify-content: center;
 }
 
 .voteListWrapper {
-  height: 60vh;
-  overflow: scroll;
+  height: 73vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
   align-items: center;
 
   .voteList {
