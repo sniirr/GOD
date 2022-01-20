@@ -27,7 +27,7 @@ import Discussion from './views/pages/CardView/Discussion/Discussion';
 import Notifications from './views/pages/Notifications/Notifications';
 import { theme } from './style/Theme';
 import ButtonAppBar from './views/components/ButtonAppBar/ButtonAppBar';
-import Vote from './views/pages/Vote/Vote';
+import Vote from './views/pages/Questions/Questions';
 
 
 
