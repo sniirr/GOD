@@ -61,7 +61,7 @@ app.get('/google/callback', passport.authenticate('google', {
         }
 
         res.cookie('user', userJWT, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 2 })
-        res.redirect('http://localhost:3000/ready')
+        res.redirect('http://localhost:3000/vote')
     } catch (err) {
         res.status(500).send(err.message);
     }

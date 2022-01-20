@@ -15,8 +15,8 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import Button from '@mui/material/Button';
-import { handleSecret, handleLogout } from './controlers/user/user';
+
+
 
 //components
 import Login from './views/pages/Login/Login';
@@ -24,7 +24,7 @@ import CreateQuestion from './views/pages/CreateQuestion/CreateQuestion';
 import Home from './views/pages/Home/Home';
 import CardView from './views/pages/CardView/CardView';
 import Discussion from './views/pages/CardView/Discussion/Discussion';
-
+import Notifications from './views/pages/Notifications/Notifications';
 import { theme } from './style/Theme';
 import ButtonAppBar from './views/components/ButtonAppBar/ButtonAppBar';
 import Vote from './views/pages/Vote/Vote';
@@ -55,8 +55,8 @@ function App() {
             {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
             <Switch>
-              <Route path="/login">
-                <Login />
+              <Route path="/about">
+                <Home />
               </Route>
               <Route path='/vote'>
                 <Vote />
@@ -70,14 +70,14 @@ function App() {
               <Route path='/create_question'>
                 <CreateQuestion />
               </Route>
-              <Route path="/ready">
-                <Ready />
+              <Route path="/notifications">
+                <Notifications />
               </Route>
               <Route path="/fail">
                 <Fail />
               </Route>
               <Route path="/">
-                <Home />
+                <Login />
               </Route>
             </Switch>
             <ButtonAppBar />
@@ -92,13 +92,7 @@ function App() {
 export default App;
 
 
-function Ready() {
-  return (<div>
-    <h1>Ready</h1>
-    <Button onClick={handleSecret}>Get Secret</Button>
-    <Button onClick={handleLogout}>Logout</Button>
-  </div>)
-}
+
 
 function Fail() {
   return (<h1>Fail</h1>)

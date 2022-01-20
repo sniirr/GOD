@@ -89,7 +89,7 @@ app.get('/google/callback', passport.authenticate('google', {
                 _a.label = 3;
             case 3:
                 res.cookie('user', userJWT, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 2 });
-                res.redirect('http://localhost:3000/ready');
+                res.redirect('http://localhost:3000/vote');
                 return [3 /*break*/, 5];
             case 4:
                 err_1 = _a.sent();

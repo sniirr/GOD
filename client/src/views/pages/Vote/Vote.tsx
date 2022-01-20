@@ -7,7 +7,7 @@ import Buttons from "../../components/Buttons/Buttons";
 
 //redux
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { getQuestionsThunk,allQuestions} from '../../../redux/reducers/questionsReducers';
+import { getQuestionsThunk, allQuestions } from '../../../redux/reducers/questionsReducers';
 
 // const useStyles = makeStyles({
 //   div: {
@@ -34,7 +34,7 @@ const Vote: FC = () => {
   };
 
   useEffect(() => {
-   
+
     dispatch(getQuestionsThunk());
   }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
@@ -44,14 +44,18 @@ const Vote: FC = () => {
       <Buttons />
 
       <div className="TabsWrapper">
-        <Tabs variant="scrollable" scrollButtons="auto"
-          value={selectedTab} onChange={hendelTapTab} TabIndicatorProps={{
+      
+        <Tabs variant="scrollable"
+          scrollButtons="auto"
+          value={selectedTab}
+          onChange={hendelTapTab}
+          TabIndicatorProps={{
             style: {
-              backgroundColor: "#21DCA2",
+              backgroundColor: "gray",
 
             }
           }} >
-          <Tab label={<span style={{ color: 'rgb(15,52,79)', textTransform: "none" }}>My Questions</span>} />
+          <Tab label={<span>My Questions</span>} />
           <Tab label={<span style={{ color: 'rgb(15,52,79)', textTransform: "none" }}>Ongoing</span>} />
           <Tab label={<span style={{ color: 'rgb(15,52,79)', textTransform: "none" }}>Pending</span>} />
           <Tab label={<span style={{ color: 'rgb(15,52,79)', textTransform: "none" }}>Past</span>} />

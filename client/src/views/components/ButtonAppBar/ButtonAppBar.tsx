@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 //material-ui styles
 import { Button } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
-import HowToVoteIcon from "@mui/icons-material/HowToVote";
+import PublicIcon from '@mui/icons-material/Public';
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { styled } from "@mui/styles";
 
@@ -33,15 +33,15 @@ const MyButton = styled(Button)({
 const ButtonAppBar: FC = () => {
   return (
     <div className="button-app-bar">
-      <NavLink to="/" className="nav-links" exact>
+      <NavLink to="/about" className="nav-links" exact>
         <MyButton>
-          <HomeIcon style={{ margin: "0 auto" }} /> Home
+          <PublicIcon style={{ margin: "0 auto" }} /> About
         </MyButton>
       </NavLink>
 
       <NavLink to="/vote" className="nav-links">
         <MyButton>
-          <HowToVoteIcon style={{ margin: "0 auto" }} /> Vote
+          <HomeIcon style={{ margin: "0 auto" }} /> Home
         </MyButton>
       </NavLink>
 
