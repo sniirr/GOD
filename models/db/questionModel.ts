@@ -10,11 +10,6 @@ const FileSchema = new Schema({
     fileUrl:String
 });
 
-const Image = new Schema({
-    title: String,
-    description: String,
-    // image:String
-})
 
 
 export const QuestionSchema = new Schema({
@@ -22,13 +17,14 @@ export const QuestionSchema = new Schema({
     description: String,
     files: [FileSchema],
     coverImage: String,
-    members:[UserSchema],
+    members:{type:[String],index:true},
     creatorId:String,
     admins:[UserSchema],
     last_entered: Date,
     role:String,
     image:Map,
-    active:Boolean
+    active:Boolean, //ongoing or past
+    draft:Boolean  //draft or publish
 });
 
 const QuestionModel = mongoose.model('QuestionModel', QuestionSchema);

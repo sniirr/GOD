@@ -9,22 +9,19 @@ var FileSchema = new Schema({
     fileName: String,
     fileUrl: String
 });
-var Image = new Schema({
-    title: String,
-    description: String
-});
 exports.QuestionSchema = new Schema({
     title: String,
     description: String,
     files: [FileSchema],
     coverImage: String,
-    members: [UserModel_1.UserSchema],
+    members: { type: [String], index: true },
     creatorId: String,
     admins: [UserModel_1.UserSchema],
     last_entered: Date,
     role: String,
     image: Map,
-    active: Boolean
+    active: Boolean,
+    draft: Boolean //draft or publish
 });
 var QuestionModel = mongoose.model('QuestionModel', exports.QuestionSchema);
 exports["default"] = QuestionModel;

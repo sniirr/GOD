@@ -22,7 +22,7 @@ import { fill } from "@cloudinary/url-gen/actions/resize";
 import { createQuestionProps } from './CreateQuestion';
 
 //functions
-import { createUpdateQuestion, acitvateQuestion } from '../../../controlers/questions/questions'
+import { createUpdateQuestion, activateQuestion } from '../../../controlers/questions/questions'
 
 
 const CreateQuestion4: FC<createQuestionProps> = (props: createQuestionProps) => {
@@ -38,11 +38,12 @@ const CreateQuestion4: FC<createQuestionProps> = (props: createQuestionProps) =>
 
     useEffect(() => {
         //save question as draft 
+
         createUpdateQuestion(title, description, image).then(questionId => {
-            console.log(questionId)
+
             dispatch(setQuestionId(questionId));
         })
-
+        // eslint-disable-next-line
     }, [])
 
     const cld = new Cloudinary({
@@ -99,7 +100,7 @@ const CreateQuestion4: FC<createQuestionProps> = (props: createQuestionProps) =>
 
             console.log("finish", questionId)
             if (typeof questionId === 'string') {
-                acitvateQuestion(true, questionId).then(activate=>{
+                activateQuestion(true, questionId).then(activate => {
                     console.log(activate);
                     dispatch(setActivate(activate));
                 })
@@ -107,7 +108,7 @@ const CreateQuestion4: FC<createQuestionProps> = (props: createQuestionProps) =>
                 console.info(questionId)
                 throw new Error('question Id is not of type string')
             }
-        } catch (err:any) {
+        } catch (err: any) {
             console.error(err.message)
         }
 

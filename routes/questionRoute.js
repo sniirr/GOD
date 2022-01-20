@@ -5,5 +5,6 @@ var router = require('express').Router();
 var questionCont_1 = require("../controlers/questionCont");
 router
     .post('/create', isLoggedIn_1["default"], questionCont_1.createQuestion)
-    .post('/activate', isLoggedIn_1["default"], questionCont_1.activateQuestion);
+    .post('/activate', isLoggedIn_1["default"], questionCont_1.activateQuestion)
+    .post('/get-all', isLoggedIn_1["default"], questionCont_1.getAllQuestions);
 exports["default"] = router;

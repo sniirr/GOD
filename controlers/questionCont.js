@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.activateQuestion = exports.createQuestion = void 0;
+exports.getAllQuestions = exports.activateQuestion = exports.createQuestion = void 0;
 var QuestionModel_1 = require("../models/db/QuestionModel");
 var ObjectId = require('mongoose').Types.ObjectId;
 var mongoose = require('mongoose');
@@ -50,8 +50,9 @@ function createQuestion(req, res) {
                     _a.trys.push([0, 5, , 6]);
                     question = req.body;
                     question.creatorId = req.user.id;
+                    question.members = [req.user.id];
                     if (!question.questionId) return [3 /*break*/, 2];
-                    return [4 /*yield*/, Question.find({ _id: new ObjectId(question.questionId) })];
+                    return [4 /*yield*/, Question.findOneAndUpdate({ _id: new ObjectId(question.questionId) }, question)];
                 case 1:
                     response = _a.sent();
                     res.send({ update: true, response: response });
@@ -63,7 +64,7 @@ function createQuestion(req, res) {
                 case 3:
                     results = _a.sent();
                     _id = results._id;
-                    res.send({ questionId: _id });
+                    res.send({ questionId: _id, results: results });
                     _a.label = 4;
                 case 4: return [3 /*break*/, 6];
                 case 5:
@@ -103,3 +104,34 @@ function activateQuestion(req, res) {
     });
 }
 exports.activateQuestion = activateQuestion;
+function getAllQuestions(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var userId, result, i, error_3;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    if (!{}.hasOwnProperty.call(req, 'user'))
+                        throw new Error('No user in request');
+                    userId = req.user.id;
+                    return [4 /*yield*/, Question.find({
+                            members: userId
+                        })];
+                case 1:
+                    result = _a.sent();
+                    for (i in result) {
+                        result[i].members = [req.user.id];
+                        result[i].admins = [];
+                    }
+                    res.send({ result: result, ok: true });
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_3 = _a.sent();
+                    res.send({ error: error_3.message });
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.getAllQuestions = getAllQuestions;
