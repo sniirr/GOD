@@ -4,7 +4,7 @@ import './CardView.scss';
 
 
 export interface CardViewProps {
-  info: any
+  info?: any
 }
 
 
@@ -15,7 +15,7 @@ const CardView: FC<CardViewProps> = (props: CardViewProps) => {
     setSelectedTab(newValue);
   };
   const { info } = props;
-  console.log(info)
+  
 
 
 
