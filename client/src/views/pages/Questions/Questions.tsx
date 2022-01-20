@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from "react";
 import { Tabs, Tab } from "@mui/material";
 import VoteCard from "../../components/VoteCard/VoteCard";
 import axios from 'axios';
-import Buttons from "../../components/Buttons/Buttons";
+import Buttons from "../../components/Header/Header";
 
 
 //redux

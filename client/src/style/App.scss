@@ -18,9 +18,9 @@ $max_wrapper:600px;
 $reg_padding:20px;
 $border_radius:10px;
 
-@import '../views/pages/Home/Home.scss';
+@import '../views/pages/About/About.scss';
 @import '../views/components/ButtonAppBar/ButtonAppBar.scss';
-@import '../views/pages/Vote/Vote.scss';
+@import '../views/pages/Questions/Questions.scss';
 
 body,
 html {

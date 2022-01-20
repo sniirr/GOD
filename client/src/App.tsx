@@ -26,8 +26,8 @@ import CardView from './views/pages/CardView/CardView';
 import Discussion from './views/pages/CardView/Discussion/Discussion';
 import Notifications from './views/pages/Notifications/Notifications';
 import { theme } from './style/Theme';
-import ButtonAppBar from './views/components/ButtonAppBar/ButtonAppBar';
-import Vote from './views/pages/Questions/Questions';
+import Questions from './views/pages/Questions/Questions';
+import Question from './views/pages/Question/Question';
 
 
 
@@ -37,35 +37,21 @@ function App() {
       <ThemeProvider theme={theme}>
         <Router>
           <div>
-            {/* <nav>
-              <ul>
-                <li>
-                  <Link to="/">About</Link>
-                </li>
-                <li>
-                  <Link to="/ready">Ready</Link>
-                </li>
-                <li>
-                  <Link to='/create_question'>Create Question</Link>
-                </li>
-
-              </ul>
-            </nav> */}
-
-            {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
             <Switch>
               <Route path="/about">
                 <About />
               </Route>
               <Route path='/questions'>
-                <Vote />
+                <Questions />
               </Route>
               <Route path='/card_view'>
                 <CardView />
               </Route>
               <Route path='/discussion'>
                 <Discussion />
+              </Route>
+              <Route path='/question/:questionId'>
+                <Question />
               </Route>
               <Route path='/create_question'>
                 <CreateQuestion />
