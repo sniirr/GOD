@@ -1,15 +1,15 @@
 import React, { FC, useState, useEffect } from "react";
 import { Tabs, Tab } from "@mui/material";
-import './CardView.scss';
+import './Question.scss';
 
 
-export interface CardViewProps {
+export interface QuestionProps {
   info?: any
 }
 
 
 
-const CardView: FC<CardViewProps> = (props: CardViewProps) => {
+const Question: FC<QuestionProps> = (props: QuestionProps) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const hendelTapTab = (event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
@@ -17,11 +17,6 @@ const CardView: FC<CardViewProps> = (props: CardViewProps) => {
   const { info } = props;
   
 
-
-
-
-
-  
 
 
   return (
@@ -68,4 +63,4 @@ const CardView: FC<CardViewProps> = (props: CardViewProps) => {
     </>
   );
 };
-export default CardView;
+export default Question;

@@ -22,8 +22,8 @@ import '@fontsource/roboto/700.css';
 import Login from './views/pages/Login/Login';
 import CreateQuestion from './views/pages/CreateQuestion/CreateQuestion';
 import About from './views/pages/About/About';
-import CardView from './views/pages/CardView/CardView';
-import Discussion from './views/pages/CardView/Discussion/Discussion';
+import CardView from './views/pages/Question/Question';
+import Discussion from './views/pages/Question/Discussion/Discussion';
 import Notifications from './views/pages/Notifications/Notifications';
 import { theme } from './style/Theme';
 import Questions from './views/pages/Questions/Questions';
@@ -43,9 +43,6 @@ function App() {
               </Route>
               <Route path='/questions'>
                 <Questions />
-              </Route>
-              <Route path='/card_view'>
-                <CardView />
               </Route>
               <Route path='/discussion'>
                 <Discussion />

@@ -1,11 +1,12 @@
-.header{
+.header {
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  
+  background-color: white;
+  padding: 20px;
 
+  img {
 
-  img{
-    
     width: 40px;
   }
 }
