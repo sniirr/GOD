@@ -21,7 +21,7 @@ import '@fontsource/roboto/700.css';
 //components
 import Login from './views/pages/Login/Login';
 import CreateQuestion from './views/pages/CreateQuestion/CreateQuestion';
-import Home from './views/pages/Home/Home';
+import Home from './views/pages/About/About';
 import CardView from './views/pages/CardView/CardView';
 import Discussion from './views/pages/CardView/Discussion/Discussion';
 import Notifications from './views/pages/Notifications/Notifications';

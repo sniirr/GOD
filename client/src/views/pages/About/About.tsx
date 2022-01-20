@@ -1,5 +1,6 @@
+import './About.scss';
 import React, { FC } from "react";
-import Buttons from "../.././components/Buttons/Buttons";
+import Buttons from "../../components/Buttons/Buttons";
 
 //material-ui styles
 import { Button } from "@mui/material";
