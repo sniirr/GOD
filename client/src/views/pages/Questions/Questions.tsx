@@ -9,12 +9,8 @@ import Buttons from "../../components/Buttons/Buttons";
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { getQuestionsThunk, allQuestions } from '../../../redux/reducers/questionsReducers';
 
-// const useStyles = makeStyles({
-//   div: {
-//     color: "blue",
-
-//   }
-// });
+//components
+import ButtonAppBar from '../../components/ButtonAppBar/ButtonAppBar';
 
 
 export interface Group {
@@ -44,7 +40,7 @@ const Vote: FC = () => {
       <Buttons />
 
       <div className="TabsWrapper">
-      
+
         <Tabs variant="scrollable"
           scrollButtons="auto"
           value={selectedTab}
@@ -80,7 +76,7 @@ const Vote: FC = () => {
         </div>}
 
       </div>
-
+      <ButtonAppBar />
     </>
   );
 };

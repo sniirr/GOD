@@ -5,10 +5,14 @@ import Buttons from "../../components/Buttons/Buttons";
 //material-ui styles
 import { Button } from "@mui/material";
 
+//components
+import ButtonAppBar from '../../components/ButtonAppBar/ButtonAppBar';
+
 const Home: FC = () => {
 
 
   return (
+    <>
     <div className="about__page">
       <Buttons />
 
@@ -34,7 +38,10 @@ const Home: FC = () => {
           </Button>
         </div>
       </div>
+      
     </div>
+    <ButtonAppBar />
+    </>
   );
 };
 export default Home;

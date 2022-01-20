@@ -39,7 +39,7 @@ const ButtonAppBar: FC = () => {
         </MyButton>
       </NavLink>
 
-      <NavLink to="/vote" className="nav-links">
+      <NavLink to="/questions" className="nav-links">
         <MyButton>
           <HomeIcon style={{ margin: "0 auto" }} /> Home
         </MyButton>

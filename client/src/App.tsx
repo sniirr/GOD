@@ -21,7 +21,7 @@ import '@fontsource/roboto/700.css';
 //components
 import Login from './views/pages/Login/Login';
 import CreateQuestion from './views/pages/CreateQuestion/CreateQuestion';
-import Home from './views/pages/About/About';
+import About from './views/pages/About/About';
 import CardView from './views/pages/CardView/CardView';
 import Discussion from './views/pages/CardView/Discussion/Discussion';
 import Notifications from './views/pages/Notifications/Notifications';
@@ -40,7 +40,7 @@ function App() {
             {/* <nav>
               <ul>
                 <li>
-                  <Link to="/">Home</Link>
+                  <Link to="/">About</Link>
                 </li>
                 <li>
                   <Link to="/ready">Ready</Link>
@@ -56,9 +56,9 @@ function App() {
             renders the first one that matches the current URL. */}
             <Switch>
               <Route path="/about">
-                <Home />
+                <About />
               </Route>
-              <Route path='/vote'>
+              <Route path='/questions'>
                 <Vote />
               </Route>
               <Route path='/card_view'>
@@ -80,7 +80,6 @@ function App() {
                 <Login />
               </Route>
             </Switch>
-            <ButtonAppBar />
           </div>
         </Router>
       </ThemeProvider>
