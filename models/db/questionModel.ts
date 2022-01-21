@@ -23,8 +23,16 @@ export const QuestionSchema = new Schema({
     last_entered: Date,
     role:String,
     image:Map,
-    active:Boolean, //ongoing or past
-    draft:Boolean  //draft or publish
+    active:Boolean, //legacy
+    draft:Boolean, //legacy
+    status:{
+        draft:Boolean,
+        active:Boolean,
+        suggestions:Boolean,
+        vote:Boolean,
+        closed:Boolean,
+        deleted:Boolean,
+    } 
 });
 
 const QuestionModel = mongoose.model('QuestionModel', QuestionSchema);

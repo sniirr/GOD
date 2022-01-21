@@ -21,7 +21,15 @@ exports.QuestionSchema = new Schema({
     role: String,
     image: Map,
     active: Boolean,
-    draft: Boolean //draft or publish
+    draft: Boolean,
+    status: {
+        draft: Boolean,
+        active: Boolean,
+        suggestions: Boolean,
+        vote: Boolean,
+        closed: Boolean,
+        deleted: Boolean
+    }
 });
 var QuestionModel = mongoose.model('QuestionModel', exports.QuestionSchema);
 exports["default"] = QuestionModel;
