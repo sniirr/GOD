@@ -30,3 +30,9 @@ in root run ```npm run tsc```
 in root run ```npm run tsc```
 
 in client run ```npm start```
+
+**Contributers**
+
+***UX/UI***
+
+Rotem Bonder & Daniella Rechter - design the first simple onboarding and suggestions
