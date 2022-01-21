@@ -35,4 +35,4 @@ in client run ```npm start```
 
 ***UX/UI***
 
-Rotem Bonder & Daniell Rechter - design the first simple onboarding and suggestions
+Daniell Rechter & Rotem Bonder - design the first simple onboarding and suggestions
