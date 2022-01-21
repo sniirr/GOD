@@ -3,7 +3,7 @@
 Delib is a PWA for deliberative and democratic decision making, which was created with the help of [Deliberative Democracy Institute](http://delib.org), for [Global Online Democracy Movement](https://www.globalonlinedemocracy.org/).
 
 The current version is 4. The previous version code can be found here ([Delib-3](https://github.com/talyaron/delib).)
-
+----
 **Install**
 
 in root run ```npm i```
