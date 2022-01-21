@@ -1,10 +1,11 @@
 .button-app-bar {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  position: absolute;
+  position: fixed;
   bottom: 0;
-  height: 10vh;
+  height: 55px;
   width: 100%;
+  background-color: white;
 }
 
 .nav-links {
