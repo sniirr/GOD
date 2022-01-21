@@ -27,7 +27,7 @@ Run local mongodb local server
 
 in root run ```npm run tsc```
 
-in root run ```npm run tsc```
+in root run ```npm run dev```
 
 in client run ```npm start```
 
