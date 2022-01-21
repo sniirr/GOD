@@ -1,7 +1,7 @@
 
 
 // colors
-$primary_color: blue;
+$primary_color: #103450;;
 $primary_text: white;
 $accent:#39B6FA;
 $main:white;
@@ -21,6 +21,7 @@ $border_radius:10px;
 @import '../views/pages/About/About.scss';
 @import '../views/components/ButtonAppBar/ButtonAppBar.scss';
 @import '../views/pages/Questions/Questions.scss';
+@import '../views//pages/Login/Login.scss';
 
 body,
 html {
@@ -271,3 +272,4 @@ h2 {
 .accent {
   color: $accent;
 }
+
