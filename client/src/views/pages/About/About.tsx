@@ -24,12 +24,14 @@ const Home: FC = () => {
           <img src={aboutImg} alt="" />
 
           <div className="about__learnMore">
-            <Button
-              variant="outlined"
-              style={{ color: "#34aef0" }}
-            >
-              Learn More
-            </Button>
+            <a href="https://www.globalonlinedemocracy.org/" target='_blank'>
+              <Button
+                variant="outlined"
+                style={{ color: "#34aef0" }}
+              >
+                Learn More
+              </Button>
+            </a>
           </div>
         </div>
 
