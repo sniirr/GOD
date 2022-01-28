@@ -42,7 +42,13 @@ in root run ```npm run dev```
 
 in client run ```npm start```
 
+***Update your forked repository***
+If you are using github desktop, use [this procedure](https://stackoverflow.com/questions/46110615/how-to-sync-your-forked-repo-with-original-repo-in-github-desktop#:~:text=2%20Answers&text=To%20sync%20the%20master%20of,the%20'fetch%20origin'%20button.).
+
+----
+
 **Contributers**
+
 
 ***UX/UI***
 
