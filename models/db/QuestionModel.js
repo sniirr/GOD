@@ -2,7 +2,7 @@
 exports.__esModule = true;
 exports.QuestionSchema = void 0;
 var mongoose = require('mongoose');
-var UserModel_1 = require("./UserModel");
+var userModel_1 = require("./userModel");
 //Define a schema
 var Schema = mongoose.Schema;
 var FileSchema = new Schema({
@@ -16,7 +16,7 @@ exports.QuestionSchema = new Schema({
     coverImage: String,
     members: { type: [String], index: true },
     creatorId: String,
-    admins: [UserModel_1.UserSchema],
+    admins: [userModel_1.UserSchema],
     last_entered: Date,
     role: String,
     image: Map,
