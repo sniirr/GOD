@@ -39,7 +39,6 @@ const Discussion: FC = () => {
    
   }
   const sendMessage = (message:string)=>{
-
     setQuestion(message);
    socket.send(question);
   };
