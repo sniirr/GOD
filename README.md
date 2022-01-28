@@ -27,7 +27,7 @@ CLOUDINARY_PAAS=<>
 
 ```
 
-In the client directory add a file ```env.ts``` and write the cloudanry key you got from cloudinary.com:
+In the client src directory add a file ```env.ts``` and write the cloudanry key you got from cloudinary.com:
 ```
 export const CLOUDINARY_API='cloudanry_key';
 ```
