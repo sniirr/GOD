@@ -56,9 +56,6 @@ function App() {
               <Route path="/notifications">
                 <Notifications />
               </Route>
-              <Route path="/fail">
-                <Fail />
-              </Route>
               <Route path="/">
                 <Login />
               </Route>
@@ -67,6 +64,7 @@ function App() {
         </Router>
       </ThemeProvider>
     </Provider>
+  
   );
 }
 
@@ -76,6 +74,3 @@ export default App;
 
 
 
-function Fail() {
-  return (<h1>Fail</h1>)
-}
