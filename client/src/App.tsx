@@ -33,41 +33,38 @@ import Question from './views/pages/Question/Question';
 
 function App() {
   return (
-    // <Provider store={store}>
-    //   <ThemeProvider theme={theme}>
-    //     <Router>
-    //       <div>
-    //         <Switch>
-    //           <Route path="/about">
-    //             <About />
-    //           </Route>
-    //           <Route path='/questions'>
-    //             <Questions />
-    //           </Route>
-    //           <Route path='/discussion'>
-    //             <Discussion />
-    //           </Route>
-    //           <Route path='/question/:questionId'>
-    //             <Question />
-    //           </Route>
-    //           <Route path='/create_question'>
-    //             <CreateQuestion />
-    //           </Route>
-    //           <Route path="/notifications">
-    //             <Notifications />
-    //           </Route>
-    //           <Route path="/fail">
-    //             <Fail />
-    //           </Route>
-    //           <Route path="/">
-    //             <Login />
-    //           </Route>
-    //         </Switch>
-    //       </div>
-    //     </Router>
-    //   </ThemeProvider>
-    // </Provider>
-    <h1>Test</h1>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <div>
+            <Switch>
+              <Route path="/about">
+                <About />
+              </Route>
+              <Route path='/questions'>
+                <Questions />
+              </Route>
+              <Route path='/discussion'>
+                <Discussion />
+              </Route>
+              <Route path='/question/:questionId'>
+                <Question />
+              </Route>
+              <Route path='/create_question'>
+                <CreateQuestion />
+              </Route>
+              <Route path="/notifications">
+                <Notifications />
+              </Route>
+              <Route path="/">
+                <Login />
+              </Route>
+            </Switch>
+          </div>
+        </Router>
+      </ThemeProvider>
+    </Provider>
+  
   );
 }
 
