@@ -38,6 +38,31 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 var express = require('express');
 var session = require('express-session');
+const http = require('http').createServer(express);
+const io = require("socket.io")(5000, {
+    cors: {
+        origin : "http://localhost:3000"
+    }
+});
+io.on("connection", socket => {
+    // either with send()
+    //socket.send("Hello!");
+    
+    // // or with emit() and custom event names
+    // socket.emit("greetings", "Hey!", { "ms": "jane" }, Buffer.from([4, 3, 3, 1]));
+  
+    // handle the event sent with socket.send()
+    socket.on("message", (chatMessage) => {
+       
+      console.log(chatMessage);
+    });
+ 
+    // handle the event sent with socket.emit()
+    // socket.on("salutations", (elem1, elem2, elem3) => {
+    //   console.log(elem1, elem2, elem3);
+    // });
+  });
+  
 var cookieParser = require('cookie-parser');
 var jwt = require('jwt-simple');
 var mongoose = require('mongoose');
