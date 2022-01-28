@@ -1,27 +1,28 @@
+import { lookupService } from 'dns';
 import {UserSchema} from './userModel'
 const mongoose = require('mongoose');
 
 //Define a schema
 const Schema = mongoose.Schema;
 
-const EvaluationsSchema = new Schema({
-    likes:Object
-});
 
 
-export const MessageSchema = new Schema({
+
+export const QuestionVoteSchema = new Schema({
     id: String,
-    text: String,
     parentId: String, //question id
     parentType:String, //"question"
     direction:String, //is it rtl or ltr
     language: String, //hebrew, arabic, english, etc
-    locale: String,
-    image: String,
     date: Date,
-    evaluations:EvaluationsSchema,
-    roles:{
-        creator:UserSchema
-    }
     
 });
+
+export const VoteSchema = new Schema({
+    userId: String, //userId
+    parentId: String, //question id
+    date: Date,
+    selectedOption:String
+    
+});
+
