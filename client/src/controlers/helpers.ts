@@ -2,7 +2,7 @@ function getCookies() {
   var decodedCookie = decodeURIComponent(document.cookie);
   var ca = decodedCookie.split(";");
   return ca.map((c) => {
-    while (c.charAt(0) == " ") {
+    while (c.charAt(0) === " ") {
       c = c.substring(1);
     }
     return c.split("=");

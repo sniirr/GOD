@@ -5,6 +5,7 @@ import io from "socket.io-client";
 
 const Discussion: FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
+  // eslint-disable-next-line
   const [questions, setQuestions] = useState([]);
   const [questiontitle,setQuestiontitle] = useState("")
   const [question, setQuestion] = useState("");

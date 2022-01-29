@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState } from "react";
 import { Tabs, Tab } from "@mui/material";
 import './Question.scss';
 
@@ -14,7 +14,7 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
   const hendelTapTab = (event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
   };
-  const { info } = props;
+ 
   
 
 
