@@ -1,10 +1,5 @@
-const a:number= 0;
-console.log(a);
-
 //Import the mongoose module
 const mongoose = require('mongoose');
-
-
 
 //Set up default mongoose connection
 //local:

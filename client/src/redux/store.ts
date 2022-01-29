@@ -1,12 +1,14 @@
 import {ThunkAction, configureStore,Action } from '@reduxjs/toolkit';
 import newQuestionSlice from './reducers/createQuestionReducer';
 import questionsSlice from './reducers/questionsReducers';
+import userSlice from './reducers/userRducer';
 
 const store = configureStore({
   reducer: {
   
     newQuestion:newQuestionSlice,
-    questions:questionsSlice
+    questions:questionsSlice,
+    user:userSlice
   },
 })
 

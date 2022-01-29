@@ -24,7 +24,7 @@ const Home: FC = () => {
           <img src={aboutImg} alt="" />
 
           <div className="about__learnMore">
-            <a href="https://www.globalonlinedemocracy.org/" target='_blank'>
+            <a href="https://www.globalonlinedemocracy.org/" target='_blank' rel="noreferrer">
               <Button
                 variant="outlined"
                 style={{ color: "#34aef0" }}

@@ -22,7 +22,6 @@ import '@fontsource/roboto/700.css';
 import Login from './views/pages/Login/Login';
 import CreateQuestion from './views/pages/CreateQuestion/CreateQuestion';
 import About from './views/pages/About/About';
-import CardView from './views/pages/Question/Question';
 import Discussion from './views/pages/Question/Discussion/Discussion';
 import Notifications from './views/pages/Notifications/Notifications';
 import { theme } from './style/Theme';
@@ -50,6 +49,9 @@ function App() {
               <Route path='/question/:questionId'>
                 <Question />
               </Route>
+              <Route path='/fail'>
+                <Fail />
+              </Route>
               <Route path='/create_question'>
                 <CreateQuestion />
               </Route>
@@ -72,5 +74,9 @@ function App() {
 export default App;
 
 
-
+function Fail(){
+  return(
+    <h1>Login failed</h1>
+  )
+}
 

@@ -1,8 +1,7 @@
 // import axios from 'axios';
-import { CLOUDINARY_API } from '../env';
 
 
-console.log(CLOUDINARY_API)
+
 
 export function uploadFile(file:any) {
     return new Promise((resolve, reject) => {

@@ -20,6 +20,22 @@ export function login(req: any, res: any): void {
 
 }
 
+export function getUser(req: any, res: any): void {
+    try {
+        
+        const user = req.user
+
+        
+
+        res.send({user})
+        
+    } catch (err) {
+        console.log(err);
+        res.status(500).send(err.message)
+    }
+
+}
+
 export function secret(req: any, res: any): void {
     try {
         res.send({secret:true});

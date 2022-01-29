@@ -66,7 +66,7 @@ app.get('/auth', passport.authenticate('google', { scope: ['email', 'profile'] }
 app.get('/google/callback', passport.authenticate('google', {
     failureRedirect: 'http://localhost:3000/fail'
 }), function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, userJWT, UserModel, userDB, newUser, userData, err_1;
+    var user, UserModel, userDB, newUser, userData, userJWT, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -75,7 +75,6 @@ app.get('/google/callback', passport.authenticate('google', {
                 user.role = 'public';
                 user.last_entered = new Date();
                 console.log("user " + user.displayName + " logged in");
-                userJWT = jwt.encode({ id: user.id }, JWT_SECRET);
                 UserModel = mongoose.model('UserModel', userModel_1.UserSchema);
                 return [4 /*yield*/, UserModel.findOneAndUpdate({ id: user.id }, user)];
             case 1:
@@ -88,7 +87,10 @@ app.get('/google/callback', passport.authenticate('google', {
                 console.log(userData);
                 _a.label = 3;
             case 3:
+                res.user = user;
+                userJWT = jwt.encode({ id: user.id, role: user.role, displayName: user.displayName }, JWT_SECRET);
                 res.cookie('user', userJWT, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 2 });
+                res.cookie('isLogged', 'true', { maxAge: 1000 * 60 * 60 * 24 * 2 });
                 res.redirect('http://localhost:3000/questions');
                 return [3 /*break*/, 5];
             case 4:
