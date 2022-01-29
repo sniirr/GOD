@@ -1,16 +1,27 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Button } from "@mui/material";
+import {useHistory} from 'react-router-dom';
 
 import logo from '../../../img/logo.webp'
 
+//controls
+import {isLogged} from '../../../controlers/helpers';
+
 
 const Login: FC = () => {
+    const history = useHistory();
+
+    useEffect(()=>{
+        //check if logged in
+        
+        if(isLogged()) history.push('/questions')
+    },[])
     return (
         <div className="page login">
             <div className="login__wrapper">
                 <h1>Global Online Democracy</h1>
                 <img src={logo} alt="Global online deomcracy logo" />
-                <a href="http://localhost:4000/auth"> <Button
+                <a href="http://localhost:4000/auth" target="_blank" > <Button
                     variant="outlined"
                     style={{
                         color: "white",

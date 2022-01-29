@@ -37,7 +37,9 @@ require('./controlers/db') //connect to mongoDB
 
 import { UserSchema } from './models/db/userModel';
 
-app.get('/auth', passport.authenticate('google', { scope: ['email', 'profile'] }),);
+app.get('/auth', passport.authenticate('google', { scope: ['email', 'profile'] }));
+   
+
 app.get('/google/callback', passport.authenticate('google', {
     failureRedirect: 'http://localhost:3000/fail'
 }), async (req, res) => {
@@ -47,7 +49,7 @@ app.get('/google/callback', passport.authenticate('google', {
         user.role = 'public';
         user.last_entered = new Date();
         console.log(`user ${user.displayName} logged in`);
-        const userJWT = jwt.encode({ id: user.id }, JWT_SECRET);
+        
 
         const UserModel = mongoose.model('UserModel', UserSchema)
 
@@ -59,9 +61,11 @@ app.get('/google/callback', passport.authenticate('google', {
             const userData = await newUser.save();
             console.log(userData);
         }
-
+        res.user = user;
+        const userJWT = jwt.encode({ id: user.id, role:user.role, displayName:user.displayName}, JWT_SECRET);
         res.cookie('user', userJWT, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 2 })
-        res.redirect('http://localhost:3000/questions')
+        res.cookie('isLogged','true',{maxAge: 1000 * 60 * 60 * 24 * 2 })
+        res.redirect('http://localhost:3000/questions');
     } catch (err) {
         res.status(500).send(err.message);
     }
