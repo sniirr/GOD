@@ -8,7 +8,9 @@ The current version is 4. The previous version code can be found here ([Delib-3]
 
 **Install**
 
-in root run ```npm i```
+Fork the rpeository, and then clone the rpositirory to your local machine
+
+then in root run ```npm i```
 
 in ```/client``` run  ```npm i```
 
