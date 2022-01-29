@@ -35,7 +35,7 @@ export const activateQuestionThunk = createAsyncThunk(
 // Define a type for the slice state
 export interface QuestionSchema {
   questionId: string | boolean;
-  value: number,
+  pageNumber: number, //number of page
   title: string,
   image: Image,
   status: string,
@@ -49,7 +49,7 @@ export interface QuestionSchema {
 // Define the initial state using that type
 const initialState = {
   questionId: false,
-  value: 1,
+  pageNumber: 1,
   title: '',
   description: '',
   image: {},
@@ -67,14 +67,14 @@ export const questionsSlice = createSlice({
   reducers: {
     increment: (state) => {
 
-      if (state.value < 4) state.value += 1;
+      if (state.pageNumber < 4) state.pageNumber += 1;
     },
     decrement: (state) => {
-      if (state.value > 1) state.value -= 1;
+      if (state.pageNumber > 1) state.pageNumber -= 1;
     },
     // Use the PayloadAction type to declare the contents of `action.payload`
     incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload
+      state.pageNumber += action.payload
     },
     setQuestionId: (state, action: PayloadAction<string>) => {
       state.questionId = action.payload;
@@ -136,7 +136,7 @@ export const { increment, decrement, incrementByAmount, setQuestionId, setTitle,
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectQuestion = (state: RootState) => state.newQuestion
-export const selectCount = (state: RootState) => state.newQuestion.value;
+export const selectCount = (state: RootState) => state.newQuestion.pageNumber;
 export const selectTitle = (state: RootState) => state.newQuestion.title;
 export const selectDescription = (state: RootState) => state.newQuestion.description;
 export const selectLoader = (state: RootState) => state.newQuestion.loader;
