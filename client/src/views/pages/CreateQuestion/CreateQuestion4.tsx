@@ -24,6 +24,7 @@ import { createQuestionProps } from './CreateQuestion';
 //functions
 import { createUpdateQuestion, activateQuestion } from '../../../controlers/questions/questions'
 
+import { EmailShareButton, WhatsappShareButton } from "react-share";
 
 const CreateQuestion4: FC<createQuestionProps> = (props: createQuestionProps) => {
     const { path } = props;
@@ -67,8 +68,12 @@ const CreateQuestion4: FC<createQuestionProps> = (props: createQuestionProps) =>
                 <p>This is the moment your idea is sent out to the world. Finish the process by Inviting the people relevant to solving this issue., Together you will reach a better solution.
                 </p>
                 <div className="share__wrapper">
-                    <Button variant="outlined" startIcon={<MailOutlineIcon />}>Share using E-Mail</Button>
-                    <Button variant="outlined" startIcon={<WhatsappIcon />}>share using Whatsapp</Button>
+                    <Button variant="outlined" startIcon={<MailOutlineIcon />}>
+                        <EmailShareButton url="https://www.globalonlinedemocracy.org/" subject={title}>Share using E-Mail</EmailShareButton>
+                    </Button>
+                    <Button variant="outlined" startIcon={<WhatsappIcon />}>
+                        <WhatsappShareButton url="https://www.globalonlinedemocracy.org/" title={title || ""}>Share using Whatsapp</WhatsappShareButton> 
+                    </Button>
                     <div className="share__preview">
                         {myImage ?
                             <div className="share__preview__image">
