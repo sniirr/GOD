@@ -1,7 +1,9 @@
 import React, { FC, useState, useEffect } from "react";
 import { Tabs, Tab } from "@mui/material";
 import './Question.scss';
-
+import { Link } from 'react-router-dom';
+import { Button } from '@mui/material';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 export interface QuestionProps {
   info?: any
@@ -59,7 +61,14 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
 
 
       </div>
-
+      
+      <div className="bottom-nav">
+        <Link to="/questions" style={{ textDecoration: 'none' }}>
+          <Button variant="outlined">
+            <ArrowBackIosIcon/>Back
+          </Button>
+        </Link>
+      </div>
     </>
   );
 };
