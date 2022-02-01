@@ -3,6 +3,7 @@ import type { RootState } from "../store";
 import { getAllQuestions } from "../../controlers/questions/questions";
 
 export interface Message {
+  messageId: string;
   message: string;
   creatorId: string;
   creatorDisplayName: string;
@@ -23,7 +24,7 @@ export const chatSlice = createSlice({
   initialState,
   reducers: {
     addMessage: (state, action: { payload: Message; type: string }) => {
-        console.log('add message')
+      console.log("add message");
       state.messages = [...state.messages, action.payload];
     },
   },
