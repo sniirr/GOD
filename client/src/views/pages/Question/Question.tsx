@@ -2,6 +2,10 @@ import React, { FC, useState, useEffect } from "react";
 import io from "socket.io-client";
 import {useParams} from 'react-router-dom';
 import { Tabs, Tab } from "@mui/material";
+import './Question.scss';
+import { Link } from 'react-router-dom';
+import { Button } from '@mui/material';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import "./Question.scss";
 
 import { useAppSelector, useAppDispatch } from "../../../redux/hooks";
@@ -116,6 +120,14 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
         <div>
           <h2>Votes</h2>
           </div>}
+      </div>
+      
+      <div className="bottom-nav">
+        <Link to="/questions" style={{ textDecoration: 'none' }}>
+          <Button variant="outlined">
+            <ArrowBackIosIcon/>Back
+          </Button>
+        </Link>
       </div>
     </>
   );
