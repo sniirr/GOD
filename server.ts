@@ -92,7 +92,7 @@ io.on('connection', socket => {
 
 
     socket.on('message', (msg) => {
-        console.log('message: ' + msg);
+        console.log('message: ' + msg.message);
         io.emit('message', msg);
     });
 

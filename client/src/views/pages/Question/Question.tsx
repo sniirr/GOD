@@ -1,4 +1,5 @@
 import React, { FC, useState } from "react";
+import {useParams} from 'react-router-dom';
 import { Tabs, Tab } from "@mui/material";
 import "./Question.scss";
 
@@ -9,7 +10,19 @@ export interface QuestionProps {
   info?: any;
 }
 
+interface QuestionParams{
+  questionId:string
+}
+
 const Question: FC<QuestionProps> = (props: QuestionProps) => {
+
+  const params = useParams<QuestionParams>();
+  console.log(params)
+  let questionId = '';
+  if('questionId' in params){
+    questionId = params.questionId
+  }
+
   const [selectedTab, setSelectedTab] = useState(0);
   const hendelTapTab = (event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
@@ -68,7 +81,7 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
           </div>
         )}
 
-        {selectedTab === 1 && <div><Discussion/></div>}
+        {selectedTab === 1 && <div><Discussion questionId={questionId}/></div>}
 
         {selectedTab === 2 && 
         <div>

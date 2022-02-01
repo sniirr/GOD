@@ -114,7 +114,7 @@ io.on('connection', function (socket) {
     console.log(socket.rooms);
     console.log('a user connected');
     socket.on('message', function (msg) {
-        console.log('message: ' + msg);
+        console.log('message: ' + msg.message);
         io.emit('message', msg);
     });
     socket.on('disconnect', function () {

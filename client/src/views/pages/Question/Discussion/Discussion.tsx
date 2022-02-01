@@ -6,12 +6,19 @@ import { useAppSelector, useAppDispatch } from "../../../../redux/hooks";
 
 //redux
 import { addMessage } from "../../../../redux/reducers/chatReducer";
+import {allMessages} from '../../../../redux/reducers/chatReducer';
 
 //interfaces
 import { Message } from "../../../../redux/reducers/chatReducer";
 const socket = io();
 
-const Discussion: FC = () => {
+interface DisccusionProps{
+  questionId:string
+}
+
+const Discussion: FC<DisccusionProps> = (props:DisccusionProps) => {
+
+  const {questionId} = props;
   const [selectedTab, setSelectedTab] = useState(0);
   // eslint-disable-next-line
   const [questions, setQuestions] = useState([]);
@@ -19,48 +26,26 @@ const Discussion: FC = () => {
   const [question, setQuestion] = useState("");
 
   const dispatch = useAppDispatch();
+  const messages = useAppSelector(allMessages).filter(msg=>msg.parentId === questionId);
+
+  console.log(messages)
 
   const hendelTapTab = (event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
   };
 
   useEffect(() => {
-    // axios
-    //   .post("/questions/get-all", {})
-    //   .then(({ data }) => {
-    //     console.log(data.result);
-    //     setQuestions(data.result);
-    //   })
-    //   .catch((e) => {
-    //     console.error(e);
-    //   });
-
-    // socket.on("chat", (data) => {
-    //   socket.send("message");
-    // });
-
-    // socket.on("connect", () => {
-    //   // either with send()
-    //   // socket.send("first comment !");
-    //   // socket.send("second comment !");
-    //   // // or with emit() and custom event names
-    //   socket.emit(
-    //     "salutations",
-    //     "chat!",
-    //     { mr: "jzzohn" },
-    //     Uint8Array.from([1, 2, 3, 4])
-    //   );
-    // });
-
-    // handle the event sent with socket.send()
-
-    // handle the event sent with socket.emit()
+   
     socket.on("message", (msg:Message) => {
       console.log("message", msg);
       if (msg) {
         dispatch(addMessage(msg));
       }
     });
+
+    return ()=>{
+      socket.removeAllListeners("message");
+    }
   }, []);
 
   const handleChangetitle = (e: {
@@ -94,7 +79,7 @@ const Discussion: FC = () => {
     try {
       const creatorId = "123";
       const creatorDisplayName = "Tal";
-      const parentId = "parentId2";
+      const parentId = questionId;
       const parentType = "question";
 
       return {
