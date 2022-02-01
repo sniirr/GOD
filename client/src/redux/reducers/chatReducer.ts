@@ -4,7 +4,7 @@ import { getAllQuestions } from '../../controlers/questions/questions';
 
 
 
-interface Message {
+export interface Message {
      
     message:string;
     creatorId:string;
@@ -25,13 +25,15 @@ const initialState = {
     name: 'chat',
     initialState,
     reducers: {
-        addMessage: (state, action) => {
+        addMessage: (state, action:{payload:Message, type:string}) => {
 
             state.messages = [...state.messages,action.payload ]
           },
     },
     
   })
+
+  export const { addMessage } = chatSlice.actions
 
   export const allMessages = (state: RootState) => state.chats.messages;
 
