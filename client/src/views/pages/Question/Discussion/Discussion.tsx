@@ -34,7 +34,7 @@ const Discussion: FC = () => {
     //     console.error(e);
     //   });
 
-    // const socket = io("ws://localhost:5000");
+    const socket = io();
     // socket.on("chat", (data) => {
     //   socket.send("message");
     // });
