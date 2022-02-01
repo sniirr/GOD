@@ -113,9 +113,9 @@ app.get('/logout', function (req, res) {
 io.on('connection', function (socket) {
     console.log(socket.rooms);
     console.log('a user connected');
-    socket.on('chat message', function (msg) {
+    socket.on('message', function (msg) {
         console.log('message: ' + msg);
-        io.emit('chat message', msg);
+        io.emit('message', msg);
     });
     socket.on('disconnect', function () {
         console.log('user disconnected');
@@ -125,8 +125,9 @@ io.on('connection', function (socket) {
     //     socket.join(roomId);
     // })
     // rooms
-    socket.on('join room', function (roomId) {
-        socket.join(roomId); //the client is now in that room
+    socket.on('join room', function (chatId) {
+        socket.join(chatId); //the client is now in that room
+        console.log('chat', chatId);
     });
     socket.on("chat room message", function (msgObj) {
         msgObj = JSON.parse(msgObj);

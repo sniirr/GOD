@@ -91,9 +91,9 @@ io.on('connection', socket => {
 
 
 
-    socket.on('chat message', (msg) => {
+    socket.on('message', (msg) => {
         console.log('message: ' + msg);
-        io.emit('chat message', msg);
+        io.emit('message', msg);
     });
 
     socket.on('disconnect', () => {
@@ -107,8 +107,9 @@ io.on('connection', socket => {
     // })
     // rooms
 
-    socket.on('join room', roomId => {
-        socket.join(roomId); //the client is now in that room
+    socket.on('join room', chatId => {
+        socket.join(chatId); //the client is now in that room
+        console.log('chat', chatId)
     })
 
     socket.on(`chat room message`, msgObj => {

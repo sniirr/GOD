@@ -9,6 +9,7 @@ import { addMessage } from "../../../../redux/reducers/chatReducer";
 
 //interfaces
 import { Message } from "../../../../redux/reducers/chatReducer";
+const socket = io();
 
 const Discussion: FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -34,7 +35,6 @@ const Discussion: FC = () => {
     //     console.error(e);
     //   });
 
-    const socket = io();
     // socket.on("chat", (data) => {
     //   socket.send("message");
     // });
@@ -55,9 +55,12 @@ const Discussion: FC = () => {
     // handle the event sent with socket.send()
 
     // handle the event sent with socket.emit()
-    // socket.on("greetings", (elem1, elem2, elem3) => {
-    //   console.log(elem1, elem2, elem3);
-    // });
+    socket.on("message", (msg) => {
+      console.log("message", msg);
+      if (msg) {
+        dispatchMessage(msg);
+      }
+    });
   }, []);
 
   const handleChangetitle = (e: {
@@ -77,13 +80,32 @@ const Discussion: FC = () => {
 
   function handleSendMessage(ev: any) {
     ev.preventDefault();
-    const message:string = ev.target.elements.message.value;
-    const creatorId = '123';
-    const creatorDisplayName= 'Tal';
-    const parentId='parentId2';
-    const parentType='question';
+    const message: string = ev.target.elements.message.value;
+
     if (message) {
-      dispatch(addMessage({ message, creatorId, creatorDisplayName,parentId,parentType }));
+      dispatchMessage(message);
+
+      socket.emit("message", message);
+    }
+  }
+
+  function dispatchMessage(message: string) {
+    const creatorId = "123";
+    const creatorDisplayName = "Tal";
+    const parentId = "parentId2";
+    const parentType = "question";
+
+    if (message) {
+      console.log('trying to dispatch message', message)
+      dispatch(
+        addMessage({
+          message,
+          creatorId,
+          creatorDisplayName,
+          parentId,
+          parentType,
+        })
+      );
     }
   }
 
@@ -93,9 +115,8 @@ const Discussion: FC = () => {
         {" "}
         <ul id="messages"></ul>
         <form onSubmit={handleSendMessage}>
-        
           <input name="message" autoComplete="off" placeholder="add message" />
-           <input type="submit" value="Send" />
+          <input type="submit" value="Send" />
         </form>
       </div>
     </>
