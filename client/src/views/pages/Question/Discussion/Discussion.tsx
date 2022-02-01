@@ -55,10 +55,10 @@ const Discussion: FC = () => {
     // handle the event sent with socket.send()
 
     // handle the event sent with socket.emit()
-    socket.on("message", (msg) => {
+    socket.on("message", (msg:Message) => {
       console.log("message", msg);
       if (msg) {
-        dispatchMessage(msg);
+        dispatch(addMessage(msg));
       }
     });
   }, []);
@@ -83,29 +83,48 @@ const Discussion: FC = () => {
     const message: string = ev.target.elements.message.value;
 
     if (message) {
-      dispatchMessage(message);
-
-      socket.emit("message", message);
+      const msg:Message = formatMessage(message)
+        dispatchMessage(message);
+        socket.emit("message", msg);
+     
     }
   }
 
-  function dispatchMessage(message: string) {
-    const creatorId = "123";
-    const creatorDisplayName = "Tal";
-    const parentId = "parentId2";
-    const parentType = "question";
+  function formatMessage(message: string): Message {
+    try {
+      const creatorId = "123";
+      const creatorDisplayName = "Tal";
+      const parentId = "parentId2";
+      const parentType = "question";
 
-    if (message) {
-      console.log('trying to dispatch message', message)
-      dispatch(
-        addMessage({
-          message,
-          creatorId,
-          creatorDisplayName,
-          parentId,
-          parentType,
-        })
-      );
+      return {
+        message,
+        creatorId,
+        creatorDisplayName,
+        parentId,
+        parentType,
+        error: false,
+      };
+    } catch (err) {
+      console.error(err);
+      return {
+        message,
+        creatorId: "",
+        creatorDisplayName: "",
+        parentId: "",
+        parentType: "question",
+        error: true,
+      };
+    }
+  }
+
+  function dispatchMessage(messageText: string) {
+    if (messageText) {
+      console.log("trying to dispatch message", messageText);
+      const msg:Message = formatMessage(messageText);
+      if (msg.error !== false) {
+        dispatch(addMessage(msg));
+      }
     }
   }
 

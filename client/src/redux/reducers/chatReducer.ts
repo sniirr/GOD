@@ -11,6 +11,7 @@ export interface Message {
     creatorDisplayName:string;
     parentId:string;
     parentType:'question';
+    error:boolean
 }
 interface Chat {
     messages:Array<Message>
