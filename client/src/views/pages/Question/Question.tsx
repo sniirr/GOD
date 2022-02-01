@@ -1,7 +1,17 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
+import io from "socket.io-client";
 import {useParams} from 'react-router-dom';
 import { Tabs, Tab } from "@mui/material";
 import "./Question.scss";
+
+import { useAppSelector, useAppDispatch } from "../../../redux/hooks";
+
+//redux
+import { addMessage } from "../../../redux/reducers/chatReducer";
+import {allMessages} from '../../../redux/reducers/chatReducer';
+
+//interfaces
+import { Message } from "../../../redux/reducers/chatReducer";
 
 //components
 import Discussion from "./Discussion/Discussion";
@@ -14,6 +24,8 @@ interface QuestionParams{
   questionId:string
 }
 
+const socket = io();
+
 const Question: FC<QuestionProps> = (props: QuestionProps) => {
 
   const params = useParams<QuestionParams>();
@@ -22,6 +34,23 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
   if('questionId' in params){
     questionId = params.questionId
   }
+
+  const dispatch = useAppDispatch();
+  const messages = useAppSelector(allMessages).filter(msg=>msg.parentId === questionId);
+
+  useEffect(() => {
+   //listen to messges
+    socket.on("message", (msg:Message) => {
+      console.log("message", msg);
+      if (msg) {
+        dispatch(addMessage(msg));
+      }
+    });
+
+    return ()=>{
+      socket.removeAllListeners("message");
+    }
+  }, []);
 
   const [selectedTab, setSelectedTab] = useState(0);
   const hendelTapTab = (event: React.SyntheticEvent, newValue: number) => {
@@ -81,7 +110,7 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
           </div>
         )}
 
-        {selectedTab === 1 && <div><Discussion questionId={questionId}/></div>}
+        {selectedTab === 1 && <div><Discussion questionId={questionId} messages={messages}/></div>}
 
         {selectedTab === 2 && 
         <div>

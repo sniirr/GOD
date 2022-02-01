@@ -1,6 +1,4 @@
 import React, { FC, useState, useEffect } from "react";
-import { Tabs, Tab } from "@mui/material";
-import axios from "axios";
 import io from "socket.io-client";
 import { useAppSelector, useAppDispatch } from "../../../../redux/hooks";
 
@@ -13,7 +11,8 @@ import { Message } from "../../../../redux/reducers/chatReducer";
 const socket = io();
 
 interface DisccusionProps{
-  questionId:string
+  questionId:string;
+  messages:Array<Message>;
 }
 
 const Discussion: FC<DisccusionProps> = (props:DisccusionProps) => {
@@ -26,9 +25,9 @@ const Discussion: FC<DisccusionProps> = (props:DisccusionProps) => {
   const [question, setQuestion] = useState("");
 
   const dispatch = useAppDispatch();
-  const messages = useAppSelector(allMessages).filter(msg=>msg.parentId === questionId);
+ 
 
-  console.log(messages)
+  
 
   const hendelTapTab = (event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
@@ -58,10 +57,7 @@ const Discussion: FC<DisccusionProps> = (props:DisccusionProps) => {
   }) => {
     setQuestion(e.target.value);
   };
-  // const sendMessage = (message:string)=>{
-  //   setQuestion(message);
-  //  socket.send(question);
-  // };
+  
 
   function handleSendMessage(ev: any) {
     ev.preventDefault();
