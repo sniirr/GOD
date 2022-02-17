@@ -1,5 +1,5 @@
-import { lookupService } from 'dns';
-import {UserSchema} from './userModel'
+import {UserSchema} from './UserModel'
+
 const mongoose = require('mongoose');
 
 //Define a schema
@@ -9,25 +9,23 @@ const EvaluationsSchema = new Schema({
     likes:Object
 });
 
-// const eval ={
-//     uid1:'like',
-//     uid2:'like',
-//     uid3:'dislike'
-// }
 
-
-export const MessageSchema = new Schema({
+export const SuggestionSchema = new Schema({
     id: String,
-    text: String,
+    title: String,
+    description: String,
     parentId: String, //question id
     parentType:String, //"question"
     direction:String, //is it rtl or ltr
     language: String, //hebrew, arabic, english, etc
+    locale: String,
     image: String,
     date: Date,
     evaluations:EvaluationsSchema,
     roles:{
-        creator:UserSchema
+        creator:UserSchema,
+        admins:[UserSchema],
+        participents:[UserSchema]
     }
     
 });

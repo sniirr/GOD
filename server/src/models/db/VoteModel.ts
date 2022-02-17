@@ -1,5 +1,5 @@
 import { lookupService } from 'dns';
-import {UserSchema} from './userModel'
+import {UserSchema} from './UserModel'
 const mongoose = require('mongoose');
 
 //Define a schema

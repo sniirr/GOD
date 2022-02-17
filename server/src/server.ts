@@ -37,7 +37,7 @@ app.use(session({ secret: PASSPORT_SECRET, resave: false, saveUninitialized: fal
 require('./controlers/auth')// get google authentication
 require('./controlers/db') //connect to mongoDB
 
-import { UserSchema } from './models/db/userModel';
+import { UserSchema } from './models/db/UserModel';
 
 
 //pasport routes
@@ -69,13 +69,10 @@ app.get('/google/callback', passport.authenticate('google', {
         res.cookie('user', userJWT, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 2 })
         res.cookie('isLogged','true',{maxAge: 1000 * 60 * 60 * 24 * 2 })
         res.redirect('http://localhost:3000/questions');
-    } catch (err) {
+    } catch (err: any) {
         res.status(500).send(err.message);
     }
 });
-
-
-
 
 app.get('/logout', (req: any, res: any) => {
     req.logout();

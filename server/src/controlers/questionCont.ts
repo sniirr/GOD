@@ -33,7 +33,7 @@ export async function createQuestion(req: any, res: any) {
         }
 
 
-    } catch (error) {
+    } catch (error: any) {
         console.error(error)
         res.status(500).send({ error: error.message })
     }
@@ -49,7 +49,7 @@ export async function activateQuestion(req: any, res: any): Promise<void> {
             throw new Error(`activate should be bollean but was ${typeof activate}`);
         }
 
-    } catch (error) {
+    } catch (error: any) {
         res.send({ error: error.message });
     }
 
@@ -75,7 +75,7 @@ export async function getAllQuestions(req: any, res: any): Promise<void> {
         }
         
         res.send({ result, ok: true });
-    } catch (error) {
+    } catch (error: any) {
         res.send({ error: error.message });
     }
 }

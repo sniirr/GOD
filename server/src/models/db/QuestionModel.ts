@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-import {UserSchema} from './userModel';
+import {UserSchema} from './UserModel';
 
 
 //Define a schema

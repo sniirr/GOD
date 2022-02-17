@@ -13,7 +13,7 @@ export function login(req: any, res: any): void {
 
         res.send({username, password})
         
-    } catch (err) {
+    } catch (err: any) {
         console.log(err);
         res.status(500).send(err.message)
     }
@@ -29,7 +29,7 @@ export function getUser(req: any, res: any): void {
 
         res.send({user})
         
-    } catch (err) {
+    } catch (err: any) {
         console.log(err);
         res.status(500).send(err.message)
     }
@@ -40,7 +40,7 @@ export function secret(req: any, res: any): void {
     try {
         res.send({secret:true});
         
-    } catch (err) {
+    } catch (err: any) {
         console.log(err);
         res.status(500).send(err.message)
     }
