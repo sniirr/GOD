@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from "react";
-import io from "socket.io-client";
+// import io from "socket.io-client";
 import {useParams} from 'react-router-dom';
 import { Tabs, Tab } from "@mui/material";
 import './Question.scss';
@@ -28,7 +28,7 @@ interface QuestionParams{
   questionId:string
 }
 
-const socket = io();
+// const socket = io();
 
 const Question: FC<QuestionProps> = (props: QuestionProps) => {
 
@@ -42,19 +42,19 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
   const dispatch = useAppDispatch();
   const messages = useAppSelector(allMessages).filter(msg=>msg.parentId === questionId);
 
-  useEffect(() => {
-   //listen to messges
-    socket.on("message", (msg:Message) => {
-      console.log("message", msg);
-      if (msg) {
-        dispatch(addMessage(msg));
-      }
-    });
-
-    return ()=>{
-      socket.removeAllListeners("message");
-    }
-  }, []);
+  // useEffect(() => {
+  //  //listen to messges
+  //   socket.on("message", (msg:Message) => {
+  //     console.log("message", msg);
+  //     if (msg) {
+  //       dispatch(addMessage(msg));
+  //     }
+  //   });
+  //
+  //   return ()=>{
+  //     socket.removeAllListeners("message");
+  //   }
+  // }, []);
 
   const [selectedTab, setSelectedTab] = useState(0);
   const hendelTapTab = (event: React.SyntheticEvent, newValue: number) => {

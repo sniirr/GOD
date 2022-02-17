@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from "react";
-import io from "socket.io-client";
+// import io from "socket.io-client";
 import { useAppSelector, useAppDispatch } from "../../../../redux/hooks";
 
 import { uid } from "../../../../controlers/helpers";
@@ -10,7 +10,7 @@ import { allMessages } from "../../../../redux/reducers/chatReducer";
 
 //interfaces
 import { Message } from "../../../../redux/reducers/chatReducer";
-const socket = io();
+// const socket = io();
 
 interface DisccusionProps {
   questionId: string;
@@ -33,21 +33,21 @@ const Discussion: FC<DisccusionProps> = (props: DisccusionProps) => {
     setSelectedTab(newValue);
   };
 
-  useEffect(() => {
-    socket.on("message", (msg: Message) => {
-      console.log("message", msg.message);
-      if (msg.messageId !== tempMessageId) {
-        console.log('new message')
-        if (msg) {
-          dispatch(addMessage(msg));
-        }
-      }
-    });
-
-    return () => {
-      socket.removeAllListeners("message");
-    };
-  }, []);
+  // useEffect(() => {
+  //   socket.on("message", (msg: Message) => {
+  //     console.log("message", msg.message);
+  //     if (msg.messageId !== tempMessageId) {
+  //       console.log('new message')
+  //       if (msg) {
+  //         dispatch(addMessage(msg));
+  //       }
+  //     }
+  //   });
+  //
+  //   return () => {
+  //     socket.removeAllListeners("message");
+  //   };
+  // }, []);
 
   const handleChangetitle = (e: {
     target: { value: React.SetStateAction<string> };
@@ -67,7 +67,7 @@ const Discussion: FC<DisccusionProps> = (props: DisccusionProps) => {
     if (message) {
       const msg: Message = formatMessage(message);
       dispatchMessage(message);
-      socket.emit("message", msg);
+      // socket.emit("message", msg);
       tempMessageId = msg.messageId;
     }
   }
