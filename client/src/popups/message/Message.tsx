@@ -1,3 +1,4 @@
+import React from 'react'
 import { ERROR } from '../types';
 
 export interface IAppProps {

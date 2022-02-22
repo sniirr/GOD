@@ -2,7 +2,7 @@ import './Notifications.scss';
 
 
 //components
-import ButtonAppBar from '../../components/ButtonAppBar/ButtonAppBar';
+import ButtonAppBar from 'components/ButtonAppBar/ButtonAppBar';
 
 function Notifications(){
     return(

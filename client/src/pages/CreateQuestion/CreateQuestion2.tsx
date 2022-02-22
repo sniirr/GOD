@@ -1,12 +1,12 @@
 import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
+import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import {
   selectDescription,
   selectEnableMoveTo3,
   setDescription,
   setEnableMoveTo3
-} from '../../../redux/reducers/createQuestionReducer';
+} from '../../redux/reducers/createQuestionReducer';
 
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';

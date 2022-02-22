@@ -2,17 +2,18 @@ import React, { FC, useState, useEffect } from "react";
 import { Tabs, Tab } from "@mui/material";
 import VoteCard from "../../components/QuestionCard/QuestionCard";
 import Buttons from "../../components/Header/Header";
+import './Questions.scss'
 
 //redux
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
 import {
   getQuestionsThunk,
   allQuestions,
-} from "../../../redux/reducers/questionsReducers";
-import { getUserThunkReducer} from "../../../redux/reducers/userRducer";
+} from "redux/reducers/questionsReducers";
+import { getUserThunkReducer} from "redux/reducers/userRducer";
 
 //components
-import ButtonAppBar from "../../components/ButtonAppBar/ButtonAppBar";
+import ButtonAppBar from "components/ButtonAppBar/ButtonAppBar";
 
 export interface Group {
   status: string;
@@ -21,21 +22,20 @@ export interface Group {
   questionId: string;
 }
 
-const Vote: FC = () => {
+const Questions: FC = () => {
   const dispatch = useAppDispatch();
-
 
   const [selectedTab, setSelectedTab] = useState(0);
   const questions = useAppSelector(allQuestions);
-  const hendelTapTab = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTapTab = (event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
   };
 
   useEffect(() => {
-   
+
     dispatch(getQuestionsThunk());
     dispatch(getUserThunkReducer())
-    
+
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 
@@ -48,7 +48,7 @@ const Vote: FC = () => {
           variant="scrollable"
           scrollButtons="auto"
           value={selectedTab}
-          onChange={hendelTapTab}
+          onChange={handleTapTab}
           TabIndicatorProps={{
             style: {
               backgroundColor: "gray",
@@ -113,4 +113,5 @@ const Vote: FC = () => {
     </>
   );
 };
-export default Vote;
+
+export default Questions

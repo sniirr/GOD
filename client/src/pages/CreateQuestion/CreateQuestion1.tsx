@@ -2,13 +2,13 @@ import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 //redux
-import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
+import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import {
   selectTitle,
   selectEnableMoveTo2,
   setTitle,
   setEnableMoveTo2
-} from '../../../redux/reducers/createQuestionReducer';
+} from '../../redux/reducers/createQuestionReducer';
 
 //matrial UI
 import Button from '@mui/material/Button';

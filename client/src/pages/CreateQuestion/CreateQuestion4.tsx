@@ -1,9 +1,9 @@
-import { FC, useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { Link } from "react-router-dom";
 // import axios from 'axios';
 
 //redux
-import { useAppSelector, useAppDispatch } from "../../../redux/hooks";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import {
   selectQuestionId,
   selectTitle,
@@ -11,7 +11,7 @@ import {
   selectImage,
   setQuestionId,
   setActivate,
-} from "../../../redux/reducers/createQuestionReducer";
+} from "../../redux/reducers/createQuestionReducer";
 
 //material UI components
 import Button from "@mui/material/Button";
@@ -32,7 +32,7 @@ import { createQuestionProps } from "./CreateQuestion";
 import {
   createUpdateQuestion,
   activateQuestion,
-} from "../../../controlers/questions/questions";
+} from "../../controlers/questions/questions";
 
 import { EmailShareButton, WhatsappShareButton } from "react-share";
 

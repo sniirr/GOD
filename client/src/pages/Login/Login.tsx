@@ -1,11 +1,11 @@
-import { FC, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Button } from "@mui/material";
 import {useHistory} from 'react-router-dom';
 
-import logo from '../../../img/logo.webp'
+import logo from 'img/logo.webp'
 
 //controls
-import {isLogged} from '../../../controlers/helpers';
+import {isLogged} from 'controlers/helpers';
 
 
 const Login: FC = () => {

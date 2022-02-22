@@ -1,15 +1,16 @@
 import React, { FC, useState, useEffect } from "react";
 // import io from "socket.io-client";
-import { useAppSelector, useAppDispatch } from "../../../../redux/hooks";
+import { useAppSelector, useAppDispatch } from "../../../redux/hooks";
 
-import { uid } from "../../../../controlers/helpers";
+import { uid } from "../../../controlers/helpers";
 
 //redux
-import { addMessage } from "../../../../redux/reducers/chatReducer";
-import { allMessages } from "../../../../redux/reducers/chatReducer";
+import { addMessage } from "../../../redux/reducers/chatReducer";
+import { allMessages } from "../../../redux/reducers/chatReducer";
 
 //interfaces
-import { Message } from "../../../../redux/reducers/chatReducer";
+import { Message } from "../../../redux/reducers/chatReducer";
+import {sendMessage} from "../../../utils/socket";
 // const socket = io();
 
 interface DisccusionProps {
@@ -68,6 +69,7 @@ const Discussion: FC<DisccusionProps> = (props: DisccusionProps) => {
       const msg: Message = formatMessage(message);
       dispatchMessage(message);
       // socket.emit("message", msg);
+      sendMessage(message)
       tempMessageId = msg.messageId;
     }
   }

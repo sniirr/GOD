@@ -2,8 +2,8 @@ import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
 //redux
-import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
-import { uploadFileThunk, selectLoader, selectImage } from '../../../redux/reducers/createQuestionReducer';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { uploadFileThunk, selectLoader, selectImage } from '../../redux/reducers/createQuestionReducer';
 
 //controls
 

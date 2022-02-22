@@ -8,17 +8,18 @@ import { Button } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import "./Question.scss";
 
-import { useAppSelector, useAppDispatch } from "../../../redux/hooks";
+import { useAppSelector, useAppDispatch } from "redux/hooks";
 
 //redux
-import { addMessage } from "../../../redux/reducers/chatReducer";
-import {allMessages} from '../../../redux/reducers/chatReducer';
+import { addMessage } from "redux/reducers/chatReducer";
+import {allMessages} from 'redux/reducers/chatReducer';
 
 //interfaces
-import { Message } from "../../../redux/reducers/chatReducer";
+import { Message } from "redux/reducers/chatReducer";
 
 //components
 import Discussion from "./Discussion/Discussion";
+import {joinRoom, leaveRoom} from "../../utils/socket";
 
 export interface QuestionProps {
   info?: any;
@@ -42,6 +43,16 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
   const dispatch = useAppDispatch();
   const messages = useAppSelector(allMessages).filter(msg=>msg.parentId === questionId);
 
+  useEffect(() => {
+    joinRoom(questionId, (messageObj: any) => {
+      console.log('message received', messageObj.message)
+    })
+    console.log('joined room', questionId)
+    return () => {
+      leaveRoom(questionId)
+      console.log('left room', questionId)
+    }
+  }, [])
   // useEffect(() => {
   //  //listen to messges
   //   socket.on("message", (msg:Message) => {
@@ -57,7 +68,7 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
   // }, []);
 
   const [selectedTab, setSelectedTab] = useState(0);
-  const hendelTapTab = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTapTab = (event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
   };
 
@@ -71,7 +82,7 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
             width: "100%",
           }}
           value={selectedTab}
-          onChange={hendelTapTab}
+          onChange={handleTapTab}
           TabIndicatorProps={{
             style: { backgroundColor: "#21DCA2" },
           }}>

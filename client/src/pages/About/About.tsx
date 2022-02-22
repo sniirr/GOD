@@ -1,12 +1,12 @@
 import './About.scss';
 import React, { FC } from "react";
-import Header from "../../components/Header/Header";
-import aboutImg from '../../../img/home-image.png';
+import Header from "components/Header/Header";
+import aboutImg from 'img/home-image.png';
 //material-ui styles
 import { Button } from "@mui/material";
 
 //components
-import ButtonAppBar from '../../components/ButtonAppBar/ButtonAppBar';
+import ButtonAppBar from 'components/ButtonAppBar/ButtonAppBar';
 
 const Home: FC = () => {
 

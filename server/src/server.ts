@@ -86,15 +86,16 @@ io.on('connection', socket => {
     console.log(socket.rooms)
     console.log('a user connected');
 
+    let socketRoom = null
 
+    socket.on('disconnect', () => {
+        socketRoom = null
+        console.log('user disconnected');
+    })
 
     socket.on('message', (msg) => {
         console.log('message: ' + msg.message);
         io.emit('message', msg);
-    });
-
-    socket.on('disconnect', () => {
-        console.log('user disconnected');
     });
 
     // socket.on('join room', roomId => {
@@ -104,17 +105,32 @@ io.on('connection', socket => {
     // })
     // rooms
 
-    socket.on('join room', chatId => {
-        socket.join(chatId); //the client is now in that room
-        console.log('chat', chatId)
+    socket.on('join-room', roomId => {
+        socket.join(roomId); //the client is now in that room
+        socketRoom = roomId
+        console.log('join room', roomId)
     })
 
-    socket.on(`chat room message`, msgObj => {
-        msgObj = JSON.parse(msgObj);
+    socket.on('leave-room', roomId => {
+        socket.leave(roomId); //the client is now in that room
+        socketRoom = null
+        console.log('leave room', roomId)
+    })
+
+    // socket.on('switch room', (data) => {
+    //     const { prevRoom, nextRoom } = data;
+    //     if (prevRoom) socket.leave(prevRoom);
+    //     if (nextRoom) socket.join(nextRoom);
+    //     socketRoom = nextRoom;
+    // })
+
+    socket.on(`chat-message`, msgObj => {
+        // console.log(message);
+        // const msgObj = JSON.parse(message);
 
         console.log(msgObj);
 
-        io.sockets.in(msgObj.roomId).emit('chat room message', msgObj.msg);
+        io.to(socketRoom).emit('chat-message', msgObj);
     })
 });
 
