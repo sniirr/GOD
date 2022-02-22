@@ -19,9 +19,11 @@ const VoteCard: FC<VoteCardProps> = (props: VoteCardProps) => {
     history.push(`/question/${info._id}`)
   }
 
+  const imageUrl = info?.image?.secure_url
+
   return (
     <div className="card">
-      <div className="card__image" style={{ backgroundImage: `url(${info.image.secure_url}` }}
+      <div className="card__image" style={{ backgroundImage: imageUrl ? `url(${info.image.secure_url}` : 'none' }}
         onClick={() => handleRedirect(info)}>
         <div className="card__title"> {info.title} </div>
         <div className="card__status"> {info.active ? "Published" : "Draft"}   </div>
@@ -43,7 +45,7 @@ const VoteCard: FC<VoteCardProps> = (props: VoteCardProps) => {
             <div>{info.__v}</div>
 
           </div>
-          <div className="card__info__shere">Shere</div>
+          <div className="card__info__shere">Share</div>
           <div className="card__info__views">View</div>
 
         </div>
