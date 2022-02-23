@@ -1,16 +1,20 @@
 .tabs {
+  .tabs-header {
+    width: 100%;
+  }
+
   .tab-header {
     cursor: pointer;
 
-    &:not(:last-child) {
-      margin-right: 24px;
-    }
+    //&:not(:last-child) {
+    //  margin-right: 24px;
+    //}
 
     &.active {
       cursor: default;
-      text-decoration: underline;
+      //text-decoration: underline;
       font-weight: 700;
-      font-size: 1.1em;
+      //font-size: 1.1em;
     }
   }
 }

@@ -1,6 +1,8 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import type {RootState} from '../store';
 import axios from "axios";
+import _ from 'lodash'
+import {QuestionSchema} from "./createQuestionReducer";
 
 function getAllQuestions(){
     return new Promise((resolve, reject)=>{
@@ -33,5 +35,6 @@ export const questionsSlice = createSlice({
 })
 
 export const allQuestions = (state: RootState) => state.questions
+export const questionById = (qid: string) => (state: RootState) => (_.find(state.questions, {_id: qid}) || {}) as QuestionSchema
 
 export default questionsSlice.reducer

@@ -16,31 +16,29 @@ const Fail = () => {
 const AppRoutes = () => {
     return (
         <Router>
-            <div>
-                <Switch>
-                    <Route path="/about">
-                        <About/>
-                    </Route>
-                    <Route path='/questions'>
-                        <Questions/>
-                    </Route>
-                    <Route path='/question/:questionId'>
-                        <Question/>
-                    </Route>
-                    <Route path='/fail'>
-                        <Fail/>
-                    </Route>
-                    <Route path='/create_question'>
-                        <CreateQuestion/>
-                    </Route>
-                    <Route path="/notifications">
-                        <Notifications/>
-                    </Route>
-                    <Route path="/">
-                        <Login/>
-                    </Route>
-                </Switch>
-            </div>
+            <Switch>
+                <Route path="/about">
+                    <About/>
+                </Route>
+                <Route path='/questions'>
+                    <Questions/>
+                </Route>
+                <Route path='/question/:questionId'>
+                    <Question/>
+                </Route>
+                <Route path='/fail'>
+                    <Fail/>
+                </Route>
+                <Route path='/create_question'>
+                    <CreateQuestion/>
+                </Route>
+                <Route path="/notifications">
+                    <Notifications/>
+                </Route>
+                <Route path="/">
+                    <Login/>
+                </Route>
+            </Switch>
         </Router>
     )
 }

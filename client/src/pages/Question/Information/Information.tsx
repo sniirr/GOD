@@ -1,60 +1,62 @@
-import React, { FC, useState, useEffect } from "react";
-import { Tabs, Tab } from "@mui/material";
+import React, {FC, useState, useEffect} from "react";
+import {Tabs, Tab, Button} from "@mui/material";
 import axios from 'axios';
+import './Information.scss'
+import AddIcon from "@mui/icons-material/Add";
+import {useHistory} from "react-router-dom";
 
-const CardView: FC = () => {
-  const [selectedTab, setSelectedTab] = useState(0);
-  const [questions, setQuestions] = useState([]);
-  const hendelTapTab = (event: React.SyntheticEvent, newValue: number) => {
-    setSelectedTab(newValue);
-  };
+export interface QuestionInfoProps {
+    question?: any;
+}
 
-  useEffect(() => {
-    axios.post('/questions/get-all', {})
-      .then(({ data }) => {
-        console.log(data.result);
-        setQuestions(data.result);
-      }).catch(e => {
-        console.error(e)
-      })
-  }, [])
+const QuestionInfo = (props: QuestionInfoProps) => {
+    // const [selectedTab, setSelectedTab] = useState(0);
+    // const [questions, setQuestions] = useState([]);
+    // const hendelTapTab = (event: React.SyntheticEvent, newValue: number) => {
+    //   setSelectedTab(newValue);
+    // };
+    //
+    // useEffect(() => {
+    //   axios.post('/questions/get-all', {})
+    //     .then(({ data }) => {
+    //       console.log(data.result);
+    //       setQuestions(data.result);
+    //     }).catch(e => {
+    //       console.error(e)
+    //     })
+    // }, [])
+
+    const history = useHistory();
+
+    const {question} = props
+
+    const {title, description} = question
 
 
-  return (
-    <>
+    return (
+        <div className="question-info">
+            <div className="title">{title}</div>
+            <div className="description">{description}</div>
+            <div className="section-title">Suggested solutions</div>
 
-      <div className="TabsWrapper">
-        <Tabs variant="scrollable" scrollButtons="auto"
-          value={selectedTab} onChange={hendelTapTab} TabIndicatorProps={{
-            style: {
-              backgroundColor: "#21DCA2",
-
-            }
-          }} >
-          <Tab label={<span style={{ color: 'rgb(15,52,79)', textTransform: "none" }}>My Questions</span>} />
-          <Tab label={<span style={{ color: 'rgb(15,52,79)', textTransform: "none" }}>Ongoing</span>} />
-          <Tab label={<span style={{ color: 'rgb(15,52,79)', textTransform: "none" }}>Pending</span>} />
-
-        </Tabs>
-
-      </div >
-      <div className="voteListWrapper">
-
-        {selectedTab === 0 && <div className="voteList">
-          
-        </div>}
-
-        {selectedTab === 1 && <div className="voteList">
-      
-        </div>}
-
-        {selectedTab === 2 && <div className="inProgress">Pending Page</div>}
-
-   
-
-      </div>
-
-    </>
-  );
+            <div className="toolbar">
+                <Button
+                    variant="contained"
+                    // style={{
+                    //     backgroundColor: "rgb(204 146 58)",
+                    // }}
+                    // startIcon={
+                    //
+                    // }
+                    onClick={() => {
+                        history.push('/create_suggestion')
+                    }}
+                >
+                    <AddIcon/>
+                </Button>
+            </div>
+        </div>
+    );
 };
-export default CardView;
+
+export default QuestionInfo
