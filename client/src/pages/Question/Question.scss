@@ -35,6 +35,25 @@
     background: no-repeat center center;
     background-size: 100% auto;
     height: 150px;
+    position: relative;
+
+    .share-button {
+      position: absolute;
+      top: 13px;
+      right: 16px;
+      background-color: white;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+
+      svg {
+        transform: translateX(-2px);
+      }
+    }
   }
 
   .bottom-nav {

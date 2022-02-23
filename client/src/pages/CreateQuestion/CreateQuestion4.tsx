@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from "react";
-import { Link } from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 // import axios from 'axios';
 
 //redux
@@ -41,6 +41,7 @@ const CreateQuestion4: FC<createQuestionProps> = (
 ) => {
   const { path } = props;
 
+  const history = useHistory();
   const dispatch = useAppDispatch();
   const questionId = useAppSelector(selectQuestionId);
   const title = useAppSelector(selectTitle);
@@ -126,6 +127,7 @@ const CreateQuestion4: FC<createQuestionProps> = (
         activateQuestion(true, questionId).then((activate) => {
           console.log(activate);
           dispatch(setActivate(activate));
+          history.push('/questions')
         });
       } else {
         console.info(questionId);

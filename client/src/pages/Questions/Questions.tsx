@@ -50,7 +50,7 @@ const Questions: FC = () => {
                     {title: "Ongoing", component: () => renderList(questions.filter((item: any) => item.active))},
                     {title: "Pending", component: () => renderList([])},
                     {title: "Past", component: () => renderList(questions.filter((item: any) => !item.active))},
-                ]} before={undefined} after={undefined}/>
+                ]}/>
             </div>
             <ButtonAppBar/>
         </>
