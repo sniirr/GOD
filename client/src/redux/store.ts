@@ -3,15 +3,17 @@ import newQuestionSlice from './reducers/createQuestionReducer';
 import questionsSlice from './reducers/questionsReducers';
 import userSlice from './reducers/userRducer';
 import chatSlic from './reducers/chatReducer'
+import {apiSlice, apiMiddleware} from "./modules/api";
 
 const store = configureStore({
   reducer: {
-  
+    api: apiSlice.reducer,
     newQuestion:newQuestionSlice,
     questions:questionsSlice,
     user:userSlice,
     chats:chatSlic
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiMiddleware),
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

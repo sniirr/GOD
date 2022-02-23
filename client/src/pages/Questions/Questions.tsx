@@ -1,117 +1,60 @@
-import React, { FC, useState, useEffect } from "react";
-import { Tabs, Tab } from "@mui/material";
-import VoteCard from "../../components/QuestionCard/QuestionCard";
-import Buttons from "../../components/Header/Header";
+import React, {FC, useEffect} from "react";
+import VoteCard from "components/QuestionCard/QuestionCard";
+import Header from "components/Header"
 import './Questions.scss'
-
 //redux
-import { useAppDispatch, useAppSelector } from "redux/hooks";
+import {useAppDispatch, useAppSelector} from "redux/hooks";
 import {
-  getQuestionsThunk,
-  allQuestions,
+    getQuestionsThunk,
+    allQuestions,
 } from "redux/reducers/questionsReducers";
-import { getUserThunkReducer} from "redux/reducers/userRducer";
-
+import {getUserThunkReducer} from "redux/reducers/userRducer";
 //components
 import ButtonAppBar from "components/ButtonAppBar/ButtonAppBar";
+import ApiData from "components/ApiData/ApiData";
+import Tabs from 'components/Tabs'
 
 export interface Group {
-  status: string;
-  votes: number;
-  title: string;
-  questionId: string;
+    status: string;
+    votes: number;
+    title: string;
+    questionId: string;
 }
 
 const Questions: FC = () => {
-  const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
-  const [selectedTab, setSelectedTab] = useState(0);
-  const questions = useAppSelector(allQuestions);
-  const handleTapTab = (event: React.SyntheticEvent, newValue: number) => {
-    setSelectedTab(newValue);
-  };
+    const questions = useAppSelector(allQuestions);
 
-  useEffect(() => {
+    useEffect(() => {
+        dispatch(getQuestionsThunk());
+        dispatch(getUserThunkReducer())
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    dispatch(getQuestionsThunk());
-    dispatch(getUserThunkReducer())
+    const renderList = (qs: any) => (
+        <div className="voteListWrapper">
+            <ApiData apiKey="questions/getQuestions">
+                {qs.map((item: any, i: number) => (
+                    <VoteCard key={`question-${i}`} info={item}/>
+                ))}
+            </ApiData>
+        </div>
+    )
 
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-
-  return (
-    <>
-      <Buttons />
-
-      <div className="TabsWrapper">
-        <Tabs
-          variant="scrollable"
-          scrollButtons="auto"
-          value={selectedTab}
-          onChange={handleTapTab}
-          TabIndicatorProps={{
-            style: {
-              backgroundColor: "gray",
-            },
-          }}>
-          <Tab label={<span>My Questions</span>} />
-          <Tab
-            label={
-              <span style={{ color: "rgb(15,52,79)", textTransform: "none" }}>
-                Ongoing
-              </span>
-            }
-          />
-          <Tab
-            label={
-              <span style={{ color: "rgb(15,52,79)", textTransform: "none" }}>
-                Pending
-              </span>
-            }
-          />
-          <Tab
-            label={
-              <span style={{ color: "rgb(15,52,79)", textTransform: "none" }}>
-                Past
-              </span>
-            }
-          />
-        </Tabs>
-      </div>
-      <div className="voteListWrapper">
-        {selectedTab === 0 && (
-          <div className="voteList">
-            {questions.map((item, i) => (
-              <VoteCard key={i} info={item} />
-            ))}
-          </div>
-        )}
-
-        {selectedTab === 1 && (
-          <div className="voteList">
-            {questions
-              .filter((item: any) => item.active)
-              .map((item, i) => (
-                <VoteCard key={i} info={item} />
-              ))}
-          </div>
-        )}
-
-        {selectedTab === 2 && <div className="inProgress">Pending Page</div>}
-
-        {selectedTab === 3 && (
-          <div className="voteList">
-            {questions
-              .filter((item: any) => !item.active)
-              .map((item, i) => (
-                <VoteCard key={i} info={item} />
-              ))}
-          </div>
-        )}
-      </div>
-      <ButtonAppBar />
-    </>
-  );
+    return (
+        <>
+            <Header/>
+            <div className="TabsWrapper">
+                <Tabs id="questions" tabs={[
+                    {title: "My Questions", component: () => renderList(questions)},
+                    {title: "Ongoing", component: () => renderList(questions.filter((item: any) => item.active))},
+                    {title: "Pending", component: () => renderList([])},
+                    {title: "Past", component: () => renderList(questions.filter((item: any) => !item.active))},
+                ]} before={undefined} after={undefined}/>
+            </div>
+            <ButtonAppBar/>
+        </>
+    );
 };
 
 export default Questions

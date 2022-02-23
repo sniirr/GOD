@@ -1,0 +1,16 @@
+.tabs {
+  .tab-header {
+    cursor: pointer;
+
+    &:not(:last-child) {
+      margin-right: 24px;
+    }
+
+    &.active {
+      cursor: default;
+      text-decoration: underline;
+      font-weight: 700;
+      font-size: 1.1em;
+    }
+  }
+}

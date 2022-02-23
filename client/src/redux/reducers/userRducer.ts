@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import { getUser } from "../../controlers/user/user";
+import _ from 'lodash'
 
 export interface User {
   displayName: string;
@@ -39,7 +40,7 @@ export const userSlice = createSlice({
       })
       .addCase(getUserThunkReducer.fulfilled, (state: any, action: any) => {
      
-        const { displayName, id } = action.payload;
+        const { displayName, id } = action.payload || {};
       
         state.displayName = displayName;
         state.id = id;
@@ -53,6 +54,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const selectUser = (state: RootState) => state.user
+export const selectUser = (state: RootState) => _.get(state, 'user', {})
 
 export default userSlice.reducer;

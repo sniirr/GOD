@@ -23,7 +23,7 @@ const VoteCard: FC<VoteCardProps> = (props: VoteCardProps) => {
 
   return (
     <div className="card">
-      <div className="card__image" style={{ backgroundImage: imageUrl ? `url(${info.image.secure_url}` : 'none' }}
+      <div className="card__image" style={{ backgroundImage: imageUrl ? `url(${imageUrl}` : 'none' }}
         onClick={() => handleRedirect(info)}>
         <div className="card__title"> {info.title} </div>
         <div className="card__status"> {info.active ? "Published" : "Draft"}   </div>

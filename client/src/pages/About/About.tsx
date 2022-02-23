@@ -1,6 +1,6 @@
 import './About.scss';
 import React, { FC } from "react";
-import Header from "components/Header/Header";
+import Header from "components/Header";
 import aboutImg from 'img/home-image.png';
 //material-ui styles
 import { Button } from "@mui/material";
