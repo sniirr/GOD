@@ -52,7 +52,7 @@ app.get('/google/callback', passport.authenticate('google', {
         user.last_entered = new Date();
         console.log(`user ${user.displayName} logged in`);
         
-        const UserModel = mongoose.model('UserModel', UserSchema)
+        const UserModel = mongoose.model('user', UserSchema)
 
         // Try to update user
         const userDB = await UserModel.findOneAndUpdate({ id: user.id }, user);
@@ -113,7 +113,7 @@ io.on('connection', socket => {
 
         const MessageModel = mongoose.model('message', MessageSchema)
 
-        const UserModel = mongoose.model('UserModel', UserSchema)
+        const UserModel = mongoose.model('user', UserSchema)
 
         const user = await UserModel.findOne({ id: msgObj.creatorId });
 

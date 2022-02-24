@@ -8,7 +8,6 @@ import {
     getQuestionsThunk,
     allQuestions,
 } from "redux/reducers/questionsReducers";
-import {getUserThunkReducer} from "redux/reducers/userReducer";
 //components
 import ButtonAppBar from "components/ButtonAppBar/ButtonAppBar";
 import ApiData from "components/ApiData/ApiData";
@@ -28,8 +27,7 @@ const Questions: FC = () => {
 
     useEffect(() => {
         dispatch(getQuestionsThunk());
-        dispatch(getUserThunkReducer())
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, []);
 
     const renderList = (qs: any) => (
         <ApiData apiKey="questions/getQuestions">

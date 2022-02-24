@@ -32,7 +32,7 @@ import { createQuestionProps } from "./CreateQuestion";
 import {
   createUpdateQuestion,
   activateQuestion,
-} from "../../controlers/questions/questions";
+} from "redux/reducers/createQuestionReducer";
 
 import { EmailShareButton, WhatsappShareButton } from "react-share";
 

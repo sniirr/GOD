@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
-import { getUser } from "../../controlers/user/user";
 import _ from 'lodash'
+import axios from "axios";
 
 export interface User {
   displayName: string;
@@ -9,6 +9,17 @@ export interface User {
   role: string;
   loader: boolean;
   status: string;
+}
+
+export async function getUser() {
+  try {
+    const { data } = await axios.get("/user/get-user");
+    const {user} = data;
+
+    return user;
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 //thunk for upload image

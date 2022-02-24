@@ -5,7 +5,7 @@ import {useHistory} from 'react-router-dom';
 import logo from 'img/logo.webp'
 
 //controls
-import {isLogged} from 'controlers/helpers';
+import {isLogged} from 'utils/helpers';
 
 
 const Login: FC = () => {

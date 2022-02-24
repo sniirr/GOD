@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from "react";
 import './Discussion.scss'
 import _ from 'lodash'
 import { useAppSelector, useAppDispatch } from "redux/hooks";
-import { uid } from "controlers/helpers";
+import { uid } from "utils/helpers";
 import {Message, addMessage, allMessages, getDiscussionThunk} from "redux/reducers/chatReducer";
 import {sendMessage} from "utils/socket";
 import {User, userSelector} from "redux/reducers/userReducer";

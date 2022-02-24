@@ -54,14 +54,3 @@ export async function handleLogout() {
     console.error(err);
   }
 }
-
-export async function getUser() {
-  try {
-    const { data } = await axios.get("/user/get-user");
-    const {user} = data;
-  
-    return user;
-  } catch (err) {
-    console.error(err);
-  }
-}
