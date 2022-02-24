@@ -14,6 +14,8 @@ export const disconnectSocket = () => {
 export const joinRoom = (room: string, messageCallback: Function) => {
     if (!socket) return (true);
     socket.emit('join-room', room)
+
+    socket.off('chat-message')
     socket.on('chat-message', (msg: any) => {
         console.log('Websocket event received!');
         return messageCallback(msg);

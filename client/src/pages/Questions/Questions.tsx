@@ -40,9 +40,9 @@ const Questions: FC = () => {
     )
 
     return (
-        <>
+        <div className="page page-questions">
             <Header/>
-            <div className="TabsWrapper">
+            <div className="page-content">
                 <Tabs id="questions" tabs={[
                     {title: "My Questions", component: () => renderList(questions)},
                     {title: "Ongoing", component: () => renderList(questions.filter((item: any) => item.active))},
@@ -51,7 +51,7 @@ const Questions: FC = () => {
                 ]}/>
             </div>
             <ButtonAppBar/>
-        </>
+        </div>
     );
 };
 
