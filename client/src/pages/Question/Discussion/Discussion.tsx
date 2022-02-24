@@ -1,131 +1,84 @@
 import React, { FC, useState, useEffect } from "react";
-// import io from "socket.io-client";
-import { useAppSelector, useAppDispatch } from "../../../redux/hooks";
+import './Discussion.scss'
+import _ from 'lodash'
+import { useAppSelector, useAppDispatch } from "redux/hooks";
+import { uid } from "controlers/helpers";
+import {Message, addMessage, allMessages, getDiscussionThunk} from "redux/reducers/chatReducer";
+import {sendMessage} from "utils/socket";
+import {User, userSelector} from "redux/reducers/userReducer";
+import SendIcon from '@mui/icons-material/Send';
 
-import { uid } from "../../../controlers/helpers";
-
-//redux
-import { addMessage } from "../../../redux/reducers/chatReducer";
-import { allMessages } from "../../../redux/reducers/chatReducer";
-
-//interfaces
-import { Message } from "../../../redux/reducers/chatReducer";
-import {sendMessage} from "../../../utils/socket";
-// const socket = io();
-
-interface DisccusionProps {
+interface DiscussionProps {
   questionId: string;
   messages: Array<Message>;
 }
 
 let tempMessageId: string | boolean = false;
 
-const Discussion: FC<DisccusionProps> = (props: DisccusionProps) => {
+const Discussion: FC<DiscussionProps> = (props: DiscussionProps) => {
   const { questionId } = props;
-  const [selectedTab, setSelectedTab] = useState(0);
-  // eslint-disable-next-line
-  const [questions, setQuestions] = useState([]);
-  const [questiontitle, setQuestiontitle] = useState("");
-  const [question, setQuestion] = useState("");
 
   const dispatch = useAppDispatch();
 
-  const hendelTapTab = (event: React.SyntheticEvent, newValue: number) => {
-    setSelectedTab(newValue);
-  };
+  const user: User = useAppSelector(userSelector)
+  const messages: Message[] = useAppSelector(allMessages)
 
-  // useEffect(() => {
-  //   socket.on("message", (msg: Message) => {
-  //     console.log("message", msg.message);
-  //     if (msg.messageId !== tempMessageId) {
-  //       console.log('new message')
-  //       if (msg) {
-  //         dispatch(addMessage(msg));
-  //       }
-  //     }
-  //   });
-  //
-  //   return () => {
-  //     socket.removeAllListeners("message");
-  //   };
-  // }, []);
-
-  const handleChangetitle = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setQuestiontitle(e.target.value);
-  };
-  const handleChange = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setQuestion(e.target.value);
-  };
+  useEffect(() => {
+    dispatch(getDiscussionThunk(questionId))
+  }, [])
 
   function handleSendMessage(ev: any) {
     ev.preventDefault();
     const message: string = ev.target.elements.message.value;
 
     if (message) {
-      const msg: Message = formatMessage(message);
-      dispatchMessage(message);
-      // socket.emit("message", msg);
-      sendMessage(message)
-      tempMessageId = msg.messageId;
-    }
-  }
-
-  function formatMessage(message: string): Message {
-    try {
-      const messageId = uid();
-      const creatorId = "123";
-      const creatorDisplayName = "Tal";
-      const parentId = questionId;
-      const parentType = "question";
-
-      return {
-        messageId,
-        message,
-        creatorId,
-        creatorDisplayName,
-        parentId,
-        parentType,
-        error: false,
-      };
-    } catch (err) {
-      console.error(err);
-      return {
-        messageId: "",
-        message,
-        creatorId: "",
-        creatorDisplayName: "",
-        parentId: "",
-        parentType: "question",
-        error: true,
-      };
-    }
-  }
-
-  function dispatchMessage(messageText: string) {
-    if (messageText) {
-      console.log("trying to dispatch message", messageText);
-      const msg: Message = formatMessage(messageText);
-      if (msg.error !== false) {
-        dispatch(addMessage(msg));
+      const msg = formatMessage(message);
+      if (!!msg) {
+        // dispatch(addMessage(msg));
+        sendMessage(msg)
+        tempMessageId = msg.id;
       }
     }
   }
 
+  function formatMessage(message: string): Message | null {
+    try {
+      return {
+        // messageId,
+        id: uid(),
+        text: message,
+        creatorId: user.id,
+        creatorDisplayName: user.displayName,
+        parentId: questionId,
+        parentType: "question",
+        error: false,
+      };
+    } catch (err) {
+      console.error(err);
+      return null
+    }
+  }
+
   return (
-    <>
-      <div>
-        {" "}
-        <ul id="messages"></ul>
+      <div className="chat">
+        <div className="messages">
+          {_.map(messages, (msg: any, i: number) => (
+              <div key={`message-${i}`} className="message">
+                <div className="creator">{msg.roles.creator.displayName} - {msg.date}</div>
+                <div className="content">{msg.text}</div>
+              </div>
+          ))}
+        </div>
         <form onSubmit={handleSendMessage}>
-          <input name="message" autoComplete="off" placeholder="add message" />
-          <input type="submit" value="Send" />
+          <div className="chat-input">
+            <input type="text" name="message" autoComplete="off" placeholder="add message" />
+            <button type="submit">
+              <SendIcon/>
+            </button>
+          </div>
         </form>
       </div>
-    </>
-  );
-};
-export default Discussion;
+  )
+}
+
+export default Discussion

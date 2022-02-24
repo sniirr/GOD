@@ -1,7 +1,7 @@
 import {ThunkAction, configureStore,Action } from '@reduxjs/toolkit';
 import newQuestionSlice from './reducers/createQuestionReducer';
 import questionsSlice from './reducers/questionsReducers';
-import userSlice from './reducers/userRducer';
+import userSlice from './reducers/userReducer';
 import chatSlic from './reducers/chatReducer'
 import {apiSlice, apiMiddleware} from "./modules/api";
 

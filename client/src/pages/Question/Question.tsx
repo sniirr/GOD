@@ -12,7 +12,7 @@ import _ from 'lodash'
 import {useAppSelector, useAppDispatch} from "redux/hooks";
 
 //redux
-import {allMessages} from 'redux/reducers/chatReducer';
+import {allMessages, addMessage} from 'redux/reducers/chatReducer';
 import {questionById} from 'redux/reducers/questionsReducers'
 
 //components
@@ -43,7 +43,8 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
 
     useEffect(() => {
         joinRoom(questionId, (messageObj: any) => {
-            console.log('message received', messageObj.message)
+            console.log('message received', messageObj.text)
+            dispatch(addMessage(messageObj))
         })
         console.log('joined room', questionId)
         return () => {
@@ -62,21 +63,17 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
             <Tabs id="questions" tabs={[
                 {
                     title: "Solutions", component: () => (
-                        <div className="voteListWrapper">
-                            <QuestionInfo question={question}/>
-                        </div>
+                        <QuestionInfo question={question}/>
                     )
                 },
                 {
                     title: "Discussion", component: () => (
-                        <div className="voteListWrapper">
-                            <Discussion questionId={questionId} messages={messages}/>
-                        </div>
+                        <Discussion questionId={questionId} messages={messages}/>
                     )
                 },
                 {
                     title: "Vote", component: () => (
-                        <div className="voteListWrapper">
+                        <div>
                             <h2>Vote</h2>
                         </div>
                     )

@@ -10,21 +10,26 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const port: number | string = process.env.PORT || 4000;
 
+import { UserSchema } from './models/db/UserModel';
+import {MessageSchema} from "./models/db/DiscussionModel";
 
+import userRoutes from './routes/userRoute';
+import questionRoutes from './routes/questionRoute';
+import discussionRoutes from './routes/discussionRoute';
+
+require('./controlers/auth')// get google authentication
+require('./controlers/db') //connect to mongoDB
 
 app.use(cookieParser());
-
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'client', 'build')));
 
-import userRoutes from './routes/userRoute';
-import questionRoutes from './routes/questionRoute';
-
 app.use('/questions', questionRoutes);
 app.use('/user', userRoutes);
+app.use('/discussion', discussionRoutes);
 
 //passport settings
 const PASSPORT_SECRET = process.env.PASSPORT_SECRET;
@@ -34,15 +39,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(session({ secret: PASSPORT_SECRET, resave: false, saveUninitialized: false }));
 
-require('./controlers/auth')// get google authentication
-require('./controlers/db') //connect to mongoDB
-
-import { UserSchema } from './models/db/UserModel';
-
-
 //pasport routes
 app.get('/auth', passport.authenticate('google', { scope: ['email', 'profile'] }));
-   
 
 app.get('/google/callback', passport.authenticate('google', {
     failureRedirect: 'http://localhost:3000/fail'
@@ -81,7 +79,6 @@ app.get('/logout', (req: any, res: any) => {
 })
 
 //socket io
-
 io.on('connection', socket => {
     console.log(socket.rooms)
     console.log('a user connected');
@@ -98,13 +95,7 @@ io.on('connection', socket => {
         io.emit('message', msg);
     });
 
-    // socket.on('join room', roomId => {
-    //     console.log('roomId', roomId)
-    //     socket.join(roomId);
-
-    // })
     // rooms
-
     socket.on('join-room', roomId => {
         socket.join(roomId); //the client is now in that room
         socketRoom = roomId
@@ -117,20 +108,30 @@ io.on('connection', socket => {
         console.log('leave room', roomId)
     })
 
-    // socket.on('switch room', (data) => {
-    //     const { prevRoom, nextRoom } = data;
-    //     if (prevRoom) socket.leave(prevRoom);
-    //     if (nextRoom) socket.join(nextRoom);
-    //     socketRoom = nextRoom;
-    // })
+    socket.on(`chat-message`, async msgObj => {
+        // console.log(msgObj);
 
-    socket.on(`chat-message`, msgObj => {
-        // console.log(message);
-        // const msgObj = JSON.parse(message);
+        const MessageModel = mongoose.model('message', MessageSchema)
 
-        console.log(msgObj);
+        const UserModel = mongoose.model('UserModel', UserSchema)
 
-        io.to(socketRoom).emit('chat-message', msgObj);
+        const user = await UserModel.findOne({ id: msgObj.creatorId });
+
+        const inMessage = {
+            text: msgObj.text,
+            parentId: msgObj.parentId,
+            parentType: msgObj.parentType,
+            date: new Date(),
+            roles: {
+                creator: user,
+            }
+        }
+        // console.log(inMessage);
+        const message = new MessageModel(inMessage);
+        const res = await message.save();
+        // console.log('on chat-message save response', res);
+
+        io.to(socketRoom).emit('chat-message', res);
     })
 });
 

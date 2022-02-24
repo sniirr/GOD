@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+import {Message} from "../redux/reducers/chatReducer";
 let socket: any;
 
 export const initiateSocket = (room?: string) => {
@@ -23,6 +24,6 @@ export const leaveRoom = (room: string) => {
     socket.emit('leave-room', room)
 }
 
-export const sendMessage = (message: string) => {
-    if (socket) socket.emit('chat-message', {message});
+export const sendMessage = (message: Message) => {
+    if (socket) socket.emit('chat-message', message);
 }

@@ -8,7 +8,7 @@ import {
     getQuestionsThunk,
     allQuestions,
 } from "redux/reducers/questionsReducers";
-import {getUserThunkReducer} from "redux/reducers/userRducer";
+import {getUserThunkReducer} from "redux/reducers/userReducer";
 //components
 import ButtonAppBar from "components/ButtonAppBar/ButtonAppBar";
 import ApiData from "components/ApiData/ApiData";
@@ -32,13 +32,11 @@ const Questions: FC = () => {
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const renderList = (qs: any) => (
-        <div className="voteListWrapper">
-            <ApiData apiKey="questions/getQuestions">
-                {qs.map((item: any, i: number) => (
-                    <VoteCard key={`question-${i}`} info={item}/>
-                ))}
-            </ApiData>
-        </div>
+        <ApiData apiKey="questions/getQuestions">
+            {qs.map((item: any, i: number) => (
+                <VoteCard key={`question-${i}`} info={item}/>
+            ))}
+        </ApiData>
     )
 
     return (
