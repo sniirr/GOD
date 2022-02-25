@@ -1,16 +1,16 @@
 import React, {useEffect} from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { Provider } from 'react-redux';
-import store from './redux/store';
-import {disconnectSocket, initiateSocket} from "./utils/socket";
+import store from 'redux/store';
+import {disconnectSocket, initiateSocket} from "utils/socket";
 import AppRoutes from "./pages";
 
-import './style/App.scss';
+import 'style/App.scss';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import { theme } from './style/Theme';
+import { theme } from 'style/Theme';
 
 function App() {
 

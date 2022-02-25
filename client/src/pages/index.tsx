@@ -6,9 +6,9 @@ import CreateQuestion from "./CreateQuestion";
 import Notifications from "./Notifications";
 import Login from "./Login";
 import React, {useEffect} from "react";
-import {useAppDispatch} from "../redux/hooks";
-import {getUserThunkReducer} from "../redux/reducers/userReducer";
-import {getQuestionsThunk} from "../redux/reducers/questionsReducers";
+import {useAppDispatch} from "redux/hooks";
+import {getUserThunkReducer} from "redux/reducers/userReducer";
+import {getQuestionsThunk} from "redux/reducers/questionsReducers";
 
 const Fail = () => {
     return(

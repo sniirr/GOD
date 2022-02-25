@@ -61,23 +61,9 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
                 <div className="share-button"><ShareIcon/></div>
             </div>
             <Tabs id="questions" tabs={[
-                {
-                    title: "Solutions", component: () => (
-                        <QuestionInfo question={question}/>
-                    )
-                },
-                {
-                    title: "Discussion", component: () => (
-                        <Discussion questionId={questionId} messages={messages}/>
-                    )
-                },
-                {
-                    title: "Vote", component: () => (
-                        <div>
-                            <h2>Vote</h2>
-                        </div>
-                    )
-                },
+                {title: "Solutions", component: () => (<QuestionInfo question={question}/>)},
+                {title: "Discussion", component: () => (<Discussion questionId={questionId} messages={messages}/>)},
+                {title: "Vote", component: () => (<div><h2>Vote</h2></div>)},
             ]}/>
             <div className="bottom-nav">
                 <Link to="/questions" style={{textDecoration: 'none'}}>
