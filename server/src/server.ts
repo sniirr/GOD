@@ -136,5 +136,5 @@ io.on('connection', socket => {
 });
 
 
-http.listen(port, () => { console.log('Server listen on port', port) });
+http.listen(port, () => { console.log('Server listen on port', port) })
 
