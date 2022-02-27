@@ -1,0 +1,27 @@
+@import 'style/vars';
+
+.solution-card {
+  background-color: $lighter_gray;
+  color: black;
+
+  .card-top {
+      padding: 20px;
+  }
+
+  .solution-title {
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .solution-desc {
+
+  }
+
+  .card-bottom {
+    border-top: solid 1px $gray;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+  }
+}

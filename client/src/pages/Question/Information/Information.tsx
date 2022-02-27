@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import {Button} from "@mui/material";
 import './Information.scss'
 import AddIcon from "@mui/icons-material/Add";
-import {useHistory} from "react-router-dom";
+import {useHistory, useRouteMatch} from "react-router-dom";
 
 
 export interface QuestionInfoProps {
@@ -12,6 +12,7 @@ export interface QuestionInfoProps {
 const QuestionInfo = (props: QuestionInfoProps) => {
 
     const history = useHistory();
+    // let { path, url } = useRouteMatch()
 
     const {question} = props
 
@@ -26,7 +27,7 @@ const QuestionInfo = (props: QuestionInfoProps) => {
                 <Button
                     variant="contained"
                     onClick={() => {
-                        history.push('/create_suggestion')
+                        history.push(`/question/${question._id}/add-solution`)
                     }}>
                     <AddIcon/>
                 </Button>

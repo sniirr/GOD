@@ -72,7 +72,8 @@ export interface QuestionSchema {
   loader: boolean,
   enableMoveTo2: boolean,
   enableMoveTo3: boolean,
-  activate: boolean
+  activate: boolean,
+  solutions: any,
 }
 
 // Define the initial state using that type
@@ -86,7 +87,8 @@ const initialState = {
   loader: false,
   enableMoveTo2: false,
   enableMoveTo3: false,
-  activate: false
+  activate: false,
+  solutions: [],
 } as QuestionSchema;
 
 export const questionsSlice = createSlice({

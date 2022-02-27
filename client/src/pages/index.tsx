@@ -9,6 +9,7 @@ import React, {useEffect} from "react";
 import {useAppDispatch} from "redux/hooks";
 import {getUserThunkReducer} from "redux/reducers/userReducer";
 import {getQuestionsThunk} from "redux/reducers/questionsReducers";
+import AddSolution from "./Question/AddSolution";
 
 const Fail = () => {
     return(
@@ -33,6 +34,9 @@ const AppRoutes = () => {
                 </Route>
                 <Route path='/questions'>
                     <Questions/>
+                </Route>
+                <Route path='/question/:questionId/add-solution'>
+                    <AddSolution/>
                 </Route>
                 <Route path='/question/:questionId'>
                     <Question/>

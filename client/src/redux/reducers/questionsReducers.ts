@@ -1,4 +1,4 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
+import {createSlice, createAsyncThunk, PayloadAction, current} from '@reduxjs/toolkit'
 import type {RootState} from '../store';
 import axios from "axios";
 import _ from 'lodash'
@@ -24,17 +24,28 @@ export const getQuestionsThunk = createAsyncThunk(
 
 export const questionsSlice = createSlice({
     name: 'questions',
-    initialState: [],
-    reducers: {},
+    initialState: {},
+    reducers: {
+        addSolution: (state, action: PayloadAction<any>) => {
+            const {payload: {qid, solution}} = action
+            // const {questionId} = payload
+            const q = _.get(state, qid) as QuestionSchema
+            q.solutions.push(solution)
+        }
+    },
     extraReducers: builder => {
         builder
             .addCase(getQuestionsThunk.fulfilled, (state: any, action: any) => {
-                return action.payload
+                return _.keyBy(action.payload, '_id')
             })
     }
 })
 
+// actions
+export const {addSolution} = questionsSlice.actions
+
 export const allQuestions = (state: RootState) => state.questions
-export const questionById = (qid: string) => (state: RootState) => (_.find(state.questions, {_id: qid}) || {}) as QuestionSchema
+export const allQuestionsArray = (state: RootState) => _.values(state.questions)
+export const questionById = (qid: string) => (state: RootState) => _.get(state, ['questions', qid], {}) as QuestionSchema
 
 export default questionsSlice.reducer

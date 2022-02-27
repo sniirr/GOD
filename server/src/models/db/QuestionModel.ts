@@ -10,7 +10,9 @@ const FileSchema = new Schema({
     fileUrl:String
 });
 
-
+const SolutionSchema = new Schema({
+    description: String,
+})
 
 export const QuestionSchema = new Schema({
     title: String,
@@ -32,7 +34,8 @@ export const QuestionSchema = new Schema({
         vote:Boolean,
         closed:Boolean,
         deleted:Boolean,
-    } 
+    } ,
+    solutions: [SolutionSchema]
 });
 
 const QuestionModel = mongoose.model('QuestionModel', QuestionSchema);
