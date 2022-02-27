@@ -12,7 +12,7 @@ function getAllQuestions(){
                 else reject()
             }).catch(e => {
             console.error(e)
-            reject();
+            reject([]);
         })
     })
 }
