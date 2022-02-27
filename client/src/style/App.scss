@@ -73,6 +73,11 @@ h2 {
   flex-direction: column;
 }
 
+.internal-page {
+  flex-grow: 2;
+  position: relative;
+}
+
 .center-aligned-row {
   display: flex;
   align-items: center;
