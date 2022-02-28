@@ -2,8 +2,9 @@ import React, {useState, useEffect} from "react";
 import {Button} from "@mui/material";
 import './Information.scss'
 import AddIcon from "@mui/icons-material/Add";
-import {useHistory, useRouteMatch} from "react-router-dom";
-
+import {useHistory} from "react-router-dom";
+import _ from 'lodash'
+import SolutionCard from "../../../components/SolutionCard";
 
 export interface QuestionInfoProps {
     question?: any;
@@ -12,7 +13,6 @@ export interface QuestionInfoProps {
 const QuestionInfo = (props: QuestionInfoProps) => {
 
     const history = useHistory();
-    // let { path, url } = useRouteMatch()
 
     const {question} = props
 
@@ -23,6 +23,9 @@ const QuestionInfo = (props: QuestionInfoProps) => {
             <div className="title">{title}</div>
             <div className="description">{description}</div>
             <div className="section-title">Suggested solutions</div>
+            {_.map(question.solutions, (solution, i: number) => {
+                return (<SolutionCard key={`solution-${i}`} solution={solution} number={i + 1}/>)
+            })}
             <div className="toolbar">
                 <Button
                     variant="contained"

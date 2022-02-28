@@ -77,7 +77,7 @@ const Step3 = (props: StepProps) => {
             <div className="step step-3">
                 <h2>Preview</h2>
                 <div className="warnings--text">Please review all details as once an answer is published it cannot be edited.</div>
-                <SolutionCard solution={solution}/>
+                <SolutionCard solution={solution} number={-1}/>
             </div>
             <div className="buttons">
                 <Button onClick={() => wizard.previousStep()}>{'< Back'}</Button>

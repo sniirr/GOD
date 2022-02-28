@@ -23,7 +23,7 @@
   .question-header {
     background: no-repeat center center;
     background-size: 100% auto;
-    height: 41.67vw;
+    min-height: 41.67vw;
     max-height: 200px;
     position: relative;
 
@@ -50,7 +50,8 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    height: 50px;
+    min-height: 58px;
+    height: 58px;
     width: 100%;
     background-color: white;
     box-shadow: 10px 10px 10px 10px gray;
