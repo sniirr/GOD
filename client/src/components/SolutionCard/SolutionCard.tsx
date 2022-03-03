@@ -9,16 +9,17 @@ import Parser from 'html-react-parser';
 interface SolutionCardProps {
     solution: Solution,
     number: number,
+    fullText?: boolean,
 }
 const SolutionCard = (props: SolutionCardProps) => {
-    const {solution, number} = props
+    const {solution, number, fullText = false} = props
 
-    const [truncate, setTruncate] = useState(true)
+    const [truncate, setTruncate] = useState(!fullText)
 
     return (
         <div className="solution-card">
             <div className="card-top">
-                <div className="solution-title">{number > -1 ? `Solution #${number}` : 'New Solution'}</div>
+                <div className="solution-title">{`${number > -1 ? `#${number} ` : ''} ${solution.title}`}</div>
                 {truncate ? (
                     <TruncateMarkup lines={7} ellipsis={<div onClick={() => setTruncate(!truncate)} className="ellipsis">Show more</div>}>
                         <div>{Parser(solution.description)}</div>
@@ -26,7 +27,9 @@ const SolutionCard = (props: SolutionCardProps) => {
                 ) : (
                     <>
                         <div>{Parser(solution.description)}</div>
-                        <div onClick={() => setTruncate(!truncate)} className="ellipsis">Show less</div>
+                        {!fullText && (
+                            <div onClick={() => setTruncate(!truncate)} className="ellipsis">Show less</div>
+                        )}
                     </>
                 )}
             </div>

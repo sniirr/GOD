@@ -1,3 +1,5 @@
+import {SuggestionSchema} from "./SuggestionSchema";
+
 const mongoose = require('mongoose');
 import {UserSchema} from './UserModel';
 
@@ -9,10 +11,6 @@ const FileSchema = new Schema({
     fileName: String,
     fileUrl:String
 });
-
-const SolutionSchema = new Schema({
-    description: String,
-})
 
 export const QuestionSchema = new Schema({
     title: String,
@@ -35,7 +33,7 @@ export const QuestionSchema = new Schema({
         closed:Boolean,
         deleted:Boolean,
     } ,
-    solutions: [SolutionSchema]
+    solutions: [SuggestionSchema]
 });
 
 const QuestionModel = mongoose.model('QuestionModel', QuestionSchema);

@@ -16,16 +16,16 @@ export const SuggestionSchema = new Schema({
     description: String,
     parentId: String, //question id
     parentType:String, //"question"
-    direction:String, //is it rtl or ltr
-    language: String, //hebrew, arabic, english, etc
+    // direction:String, //is it rtl or ltr
+    // language: String, //hebrew, arabic, english, etc
     locale: String,
-    image: String,
+    // image: String,
     date: Date,
     evaluations:EvaluationsSchema,
     roles:{
         creator:UserSchema,
-        admins:[UserSchema],
-        participents:[UserSchema]
+        // admins:[UserSchema],
+        // participants:[UserSchema]
     }
     
 });

@@ -17,7 +17,7 @@ const getInitialDraftState = html => {
     return EditorState.createWithContent(contentState);
 }
 
-export default ({html, onChange}) => {
+export default ({html, onChange, ...editorProps}) => {
     const [editorState, setEditorState] = useState(getInitialDraftState(html))
 
     const editorRef = useRef(null);
@@ -39,6 +39,7 @@ export default ({html, onChange}) => {
         <div className="html-editor-container" onClick={() => editorRef.current.focusEditor()}>
             <Editor
                 ref={editorRef}
+                {...editorProps}
                 // editorRef={setEditorReference}
                 editorState={editorState}
                 toolbarClassName="toolbarClassName"

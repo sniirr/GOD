@@ -9,7 +9,6 @@ services:
       - /usr/mongodb/data:/data/db
     ports:
       - "27017:27017"
-      -
   server:
     container_name: god_server
     build:

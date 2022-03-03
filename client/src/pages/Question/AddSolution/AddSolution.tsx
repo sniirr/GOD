@@ -9,6 +9,8 @@ import {Solution} from "types";
 import SolutionCard from "components/SolutionCard";
 import {useAppDispatch} from "redux/hooks";
 import {addSolution} from 'redux/reducers/questionsReducers'
+import TextField from "@mui/material/TextField";
+import _ from 'lodash'
 
 interface QuestionParams {
     questionId: string
@@ -57,8 +59,13 @@ const Step2 = (props: StepProps) => {
     return (
         <>
             <div className="step step-2">
+                <h2>Solution Title</h2>
+                <TextField id="standard-basic" defaultValue={_.get(solution, 'title', '')} label="Title"
+                           variant="outlined" fullWidth type="text" name='title'
+                           onChange={(e: any) => setSolution({...solution, title: e.target.value})}/>
                 <h2>Add Your Solution</h2>
-                <HtmlEditor html={solution.description} onChange={(description: string) => setSolution({...solution, description})}/>
+                <HtmlEditor html={solution.description} toolbarHidden={true} placeholder="Description"
+                            onChange={(description: string) => setSolution({...solution, description})}/>
             </div>
             <div className="buttons">
                 <Button onClick={() => wizard.previousStep()}>{'< Back'}</Button>
@@ -77,7 +84,7 @@ const Step3 = (props: StepProps) => {
             <div className="step step-3">
                 <h2>Preview</h2>
                 <div className="warnings--text">Please review all details as once an answer is published it cannot be edited.</div>
-                <SolutionCard solution={solution} number={-1}/>
+                <SolutionCard solution={solution} number={-1} fullText={true}/>
             </div>
             <div className="buttons">
                 <Button onClick={() => wizard.previousStep()}>{'< Back'}</Button>
@@ -94,6 +101,7 @@ const AddSolution = () => {
 
     const [step, wizard] = useWizard()
     const [solution, setSolution] = useState<Solution>({
+        title: '',
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
     })
 
