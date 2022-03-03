@@ -1,8 +1,9 @@
-import {createSlice, createAsyncThunk, PayloadAction, current} from '@reduxjs/toolkit'
+import {createSlice, createAsyncThunk, PayloadAction} from '@reduxjs/toolkit'
 import type {RootState} from '../store';
 import axios from "axios";
 import _ from 'lodash'
 import {QuestionSchema} from "./createQuestionReducer";
+import {Solution} from "types";
 
 function getAllQuestions(){
     return new Promise((resolve, reject)=>{
@@ -27,10 +28,9 @@ export const questionsSlice = createSlice({
     initialState: {},
     reducers: {
         addSolution: (state, action: PayloadAction<any>) => {
-            const {payload: {qid, solution}} = action
-            // const {questionId} = payload
-            const q = _.get(state, qid) as QuestionSchema
-            q.solutions.push(solution)
+            const {payload: solution} = action
+            const question = _.get(state, solution.parentId) as QuestionSchema
+            question.solutions.push(solution)
         }
     },
     extraReducers: builder => {
@@ -42,7 +42,15 @@ export const questionsSlice = createSlice({
 })
 
 // actions
-export const {addSolution} = questionsSlice.actions
+export const addSolution = (solution: Solution) => async (dispatch: any) => {
+    try {
+        const {data} = await axios.post('/questions/add-solution', solution)
+
+        dispatch(questionsSlice.actions.addSolution(data))
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 export const allQuestions = (state: RootState) => state.questions
 export const allQuestionsArray = (state: RootState) => _.values(state.questions)

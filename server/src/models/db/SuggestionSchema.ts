@@ -29,3 +29,7 @@ export const SuggestionSchema = new Schema({
     }
     
 });
+
+export const Suggestion = mongoose.model('Suggestion', SuggestionSchema)
+
+export default Suggestion

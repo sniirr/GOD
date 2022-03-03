@@ -101,12 +101,16 @@ const AddSolution = () => {
 
     const [step, wizard] = useWizard()
     const [solution, setSolution] = useState<Solution>({
-        title: '',
+        title: 'Solution 1',
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
     })
 
     const submit = () => {
-        dispatch(addSolution({qid: params.questionId, solution}))
+        dispatch(addSolution({
+            ...solution,
+            parentId: params.questionId,
+            parentType: 'question',
+        }))
         history.push(`/question/${params.questionId}`)
     }
 
