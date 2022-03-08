@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import {Button} from "@mui/material";
 import './Information.scss'
 import AddIcon from "@mui/icons-material/Add";
@@ -24,7 +24,7 @@ const QuestionInfo = (props: QuestionInfoProps) => {
             <div className="description">{description}</div>
             <div className="section-title">Suggested solutions</div>
             {_.map(question.solutions, (solution, i: number) => {
-                return (<SolutionCard key={`solution-${i}`} solution={solution} number={i + 1}/>)
+                return (<SolutionCard key={`solution-${i}`} solution={solution} number={i + 1} questionId={question._id}/>)
             })}
             <div className="toolbar">
                 <Button

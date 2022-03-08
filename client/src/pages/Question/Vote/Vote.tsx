@@ -13,7 +13,7 @@ const Vote = (props: QuestionInfoProps) => {
     return (
         <div className="vote-tab">
             {_.map(question.solutions, (solution, i: number) => {
-                return (<SolutionCard key={`solution-${i}`} solution={solution} number={i + 1}/>)
+                return (<SolutionCard key={`solution-${i}`} solution={solution} number={i + 1} questionId={question.id}/>)
             })}
         </div>
     );

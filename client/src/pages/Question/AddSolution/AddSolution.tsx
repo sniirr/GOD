@@ -17,6 +17,7 @@ interface QuestionParams {
 }
 
 interface StepProps {
+    questionId: string,
     wizard: any,
     solution: Solution,
     setSolution: Function,
@@ -77,14 +78,14 @@ const Step2 = (props: StepProps) => {
 
 const Step3 = (props: StepProps) => {
 
-    const {wizard, solution, submit} = props
+    const {questionId, wizard, solution, submit} = props
 
     return (
         <>
             <div className="step step-3">
                 <h2>Preview</h2>
                 <div className="warnings--text">Please review all details as once an answer is published it cannot be edited.</div>
-                <SolutionCard solution={solution} number={-1} fullText={true}/>
+                <SolutionCard solution={solution} number={-1} fullText={true} questionId={questionId}/>
             </div>
             <div className="buttons">
                 <Button onClick={() => wizard.previousStep()}>{'< Back'}</Button>
@@ -117,11 +118,11 @@ const AddSolution = () => {
     const renderStep = () => {
         switch (step) {
             case 1:
-                return <Step1 wizard={wizard} solution={solution} setSolution={setSolution}/>
+                return <Step1 wizard={wizard} solution={solution} setSolution={setSolution} questionId={params.questionId}/>
             case 2:
-                return <Step2 wizard={wizard} solution={solution} setSolution={setSolution}/>
+                return <Step2 wizard={wizard} solution={solution} setSolution={setSolution} questionId={params.questionId}/>
             case 3:
-                return <Step3 wizard={wizard} solution={solution} setSolution={setSolution} submit={submit}/>
+                return <Step3 wizard={wizard} solution={solution} setSolution={setSolution} submit={submit} questionId={params.questionId}/>
             default:
                 return null
         }

@@ -1,5 +1,7 @@
 import Question from '../models/db/QuestionModel';
 import User from "../models/db/UserModel";
+import Solution from "../models/db/SuggestionSchema";
+
 
 var ObjectId = require('mongoose').Types.ObjectId;
 
@@ -62,7 +64,8 @@ export async function getAllQuestions(req: any, res: any): Promise<void> {
 
         const result = await Question.find({
             members: userId
-        });
+        })
+            .populate('solutions');
 
         for (let i in result) {
 
@@ -82,7 +85,7 @@ export async function addSolution(req: any, res: any) {
     try {
         const user = await User.findOne({id: req.user.id});
 
-        const solution = {
+        const solutionData = {
             ...req.body,
             date: new Date(),
             roles: {
@@ -90,11 +93,36 @@ export async function addSolution(req: any, res: any) {
             }
         }
 
+        const solution = await Solution.create(solutionData)
+
         const question = await Question.findOne({_id: new ObjectId(req.body.parentId)})
-        question.solutions.push(solution)
+        question.solutions.push(solution._id)
         await question.save()
 
         res.send(solution);
+    } catch (error: any) {
+        console.error(error)
+        res.status(500).send({error: error.message})
+    }
+}
+
+export const setSolutionLike = async (req: any, res: any) => {
+    try {
+        const {sid, vote} = req.body
+        const userId = req.user.id
+
+        const key = `likes.${userId}`
+        console.log({key})
+        await Solution.updateOne(
+            {"_id": sid},
+            {
+                "$set": {
+                    [key]: vote
+                }
+            }
+        )
+
+        res.send({success: true});
     } catch (error: any) {
         console.error(error)
         res.status(500).send({error: error.message})

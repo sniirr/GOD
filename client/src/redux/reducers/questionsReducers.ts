@@ -31,6 +31,12 @@ export const questionsSlice = createSlice({
             const {payload: solution} = action
             const question = _.get(state, solution.parentId) as QuestionSchema
             question.solutions.push(solution)
+        },
+        likeSolution: (state, action: PayloadAction<any>) => {
+            const {payload: {qid, sid, userId, vote}} = action
+            const question = _.get(state, qid) as QuestionSchema
+            const i = _.findIndex(question.solutions, (s: Solution) => s._id === sid)
+            question.solutions[i].likes[userId] = vote
         }
     },
     extraReducers: builder => {
@@ -52,6 +58,19 @@ export const addSolution = (solution: Solution) => async (dispatch: any) => {
     }
 }
 
+export const likeSolution = (qid: string, sid: string, userId: string, vote: boolean) => async (dispatch: any) => {
+    try {
+        const {data} = await axios.post('/questions/like-solution', {sid, vote})
+
+        console.log('likeSolution', {data})
+
+        dispatch(questionsSlice.actions.likeSolution({qid, sid, vote, userId}))
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// selectors
 export const allQuestions = (state: RootState) => state.questions
 export const allQuestionsArray = (state: RootState) => _.values(state.questions)
 export const questionById = (qid: string) => (state: RootState) => _.get(state, ['questions', qid], {}) as QuestionSchema
