@@ -6,7 +6,7 @@ import './Questions.scss'
 import {useAppDispatch, useAppSelector} from "redux/hooks";
 import {
     getQuestionsThunk,
-    allQuestions,
+    allQuestions, allQuestionsArray,
 } from "redux/reducers/questionsReducers";
 //components
 import ButtonAppBar from "components/ButtonAppBar/ButtonAppBar";
@@ -23,7 +23,7 @@ export interface Group {
 const Questions: FC = () => {
     const dispatch = useAppDispatch();
 
-    const questions = useAppSelector(allQuestions);
+    const questions = useAppSelector(allQuestionsArray);
 
     useEffect(() => {
         dispatch(getQuestionsThunk());

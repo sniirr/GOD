@@ -10,7 +10,6 @@ import SendIcon from '@mui/icons-material/Send';
 
 interface DiscussionProps {
   questionId: string;
-  messages: Array<Message>;
 }
 
 let tempMessageId: string | boolean = false;

@@ -1,5 +1,5 @@
 import React, {FC, useState, useEffect} from "react";
-import {useParams} from 'react-router-dom';
+import {Redirect, Route, Switch, useParams, useRouteMatch} from 'react-router-dom';
 import Tabs from 'components/Tabs'
 import './Question.scss';
 import {Link} from 'react-router-dom';
@@ -7,17 +7,14 @@ import {Button} from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ShareIcon from '@mui/icons-material/Share';
 import "./Question.scss";
-import _ from 'lodash'
-
 import {useAppSelector, useAppDispatch} from "redux/hooks";
-
 //redux
-import {allMessages, addMessage} from 'redux/reducers/chatReducer';
+import {addMessage} from 'redux/reducers/chatReducer';
 import {questionById} from 'redux/reducers/questionsReducers'
-
 //components
 import Discussion from "./Discussion";
 import QuestionInfo from './Information'
+import Vote from "./Vote";
 import {joinRoom, leaveRoom} from "utils/socket";
 
 export interface QuestionProps {
@@ -31,7 +28,8 @@ interface QuestionParams {
 const Question: FC<QuestionProps> = (props: QuestionProps) => {
 
     const params = useParams<QuestionParams>();
-    console.log(params)
+    let { path, url } = useRouteMatch()
+
     let questionId = '';
     if ('questionId' in params) {
         questionId = params.questionId
@@ -39,7 +37,6 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
 
     const dispatch = useAppDispatch();
     const question = useAppSelector(questionById(questionId))
-    const messages = useAppSelector(allMessages).filter(msg => msg.parentId === questionId);
 
     useEffect(() => {
         joinRoom(questionId, (messageObj: any) => {
@@ -60,11 +57,25 @@ const Question: FC<QuestionProps> = (props: QuestionProps) => {
             <div className="question-header" style={{backgroundImage: imageUrl ? `url(${imageUrl}` : 'none'}}>
                 <div className="share-button"><ShareIcon/></div>
             </div>
-            <Tabs id="questions" tabs={[
-                {title: "Solutions", component: () => (<QuestionInfo question={question}/>)},
-                {title: "Discussion", component: () => (<Discussion questionId={questionId} messages={messages}/>)},
-                {title: "Vote", component: () => (<div><h2>Vote</h2></div>)},
+            <Tabs id="questions" isMenu tabs={[
+                {title: "Solutions", link: `${url}`},
+                {title: "Discussion", link: `${url}/discussion`},
+                {title: "Vote", link: `${url}/vote`},
             ]}/>
+            <div className="internal-page">
+                <Switch>
+                    <Route path={`${path}/discussion`}>
+                        <Discussion questionId={questionId}/>
+                    </Route>
+                    <Route path={`${path}/vote`}>
+                        <Vote question={question}/>
+                    </Route>
+                    <Route path={`${path}/info`}>
+                        <QuestionInfo question={question}/>
+                    </Route>
+                    <Redirect to={`${path}/info`}/>
+                </Switch>
+            </div>
             <div className="bottom-nav">
                 <Link to="/questions" style={{textDecoration: 'none'}}>
                     <Button>

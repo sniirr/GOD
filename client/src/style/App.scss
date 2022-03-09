@@ -73,6 +73,11 @@ h2 {
   flex-direction: column;
 }
 
+.internal-page {
+  flex-grow: 2;
+  position: relative;
+}
+
 .center-aligned-row {
   display: flex;
   align-items: center;
@@ -181,7 +186,7 @@ h2 {
     // z-index: -1;
   }
 
-  a {
+  a, .step{
     width: fit-content;
     text-decoration: none;
     display: flex;

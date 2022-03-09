@@ -20,17 +20,7 @@ services:
       - ./server/src:/usr/godapp/server/src
     depends_on:
       - "mongo"
-#  client:
-#    container_name: god_client
-#    build:
-#      context: ./client
-#      dockerfile: Dockerfile
-#    ports:
-#      - "3000:3000"
-#    volumes:
-#      - ./client:/usr/godapp/client
-#    stdin_open: true
-#    tty: true
+
   mongo-express:
     image: mongo-express
     container_name: mongo-express
@@ -48,8 +38,3 @@ services:
 networks:
   default:
     name: mongo-express-network
-
-#networks:
-#  MONGO:
-#    name: MONGO
-#    driver: bridge

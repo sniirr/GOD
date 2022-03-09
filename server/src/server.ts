@@ -2,7 +2,6 @@ const express = require('express');
 const session = require('express-session');
 const cookieParser = require('cookie-parser')
 const jwt = require('jwt-simple');
-const mongoose = require('mongoose');
 const path = require('path');
 require('dotenv').config();
 const app = express();
@@ -10,8 +9,8 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const port: number | string = process.env.PORT || 4000;
 
-import { UserSchema } from './models/db/UserModel';
-import {MessageSchema} from "./models/db/DiscussionModel";
+import User from './models/db/UserModel';
+import {Message} from "./models/db/DiscussionModel";
 
 import userRoutes from './routes/userRoute';
 import questionRoutes from './routes/questionRoute';
@@ -51,14 +50,12 @@ app.get('/google/callback', passport.authenticate('google', {
         user.role = 'public';
         user.last_entered = new Date();
         console.log(`user ${user.displayName} logged in`);
-        
-        const UserModel = mongoose.model('user', UserSchema)
 
         // Try to update user
-        const userDB = await UserModel.findOneAndUpdate({ id: user.id }, user);
+        const userDB = await User.findOneAndUpdate({ id: user.id }, user);
 
         if (!userDB) {
-            const newUser = new UserModel(user);
+            const newUser = new User(user);
             const userData = await newUser.save();
             console.log(userData);
         }
@@ -109,13 +106,7 @@ io.on('connection', socket => {
     })
 
     socket.on(`chat-message`, async msgObj => {
-        // console.log(msgObj);
-
-        const MessageModel = mongoose.model('message', MessageSchema)
-
-        const UserModel = mongoose.model('user', UserSchema)
-
-        const user = await UserModel.findOne({ id: msgObj.creatorId });
+        const user = await User.findOne({ id: msgObj.creatorId });
 
         const inMessage = {
             text: msgObj.text,
@@ -126,10 +117,9 @@ io.on('connection', socket => {
                 creator: user,
             }
         }
-        // console.log(inMessage);
-        const message = new MessageModel(inMessage);
+
+        const message = new Message(inMessage);
         const res = await message.save();
-        // console.log('on chat-message save response', res);
 
         io.to(socketRoom).emit('chat-message', res);
     })
