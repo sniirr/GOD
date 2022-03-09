@@ -1,3 +1,3 @@
-import SolutionCard from './SolutionCard'
+import SolutionCard from './SolutionCard';
 
-export default SolutionCard
+export default SolutionCard;

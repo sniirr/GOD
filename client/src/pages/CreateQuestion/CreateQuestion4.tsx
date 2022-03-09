@@ -1,9 +1,31 @@
-import React, { FC, useEffect } from "react";
-import {Link, useHistory} from "react-router-dom";
+import React, { FC, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 // import axios from 'axios';
 
-//redux
-import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+// redux
+
+// material UI components
+import Button from '@mui/material/Button';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import WhatsappIcon from '@mui/icons-material/WhatsApp';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+
+// Cloudaniry
+import { AdvancedImage } from '@cloudinary/react';
+import { Cloudinary } from '@cloudinary/url-gen';
+import { fill } from '@cloudinary/url-gen/actions/resize';
+
+// components
+
+// functions
+import {
+  createUpdateQuestion,
+  activateQuestion,
+} from 'redux/reducers/createQuestionReducer';
+
+import { EmailShareButton, WhatsappShareButton } from 'react-share';
+import CreateQuestionProps from './CreateQuestionProps';
 import {
   selectQuestionId,
   selectTitle,
@@ -11,33 +33,11 @@ import {
   selectImage,
   setQuestionId,
   setActivate,
-} from "../../redux/reducers/createQuestionReducer";
+} from '../../redux/reducers/createQuestionReducer';
+import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 
-//material UI components
-import Button from "@mui/material/Button";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import WhatsappIcon from "@mui/icons-material/WhatsApp";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-
-//Cloudaniry
-import { AdvancedImage } from "@cloudinary/react";
-import { Cloudinary } from "@cloudinary/url-gen";
-import { fill } from "@cloudinary/url-gen/actions/resize";
-
-//components
-import { createQuestionProps } from "./CreateQuestion";
-
-//functions
-import {
-  createUpdateQuestion,
-  activateQuestion,
-} from "redux/reducers/createQuestionReducer";
-
-import { EmailShareButton, WhatsappShareButton } from "react-share";
-
-const CreateQuestion4: FC<createQuestionProps> = (
-  props: createQuestionProps
+const CreateQuestion4: FC<CreateQuestionProps> = (
+  props: CreateQuestionProps,
 ) => {
   const { path } = props;
 
@@ -50,25 +50,43 @@ const CreateQuestion4: FC<createQuestionProps> = (
   const domain = window.location.hostname;
 
   useEffect(() => {
-    //save question as draft
+    // save question as draft
 
-    createUpdateQuestion(title, description, image).then((questionId) => {
-      dispatch(setQuestionId(questionId));
+    createUpdateQuestion(title, description, image).then((qid) => {
+      dispatch(setQuestionId(qid));
     });
     // eslint-disable-next-line
   }, []);
 
   const cld = new Cloudinary({
     cloud: {
-      cloudName: "god-delib",
+      cloudName: 'god-delib',
     },
   });
-  let imagePublicId: string = "";
+  let imagePublicId: string = '';
   let myImage;
   if (image.public_id) {
     imagePublicId = image.public_id;
     myImage = cld.image(imagePublicId);
     myImage.resize(fill().width(120));
+  }
+
+  function handleFinish() {
+    try {
+      console.log('finish', questionId);
+      if (typeof questionId === 'string') {
+        activateQuestion(true, questionId).then((activate) => {
+          console.log(activate);
+          dispatch(setActivate(activate));
+          history.push('/questions');
+        });
+      } else {
+        console.info(questionId);
+        throw new Error('question Id is not of type string');
+      }
+    } catch (err: any) {
+      console.error(err.message);
+    }
   }
 
   return (
@@ -114,29 +132,13 @@ const CreateQuestion4: FC<createQuestionProps> = (
         <Button
           variant="contained"
           endIcon={<CheckCircleIcon />}
-          onClick={handleFinish}>
+          onClick={handleFinish}
+        >
           finish
         </Button>
       </div>
     </div>
   );
-  function handleFinish() {
-    try {
-      console.log("finish", questionId);
-      if (typeof questionId === "string") {
-        activateQuestion(true, questionId).then((activate) => {
-          console.log(activate);
-          dispatch(setActivate(activate));
-          history.push('/questions')
-        });
-      } else {
-        console.info(questionId);
-        throw new Error("question Id is not of type string");
-      }
-    } catch (err: any) {
-      console.error(err.message);
-    }
-  }
 };
 
 export default CreateQuestion4;

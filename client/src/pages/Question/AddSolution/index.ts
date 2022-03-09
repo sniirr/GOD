@@ -1,3 +1,3 @@
-import AddSolution from './AddSolution'
+import AddSolution from './AddSolution';
 
-export default AddSolution
+export default AddSolution;

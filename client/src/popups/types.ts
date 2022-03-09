@@ -1,1 +1,1 @@
-export const ERROR:string = "ERROR";
+export const ERROR:string = 'ERROR';
