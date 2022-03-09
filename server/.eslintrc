@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "airbnb-base/legacy",
+    "airbnb-typescript/base"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["import"],
+  "rules": {
+    "strict": ["off", "global"],
+    "max-len": "off",
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }],
+    // dev only
+    "no-console": "off"
+  }
+}
