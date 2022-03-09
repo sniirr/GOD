@@ -36,6 +36,9 @@ export const questionsSlice = createSlice({
             const {payload: {qid, sid, userId, vote}} = action
             const question = _.get(state, qid) as QuestionSchema
             const i = _.findIndex(question.solutions, (s: Solution) => s._id === sid)
+            if (!question.solutions[i].likes) {
+                question.solutions[i].likes = {}
+            }
             question.solutions[i].likes[userId] = vote
         }
     },
