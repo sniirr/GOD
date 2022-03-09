@@ -6,13 +6,11 @@ interface MessageProps{
  const Message = (props:MessageProps) => {
     const {msg} = props
     
-    const displayName = get(msg, 'creator.displayName','')
+    const displayName = get(msg, 'roles.creator.displayName','')
     if(displayName.length ===0){ 
         console.warn (`message ${msg._id} has no creator`);
         console.log(JSON.stringify(msg))
-    } else {
-        console.log(`message ${msg._id} has a creator`)
-    }
+    } 
     try {
         return (
             <div className="message">

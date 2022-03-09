@@ -115,8 +115,9 @@ io.on("connection", (socket) => {
   // rooms
   socket.on("join-room", (roomId) => {
     socket.join(roomId); //the client is now in that room
+    
     socketRoom = roomId;
-    console.log("join room", roomId);
+    console.log("join room", roomId, '--------------------------------------------');
   });
 
   socket.on("leave-room", (roomId) => {
@@ -134,7 +135,12 @@ io.on("connection", (socket) => {
 
     const res = await addMessage(msgObj);
     // console.log('on chat-message save response', res);
-    if (res) io.to(socketRoom).emit("chat-message", res);
+  
+    if(!socketRoom) socketRoom = msgObj.parentId;
+    console.log('socketRoom',socketRoom)
+    if (res && socketRoom){ 
+        console.log('------- send socket to', socketRoom)
+        io.to(socketRoom).emit("chat-message", res);}
   });
 });
 
