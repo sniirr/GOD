@@ -1,18 +1,49 @@
-import {MessageSchema} from "../models/db/DiscussionModel";
-const mongoose = require('mongoose');
+import { MessageModel } from "../models/db/DiscussionModel";
+import { UserModel } from "../models/db/UserModel";
 
-const Message = mongoose.model('message', MessageSchema);
+const mongoose = require("mongoose");
 
 export async function getDiscussion(req: any, res: any): Promise<void> {
-    try {
-        const result = await Message.find({
-            parentType: 'question',
-            parentId: req.body.qid,
-        });
+  try {
+    const result = await MessageModel.find({
+      parentType: "question",
+      parentId: req.body.qid,
+    });
 
-        res.send({ result, ok: true });
-    } catch (error: any) {
-        res.send({ error: error.message });
-    }
+    res.send({ result, ok: true });
+  } catch (error: any) {
+    console.error(error);
+    res.send({ error: error.message });
+  }
 }
 
+export async function addMessage(
+  msgObj: any,
+  userId: string
+): Promise<boolean> {
+  try {
+    const user = await UserModel.findOne({ id: userId });
+
+    if (user) {
+      const inMessage = {
+        text: msgObj.text,
+        parentId: msgObj.parentId,
+        parentType: msgObj.parentType,
+        date: new Date(),
+        roles: {
+          creator: user,
+        },
+      };
+      // console.log(inMessage);
+      const message = new MessageModel(inMessage);
+      const res = await message.save();
+      return true;
+    }else {
+        throw new Error(`No user with id ${userId} was found in DB`)
+    }
+    
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+}

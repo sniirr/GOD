@@ -1,19 +1,29 @@
+import {get} from 'lodash'
 interface MessageProps{
     msg:any
 }
 
  const Message = (props:MessageProps) => {
     const {msg} = props
+    
+    const displayName = get(msg, 'creator.displayName','')
+    if(displayName.length ===0){ 
+        console.warn (`message ${msg._id} has no creator`);
+        console.log(JSON.stringify(msg))
+    } else {
+        console.log(`message ${msg._id} has a creator`)
+    }
     try {
         return (
             <div className="message">
               <div className="creator">
-                {msg.roles.creator.displayName} - {msg.date}
+                {displayName} - {msg.date}
               </div>
               <div className="content">{msg.text}</div>
             </div>
           ) 
     } catch (error) {
+        console.log(msg)
         console.error(error)
         return null
     }

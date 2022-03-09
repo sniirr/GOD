@@ -30,6 +30,7 @@ const Discussion: FC<DiscussionProps> = (props: DiscussionProps) => {
 
   const user: User = useAppSelector(userSelector);
   const messages: Message[] = useAppSelector(allMessages);
+  
   useEffect(() => {
     dispatch(getDiscussionThunk(questionId));
   }, []);

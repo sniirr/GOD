@@ -11,11 +11,14 @@ const io = require("socket.io")(http);
 const port: number | string = process.env.PORT || 4000;
 
 import { UserModel } from "./models/db/UserModel";
-import { MessageModel } from "./models/db/DiscussionModel";
+
 
 import userRoutes from "./routes/userRoute";
 import questionRoutes from "./routes/questionRoute";
 import discussionRoutes from "./routes/discussionRoute";
+
+//controls
+import {addMessage} from './controlers/discussionCont'
 
 require("./controlers/auth"); // get google authentication
 require("./controlers/db"); //connect to mongoDB
@@ -130,20 +133,7 @@ io.on("connection", (socket) => {
 
     // const UserModel = mongoose.model('user', UserSchema)
 
-    const user = await UserModel.findOne({ id: msgObj.creatorId });
-
-    const inMessage = {
-      text: msgObj.text,
-      parentId: msgObj.parentId,
-      parentType: msgObj.parentType,
-      date: new Date(),
-      roles: {
-        creator: user,
-      },
-    };
-    // console.log(inMessage);
-    const message = new MessageModel(inMessage);
-    const res = await message.save();
+    const res = await addMessage(msgObj,)
     // console.log('on chat-message save response', res);
 
     io.to(socketRoom).emit("chat-message", res);
