@@ -66,7 +66,7 @@ const Discussion: FC<DiscussionProps> = (props: DiscussionProps) => {
         {_.map(messages, (msg: any, i: number) => (
           <div key={`message-${i}`} className="message">
             <div className="creator">
-              {msg.roles.creator.displayName}
+              {msg.roles.creator?.displayName}
               {' '}
               -
               {' '}
