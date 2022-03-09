@@ -1,140 +1,155 @@
-const express = require('express');
-const session = require('express-session');
-const cookieParser = require('cookie-parser')
-const jwt = require('jwt-simple');
-const mongoose = require('mongoose');
-const path = require('path');
-require('dotenv').config();
+const express = require("express");
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
+const jwt = require("jwt-simple");
+const mongoose = require("mongoose");
+const path = require("path");
+require("dotenv").config();
 const app = express();
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+const http = require("http").createServer(app);
+const io = require("socket.io")(http);
 const port: number | string = process.env.PORT || 4000;
 
-import { UserSchema } from './models/db/UserModel';
-import {MessageSchema} from "./models/db/DiscussionModel";
+import { UserModel } from "./models/db/UserModel";
+import { MessageModel } from "./models/db/DiscussionModel";
 
-import userRoutes from './routes/userRoute';
-import questionRoutes from './routes/questionRoute';
-import discussionRoutes from './routes/discussionRoute';
+import userRoutes from "./routes/userRoute";
+import questionRoutes from "./routes/questionRoute";
+import discussionRoutes from "./routes/discussionRoute";
 
-require('./controlers/auth')// get google authentication
-require('./controlers/db') //connect to mongoDB
+require("./controlers/auth"); // get google authentication
+require("./controlers/db"); //connect to mongoDB
 
 app.use(cookieParser());
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'client', 'build')));
+app.use(express.static(path.join(__dirname, "client", "build")));
 
-app.use('/questions', questionRoutes);
-app.use('/user', userRoutes);
-app.use('/discussion', discussionRoutes);
+app.use("/questions", questionRoutes);
+app.use("/user", userRoutes);
+app.use("/discussion", discussionRoutes);
 
 //passport settings
 const PASSPORT_SECRET = process.env.PASSPORT_SECRET;
-const passport = require('passport');
+const passport = require("passport");
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(session({ secret: PASSPORT_SECRET, resave: false, saveUninitialized: false }));
+app.use(
+  session({ secret: PASSPORT_SECRET, resave: false, saveUninitialized: false })
+);
 
 //pasport routes
-app.get('/auth', passport.authenticate('google', { scope: ['email', 'profile'] }));
+app.get(
+  "/auth",
+  passport.authenticate("google", { scope: ["email", "profile"] })
+);
 
-app.get('/google/callback', passport.authenticate('google', {
-    failureRedirect: 'http://localhost:3000/fail'
-}), async (req, res) => {
+app.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "http://localhost:3000/fail",
+  }),
+  async (req, res) => {
     try {
-        const user = req.user;
+      const user = req.user;
 
-        user.role = 'public';
-        user.last_entered = new Date();
-        console.log(`user ${user.displayName} logged in`);
-        
-        const UserModel = mongoose.model('user', UserSchema)
+      user.role = "public";
+      user.last_entered = new Date();
+      console.log(`user ${user.displayName} logged in`);
 
-        // Try to update user
-        const userDB = await UserModel.findOneAndUpdate({ id: user.id }, user);
+    //   const UserModel = mongoose.model("user", UserSchema);
 
-        if (!userDB) {
-            const newUser = new UserModel(user);
-            const userData = await newUser.save();
-            console.log(userData);
-        }
-        res.user = user;
-        const userJWT = jwt.encode({ id: user.id, role:user.role, displayName:user.displayName}, JWT_SECRET);
-        res.cookie('user', userJWT, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 2 })
-        res.cookie('isLogged','true',{maxAge: 1000 * 60 * 60 * 24 * 2 })
-        res.redirect('http://localhost:3000/questions');
+      // Try to update user
+      const userDB = await UserModel.findOneAndUpdate({ id: user.id }, user);
+
+      if (!userDB) {
+        const newUser = new UserModel(user);
+        const userData = await newUser.save();
+        console.log(userData);
+      }
+      res.user = user;
+      const userJWT = jwt.encode(
+        { id: user.id, role: user.role, displayName: user.displayName },
+        JWT_SECRET
+      );
+      res.cookie("user", userJWT, {
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 * 2,
+      });
+      res.cookie("isLogged", "true", { maxAge: 1000 * 60 * 60 * 24 * 2 });
+      res.redirect("http://localhost:3000/questions");
     } catch (err: any) {
-        res.status(500).send(err.message);
+      res.status(500).send(err.message);
     }
-});
+  }
+);
 
-app.get('/logout', (req: any, res: any) => {
-    req.logout();
-    res.clearCookie("user");
-    res.send({ login: false })
-})
+app.get("/logout", (req: any, res: any) => {
+  req.logout();
+  res.clearCookie("user");
+  res.send({ login: false });
+});
 
 //socket io
-io.on('connection', socket => {
-    console.log(socket.rooms)
-    console.log('a user connected');
+io.on("connection", (socket) => {
+  console.log(socket.rooms);
+  console.log("a user connected");
 
-    let socketRoom = null
+  let socketRoom = null;
 
-    socket.on('disconnect', () => {
-        socketRoom = null
-        console.log('user disconnected');
-    })
+  socket.on("disconnect", () => {
+    socketRoom = null;
+    console.log("user disconnected");
+  });
 
-    socket.on('message', (msg) => {
-        console.log('message: ' + msg.message);
-        io.emit('message', msg);
-    });
+  socket.on("message", (msg) => {
+    console.log("message: " + msg.message);
+    io.emit("message", msg);
+  });
 
-    // rooms
-    socket.on('join-room', roomId => {
-        socket.join(roomId); //the client is now in that room
-        socketRoom = roomId
-        console.log('join room', roomId)
-    })
+  // rooms
+  socket.on("join-room", (roomId) => {
+    socket.join(roomId); //the client is now in that room
+    socketRoom = roomId;
+    console.log("join room", roomId);
+  });
 
-    socket.on('leave-room', roomId => {
-        socket.leave(roomId); //the client is now in that room
-        socketRoom = null
-        console.log('leave room', roomId)
-    })
+  socket.on("leave-room", (roomId) => {
+    socket.leave(roomId); //the client is now in that room
+    socketRoom = null;
+    console.log("leave room", roomId);
+  });
 
-    socket.on(`chat-message`, async msgObj => {
-        // console.log(msgObj);
+  socket.on(`chat-message`, async (msgObj) => {
+    console.log(msgObj);
 
-        const MessageModel = mongoose.model('message', MessageSchema)
+    // const MessageModel = mongoose.model('message', MessageSchema)
 
-        const UserModel = mongoose.model('user', UserSchema)
+    // const UserModel = mongoose.model('user', UserSchema)
 
-        const user = await UserModel.findOne({ id: msgObj.creatorId });
+    const user = await UserModel.findOne({ id: msgObj.creatorId });
 
-        const inMessage = {
-            text: msgObj.text,
-            parentId: msgObj.parentId,
-            parentType: msgObj.parentType,
-            date: new Date(),
-            roles: {
-                creator: user,
-            }
-        }
-        // console.log(inMessage);
-        const message = new MessageModel(inMessage);
-        const res = await message.save();
-        // console.log('on chat-message save response', res);
+    const inMessage = {
+      text: msgObj.text,
+      parentId: msgObj.parentId,
+      parentType: msgObj.parentType,
+      date: new Date(),
+      roles: {
+        creator: user,
+      },
+    };
+    // console.log(inMessage);
+    const message = new MessageModel(inMessage);
+    const res = await message.save();
+    // console.log('on chat-message save response', res);
 
-        io.to(socketRoom).emit('chat-message', res);
-    })
+    io.to(socketRoom).emit("chat-message", res);
+  });
 });
 
-
-http.listen(port, () => { console.log('Server listen on port', port) })
-
+http.listen(port, () => {
+  console.log("Server listen on port", port);
+});
