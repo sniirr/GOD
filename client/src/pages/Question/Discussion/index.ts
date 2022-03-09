@@ -1,1 +1,3 @@
-export {default} from './Discussion'
+import Discussion from './Discussion';
+
+export default Discussion;

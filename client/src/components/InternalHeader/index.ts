@@ -1,3 +1,3 @@
-import InternalHeader from './InternalHeader'
+import InternalHeader from './InternalHeader';
 
-export default InternalHeader
+export default InternalHeader;

@@ -1,3 +1,3 @@
-import HtmlEditor from "./HtmlEditor"
+import HtmlEditor from './HtmlEditor';
 
-export default HtmlEditor
+export default HtmlEditor;
