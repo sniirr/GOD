@@ -12,13 +12,12 @@ const port: number | string = process.env.PORT || 4000;
 
 import { UserModel } from "./models/db/UserModel";
 
-
 import userRoutes from "./routes/userRoute";
 import questionRoutes from "./routes/questionRoute";
 import discussionRoutes from "./routes/discussionRoute";
 
 //controls
-import {addMessage} from './controlers/discussionCont'
+import { addMessage } from "./controlers/discussionCont";
 
 require("./controlers/auth"); // get google authentication
 require("./controlers/db"); //connect to mongoDB
@@ -63,7 +62,7 @@ app.get(
       user.last_entered = new Date();
       console.log(`user ${user.displayName} logged in`);
 
-    //   const UserModel = mongoose.model("user", UserSchema);
+      //   const UserModel = mongoose.model("user", UserSchema);
 
       // Try to update user
       const userDB = await UserModel.findOneAndUpdate({ id: user.id }, user);
@@ -133,10 +132,9 @@ io.on("connection", (socket) => {
 
     // const UserModel = mongoose.model('user', UserSchema)
 
-    const res = await addMessage(msgObj,)
+    const res = await addMessage(msgObj);
     // console.log('on chat-message save response', res);
-
-    io.to(socketRoom).emit("chat-message", res);
+    if (res) io.to(socketRoom).emit("chat-message", res);
   });
 });
 

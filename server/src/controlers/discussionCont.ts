@@ -18,11 +18,10 @@ export async function getDiscussion(req: any, res: any): Promise<void> {
 }
 
 export async function addMessage(
-  msgObj: any,
-  userId: string
-): Promise<boolean> {
+  msgObj: any
+): Promise<any> {
   try {
-    const user = await UserModel.findOne({ id: userId });
+    const user = await UserModel.findOne({ id: msgObj.creatorId });
 
     if (user) {
       const inMessage = {
@@ -37,9 +36,9 @@ export async function addMessage(
       // console.log(inMessage);
       const message = new MessageModel(inMessage);
       const res = await message.save();
-      return true;
+      return res;
     }else {
-        throw new Error(`No user with id ${userId} was found in DB`)
+        throw new Error(`No user with id ${msgObj.parentId} was found in DB`)
     }
     
   } catch (err) {
