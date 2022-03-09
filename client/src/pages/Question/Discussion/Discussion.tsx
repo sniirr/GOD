@@ -13,6 +13,9 @@ import { sendMessage } from "utils/socket";
 import { User, userSelector } from "redux/reducers/userReducer";
 import SendIcon from "@mui/icons-material/Send";
 
+//components
+import MessageComp from './Discussion/Message';
+
 interface DiscussionProps {
   questionId: string;
   messages: Array<Message>;
@@ -72,12 +75,7 @@ const Discussion: FC<DiscussionProps> = (props: DiscussionProps) => {
       <div className="chat">
         <div className="messages">
           {map(messages, (msg: any, i: number) => (
-            <div key={`message-${i}`} className="message">
-              <div className="creator">
-                {msg.roles.creator.displayName} - {msg.date}
-              </div>
-              <div className="content">{msg.text}</div>
-            </div>
+            <MessageComp key={`${i}-message`} msg={msg} />
           ))}
         </div>
         <form onSubmit={handleSendMessage}>
