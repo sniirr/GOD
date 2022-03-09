@@ -14,7 +14,7 @@ import { User, userSelector } from "redux/reducers/userReducer";
 import SendIcon from "@mui/icons-material/Send";
 
 //components
-import MessageComp from './Discussion/Message';
+import MessageComp from "./Discussion/Message";
 
 interface DiscussionProps {
   questionId: string;
@@ -30,15 +30,13 @@ const Discussion: FC<DiscussionProps> = (props: DiscussionProps) => {
 
   const user: User = useAppSelector(userSelector);
   const messages: Message[] = useAppSelector(allMessages);
-  
+
   useEffect(() => {
     dispatch(getDiscussionThunk(questionId));
   }, []);
-  
-  try {
 
-    console.log(messages)
-    
+  try {
+    console.log(messages);
 
     const handleSendMessage = (ev: any) => {
       ev.preventDefault();
@@ -56,6 +54,7 @@ const Discussion: FC<DiscussionProps> = (props: DiscussionProps) => {
 
     const formatMessage = (message: string): Message | null => {
       try {
+        console.log(user);
         return {
           // messageId,
           id: uid(),
@@ -70,7 +69,7 @@ const Discussion: FC<DiscussionProps> = (props: DiscussionProps) => {
         console.error(err);
         return null;
       }
-    }
+    };
 
     return (
       <div className="chat">

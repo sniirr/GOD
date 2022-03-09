@@ -13,6 +13,7 @@ export const disconnectSocket = () => {
 }
 export const joinRoom = (room: string, messageCallback: Function) => {
     if (!socket) return (true);
+    console.log('join roon', room)
     socket.emit('join-room', room)
 
     socket.off('chat-message')
