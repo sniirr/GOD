@@ -1,1 +1,3 @@
-export {default} from './CreateQuestion'
+import CreateQuestion from './CreateQuestion';
+
+export default CreateQuestion;

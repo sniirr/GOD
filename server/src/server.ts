@@ -33,7 +33,7 @@ app.use("/questions", questionRoutes);
 app.use("/user", userRoutes);
 app.use("/discussion", discussionRoutes);
 
-//passport settings
+// passport settings
 const PASSPORT_SECRET = process.env.PASSPORT_SECRET;
 const passport = require("passport");
 

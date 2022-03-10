@@ -18,10 +18,9 @@ import MessageComp from "./Discussion/Message";
 
 interface DiscussionProps {
   questionId: string;
-  messages: Array<Message>;
 }
 
-let tempMessageId: string | boolean = false;
+// let tempMessageId: string | boolean = false;
 
 const Discussion: FC<DiscussionProps> = (props: DiscussionProps) => {
   const { questionId } = props;
@@ -90,7 +89,7 @@ const Discussion: FC<DiscussionProps> = (props: DiscussionProps) => {
               <SendIcon />
             </button>
           </div>
-        </form>
+        ))}
       </div>
     );
   } catch (err) {

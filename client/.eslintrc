@@ -1,0 +1,35 @@
+{
+  "extends": [
+    "airbnb",
+    "airbnb-typescript"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    //"extraFileExtensions": ["svg"],
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": [
+    "import"
+  ],
+  "rules": {
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }],
+    "import/prefer-default-export": "off",
+    "no-param-reassign": ["error", { "props": false }],
+    "react/prop-types": "off",
+    "react/no-unescaped-entities": "off",
+    "react/no-unused-prop-types": "warn",
+    "react/require-default-props": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/jsx-no-bind": [2, {"allowArrowFunctions": true, "allowFunctions":  true}],
+    "react/function-component-definition": "off",
+    "max-len": "off",
+    "no-console": "off",
+
+    "jsx-a11y/interactive-supports-focus": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off"
+  }
+}

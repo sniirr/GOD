@@ -22,6 +22,20 @@ $border_radius: 10px;
 //@import '../pages/Questions/Questions.scss';
 @import '../pages/Login/Login.scss';
 
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  monospace;
+}
+
 body,
 html {
   color: $main_text;
@@ -71,6 +85,11 @@ h2 {
 .page {
   display: flex;
   flex-direction: column;
+}
+
+.internal-page {
+  flex-grow: 2;
+  position: relative;
 }
 
 .center-aligned-row {
@@ -181,7 +200,7 @@ h2 {
     // z-index: -1;
   }
 
-  a {
+  a, .step{
     width: fit-content;
     text-decoration: none;
     display: flex;
