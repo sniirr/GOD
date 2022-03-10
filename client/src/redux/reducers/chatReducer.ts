@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import type { RootState } from '../store';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+import type { RootState } from "../store";
 
 export interface Message {
   id: string;
@@ -8,7 +8,7 @@ export interface Message {
   creatorId: string;
   creatorDisplayName: string;
   parentId: string;
-  parentType: 'question';
+  parentType: "question";
   error: boolean;
 }
 interface Chat {
@@ -21,7 +21,8 @@ function getDiscussion(qid: string) {
       .post("/discussion/get-discussion", { qid })
       .then(({ data }) => {
         if (Array.isArray(data.result)) resolve(data.result);
-        else reject('On getting discussion, it didnt return an array');
+        else
+          reject(new Error("On getting discussion, it didnt return an array"));
       })
       .catch((e) => {
         console.error(e);
@@ -40,11 +41,11 @@ const initialState = {
 } as Chat;
 
 export const chatSlice = createSlice({
-  name: 'chat',
+  name: "chat",
   initialState,
   reducers: {
     addMessage: (state, action: { payload: Message; type: string }) => {
-      console.log('add message');
+      console.log("add message");
       state.messages = [...state.messages, action.payload];
     },
   },

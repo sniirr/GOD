@@ -1,20 +1,20 @@
-import React, { FC, useState, useEffect } from "react";
-import "./Discussion.scss";
-import { map } from "lodash";
-import { useAppSelector, useAppDispatch } from "redux/hooks";
-import { uid } from "utils/helpers";
+import React, { FC, useEffect } from 'react';
+import './Discussion.scss';
+import { map } from 'lodash';
+import { useAppSelector, useAppDispatch } from 'redux/hooks';
+import { uid } from 'utils/helpers';
 import {
   Message,
-  addMessage,
   allMessages,
   getDiscussionThunk,
-} from "redux/reducers/chatReducer";
-import { sendMessage } from "utils/socket";
-import { User, userSelector } from "redux/reducers/userReducer";
-import SendIcon from "@mui/icons-material/Send";
+  addMessage,
+} from 'redux/reducers/chatReducer';
+import { sendMessage } from 'utils/socket';
+import { User, userSelector } from 'redux/reducers/userReducer';
+import SendIcon from '@mui/icons-material/Send';
 
-//components
-import MessageComp from "./Discussion/Message";
+// components
+import MessageComp from './Discussion/Message';
 
 interface DiscussionProps {
   questionId: string;
@@ -37,20 +37,6 @@ const Discussion: FC<DiscussionProps> = (props: DiscussionProps) => {
   try {
     console.log(messages);
 
-    const handleSendMessage = (ev: any) => {
-      ev.preventDefault();
-      const message: string = ev.target.elements.message.value;
-
-      if (message) {
-        const msg = formatMessage(message);
-        if (!!msg) {
-          // dispatch(addMessage(msg));
-          sendMessage(msg);
-          tempMessageId = msg.id;
-        }
-      }
-    };
-
     const formatMessage = (message: string): Message | null => {
       try {
         console.log(user);
@@ -61,12 +47,26 @@ const Discussion: FC<DiscussionProps> = (props: DiscussionProps) => {
           creatorId: user.id,
           creatorDisplayName: user.displayName,
           parentId: questionId,
-          parentType: "question",
+          parentType: 'question',
           error: false,
         };
       } catch (err) {
         console.error(err);
         return null;
+      }
+    };
+
+    const handleSendMessage = (ev: any) => {
+      ev.preventDefault();
+      const message: string = ev.target.elements.message.value;
+
+      if (message) {
+        const msg = formatMessage(message);
+        if (msg) {
+          dispatch(addMessage(msg));
+          sendMessage(msg);
+          // tempMessageId = msg.id;
+        }
       }
     };
 
@@ -89,7 +89,7 @@ const Discussion: FC<DiscussionProps> = (props: DiscussionProps) => {
               <SendIcon />
             </button>
           </div>
-        ))}
+        </form>
       </div>
     );
   } catch (err) {
