@@ -127,19 +127,11 @@ io.on("connection", (socket) => {
   });
 
   socket.on(`chat-message`, async (msgObj) => {
-    console.log(msgObj);
-
-    // const MessageModel = mongoose.model('message', MessageSchema)
-
-    // const UserModel = mongoose.model('user', UserSchema)
 
     const res = await addMessage(msgObj);
-    // console.log('on chat-message save response', res);
-  
-    if(!socketRoom) socketRoom = msgObj.parentId;
-    console.log('socketRoom',socketRoom)
+   const socketRoom = msgObj.parentId;
+   
     if (res && socketRoom){ 
-        console.log('------- send socket to', socketRoom)
         io.to(socketRoom).emit("chat-message", res);}
   });
 });

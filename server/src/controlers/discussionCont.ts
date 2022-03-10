@@ -21,9 +21,8 @@ export async function addMessage(
   msgObj: any
 ): Promise<any> {
   try {
-      console.log('-----message start----')
-      console.log(msgObj)
-      console.log('-----message end ----')
+     
+      
     const user = await UserModel.findOne({ id: msgObj.creatorId });
 
     if (user) {
@@ -36,7 +35,7 @@ export async function addMessage(
           creator: user,
         },
       };
-      // console.log(inMessage);
+
       const message = new MessageModel(inMessage);
       const res = await message.save();
       return res;
