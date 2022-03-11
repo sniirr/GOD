@@ -146,7 +146,12 @@ const Question: FC = () => {
             </button>
           </form>
         ) : null}
-        <div className="bottom-nav">
+        <div
+          className="bottom-nav"
+          style={{
+            boxShadow:
+              subLocation === "discussion" ? "none" : "0 12px 8px 10px grey",
+          }}>
           <Link to="/questions" style={{ textDecoration: "none" }}>
             <Button>
               <ArrowBackIcon />

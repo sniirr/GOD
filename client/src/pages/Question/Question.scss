@@ -58,16 +58,21 @@
   .bottom-bar {
     display: flex;
     flex-direction: column;
+    background-color: white;
+    box-shadow: 0 12px 8px 10px grey;
+    justify-content: center;
     &__input {
-      width:revert;
+      width: revert;
       display: flex;
       align-items: center;
-      margin: 20px;
+      margin: 4px 15px;
       height: 40px;
+      justify-content: center;
 
       input[type="text"] {
         width: unset;
         flex-grow: 2;
+        max-width: 75ch;
         border-radius: 10px;
         height: 32px;
         border: solid 1px $light_gray;
