@@ -1,6 +1,8 @@
 @import "style/vars";
 
 .page.page-question {
+  height: 100vh;
+  display: flex;
   .tabs {
     .tabs-header {
       .tab-header {
@@ -23,8 +25,8 @@
   .question-header {
     background: no-repeat center center;
     background-size: 100% auto;
-    min-height: 41.67vw;
-    max-height: 200px;
+    max-height: 41.67vw;
+    min-height: 200px;
     position: relative;
 
     .share-button {
@@ -45,35 +47,67 @@
       }
     }
   }
+  .internal-page {
+    flex: auto;
+    overflow-y: auto;
+  }
 
   .solution-card {
     margin-top: 20px;
   }
-
-  .bottom-nav {
+  .bottom-bar {
     display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    min-height: 58px;
-    height: 58px;
-    width: 100%;
-    background-color: white;
-    box-shadow: 0 12px 8px 10px grey;
+    flex-direction: column;
+    &__input {
+      width:revert;
+      display: flex;
+      align-items: center;
+      margin: 20px;
+      height: 40px;
 
-    button {
-      color: $dark_blue;
+      input[type="text"] {
+        width: unset;
+        flex-grow: 2;
+        border-radius: 10px;
+        height: 32px;
+        border: solid 1px $light_gray;
+        padding: 0 10px;
+      }
 
-      svg {
-        font-size: 2em;
+      button[type="submit"] {
+        margin-left: 10px;
+        border: none;
+        background-color: $light_blue;
+        color: white;
+        border-radius: 8px;
+        width: 34px;
+        height: 34px;
+      }
+    }
+    .bottom-nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 58px;
+      height: 58px;
+      width: 100%;
+      background-color: white;
+      box-shadow: 0 12px 8px 10px grey;
+
+      button {
+        color: $dark_blue;
+
+        svg {
+          font-size: 2em;
+        }
       }
     }
   }
 
   .toolbar {
     position: fixed;
-    bottom: 70px;
+    bottom: 130px;
     right: 16px;
-
 
     button {
       width: 40px;

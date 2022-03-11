@@ -36,6 +36,10 @@ code {
   monospace;
 }
 
+*{
+  box-sizing: border-box;
+}
+
 body,
 html {
   color: $main_text;
