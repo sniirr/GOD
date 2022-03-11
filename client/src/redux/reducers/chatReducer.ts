@@ -20,9 +20,11 @@ function getDiscussion(qid: string) {
     axios
       .post("/discussion/get-discussion", { qid })
       .then(({ data }) => {
-        if (Array.isArray(data.result)) resolve(data.result);
-        else
+        if (Array.isArray(data.result)) {
+          resolve(data.result);
+        } else {
           reject(new Error("On getting discussion, it didnt return an array"));
+        }
       })
       .catch((e) => {
         console.error(e);
@@ -33,7 +35,7 @@ function getDiscussion(qid: string) {
 
 export const getDiscussionThunk = createAsyncThunk(
   "discussion/getDiscussion",
-  async (qid: string) => await getDiscussion(qid)
+  async (qid: string) => await getDiscussion(qid),
 );
 
 const initialState = {
