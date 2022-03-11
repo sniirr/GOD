@@ -104,7 +104,7 @@ export const setSolutionLike = async (req: any, res: any) => {
     const solution = await Solution.findById(sid)
     const userVote = solution.likes.get(userId)
     const resolvedVote = vote === userVote ? null : vote
-    
+
     await Solution.updateOne(
       { _id: sid },
       {
