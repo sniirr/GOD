@@ -27,7 +27,7 @@ import { useAppSelector, useAppDispatch } from "redux/hooks";
 // components
 import Discussion from "./Discussion";
 import QuestionInfo from "./Information";
-import Vote from "./Vote";
+import Vote from "./Vote/Vote";
 
 interface QuestionParams {
   questionId: string;
