@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import _ from 'lodash';
 import axios from 'axios';
 import type { RootState } from '../store';
 
@@ -64,7 +63,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const userSelector = (state: RootState) => _.get(state, 'user', {}) as User;
+export const userSelector = (state: RootState) => state.user;
 
 const userReducer = userSlice.reducer;
 

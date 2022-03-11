@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import type { RootState } from '../store';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+import type { RootState } from "../store";
 
 export interface Message {
   id: string;
@@ -8,7 +8,7 @@ export interface Message {
   creatorId: string;
   creatorDisplayName: string;
   parentId: string;
-  parentType: 'question';
+  parentType: "question";
   error: boolean;
 }
 interface Chat {
@@ -17,20 +17,25 @@ interface Chat {
 
 function getDiscussion(qid: string) {
   return new Promise((resolve, reject) => {
-    axios.post('/discussion/get-discussion', { qid })
+    axios
+      .post("/discussion/get-discussion", { qid })
       .then(({ data }) => {
-        if (Array.isArray(data.result)) resolve(data.result);
-        else reject();
-      }).catch((e) => {
+        if (Array.isArray(data.result)) {
+          resolve(data.result);
+        } else {
+          reject(new Error("On getting discussion, it didnt return an array"));
+        }
+      })
+      .catch((e) => {
         console.error(e);
-        reject();
+        reject(e);
       });
   });
 }
 
 export const getDiscussionThunk = createAsyncThunk(
-  'discussion/getDiscussion',
-  async (qid: string) => getDiscussion(qid),
+  "discussion/getDiscussion",
+  async (qid: string) => await getDiscussion(qid),
 );
 
 const initialState = {
@@ -38,19 +43,18 @@ const initialState = {
 } as Chat;
 
 export const chatSlice = createSlice({
-  name: 'chat',
+  name: "chat",
   initialState,
   reducers: {
     addMessage: (state, action: { payload: Message; type: string }) => {
-      console.log('add message');
+      console.log("add message");
       state.messages = [...state.messages, action.payload];
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(getDiscussionThunk.fulfilled, (state: any, action: any) => {
-        state.messages = action.payload;
-      });
+    builder.addCase(getDiscussionThunk.fulfilled, (state: any, action: any) => {
+      state.messages = action.payload;
+    });
   },
 });
 

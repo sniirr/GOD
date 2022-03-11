@@ -15,6 +15,7 @@ export const UserSchema = new Schema({
   last_entered: Date,
 });
 
-const User = mongoose.model('user', UserSchema);
+const UserModel = mongoose.model('user', UserSchema);
 
-export default User;
+export default UserModel;
+
