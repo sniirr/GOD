@@ -61,6 +61,8 @@
     background-color: white;
     box-shadow: 0 12px 8px 10px grey;
     justify-content: center;
+    z-index: 10;
+
     &__input {
       width: revert;
       display: flex;
