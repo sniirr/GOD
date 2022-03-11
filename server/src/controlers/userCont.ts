@@ -1,4 +1,4 @@
-import { userValidate } from '../models/userSchema';
+import { userValidate } from '../models/userValidation';
 
 export function login(req: any, res: any): void {
   try {
