@@ -9,11 +9,7 @@ const FileSchema = new Schema({
   fileUrl: String,
 });
 
-export const TimingSchema = new Schema({
-  time: Date,
-  title: String,
-  id:String
-});
+
 
 export const QuestionSchema = new Schema({
   title: String,
@@ -36,7 +32,6 @@ export const QuestionSchema = new Schema({
     closed: Boolean,
     deleted: Boolean,
   },
-  timing: [TimingSchema],
   solutions: [
     {
       type: mongoose.Schema.Types.ObjectId,
