@@ -17,7 +17,7 @@ const getInitialDraftState = (html) => {
   return EditorState.createWithContent(contentState);
 };
 
-export default function (props) {
+export default function HTMLEditor(props) {
   const {
     html, onChange, tabIndex, ...editorProps // eslint-disable-line react/prop-types
   } = props;
