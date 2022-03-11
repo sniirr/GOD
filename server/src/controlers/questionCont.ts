@@ -100,17 +100,21 @@ export const setSolutionLike = async (req: any, res: any) => {
     const userId = req.user.id;
 
     const key = `likes.${userId}`;
-    console.log({ key });
+
+    const solution = await Solution.findById(sid)
+    const userVote = solution.likes.get(userId)
+    const resolvedVote = vote === userVote ? null : vote
+    
     await Solution.updateOne(
       { _id: sid },
       {
         $set: {
-          [key]: vote,
+          [key]: resolvedVote,
         },
       },
     );
 
-    res.send({ success: true });
+    res.send({ resolvedVote });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });
