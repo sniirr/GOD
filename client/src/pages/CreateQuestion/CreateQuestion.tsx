@@ -3,8 +3,10 @@ import {
   Switch,
   Route,
   useLocation,
-  useRouteMatch
+  useRouteMatch, useHistory
 } from 'react-router-dom';
+import { useAppDispatch } from "redux/hooks";
+import { saveDraft } from "redux/reducers/createQuestionReducer";
 import InternalHeader from "components/InternalHeader";
 import { WizardSteps } from "components/Wizard";
 import CreateQuestion0 from './CreateQuestion0';
@@ -15,16 +17,23 @@ import CreateQuestion4 from './CreateQuestion4';
 import CreateQuestion5 from './CreateQuestion5';
 
 const CreateQuestion: FC = () => {
+  const history = useHistory();
+  const dispatch = useAppDispatch()
   const { path } = useRouteMatch();
   const { pathname } = useLocation()
   const routeNames = ['1', '2', '3', '4', '5'];
 
   const hasStarted = pathname !== '/create_question'
 
+  const saveAndExit = async () => {
+    await dispatch(saveDraft())
+    history.push("/questions");
+  }
+
   return (
     <div className="page create-question">
       <InternalHeader title="Create Question" backUrl="/questions">
-        {hasStarted && (<span>Save & Exit</span>)}
+        {hasStarted && (<span onClick={saveAndExit}>Save & Exit</span>)}
       </InternalHeader>
       <WizardSteps routeNames={routeNames} isVisible={hasStarted} />
       <Switch>

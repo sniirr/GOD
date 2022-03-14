@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import type { RootState } from 'redux/store';
+import type { AppDispatch, RootState } from 'redux/store';
 import { uploadFile } from 'utils/uploadFile';
 import { Image } from 'utils/image';
 import axios from 'axios';
@@ -31,18 +31,6 @@ export async function createUpdateQuestion(title: string, description: string, i
   }
   return undefined
 }
-
-// export const saveQuestion = (title: string, description: string, image: any) => async (dispatch: AppDispatch) => {
-//   const qid = await createUpdateQuestion(title, description, image);
-//   dispatch(setQuestionId(qid));
-//   const activate = await activateQuestion(true, qid)
-//   dispatch(setActivate(activate));
-// }
-
-// export const publishDraft = async (questionId: string) => async (dispatch: AppDispatch) => {
-//   const activate = await activateQuestion(true, questionId)
-//   dispatch(setActivate(activate));
-// }
 
 // thunk for upload image
 export const uploadFileThunk = createAsyncThunk(
@@ -168,6 +156,13 @@ export const createQuestionSlice = createSlice({
 export const {
   increment, decrement, incrementByAmount, setQuestionId, setTitle, setDescription, setEnableMoveTo2, setEnableMoveTo3, setActivate,
 } = createQuestionSlice.actions;
+
+export const saveDraft = () => async (dispatch: AppDispatch, getState: Function) => {
+  const state = getState()
+  const { title, description, image } = state.newQuestion
+  const qid = await createUpdateQuestion(title, description, image);
+  dispatch(setQuestionId(qid));
+}
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectQuestion = (state: RootState) => state.newQuestion;
