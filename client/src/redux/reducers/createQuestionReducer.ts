@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import type { RootState } from 'redux/store';
+import type { AppDispatch, RootState } from 'redux/store';
 import { uploadFile } from 'utils/uploadFile';
 import { Image } from 'utils/image';
 import axios from 'axios';
@@ -25,12 +25,11 @@ export async function createUpdateQuestion(title: string, description: string, i
       title, description, image, questionId,
     });
 
-    if (data) return data.questionId;
-    return undefined;
+    return data?.questionId;
   } catch (error) {
     console.error(error);
-    return undefined;
   }
+  return undefined
 }
 
 // thunk for upload image
@@ -88,16 +87,6 @@ export const createQuestionSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    increment: (state) => {
-      if (state.pageNumber < 4) state.pageNumber += 1;
-    },
-    decrement: (state) => {
-      if (state.pageNumber > 1) state.pageNumber -= 1;
-    },
-    // Use the PayloadAction type to declare the contents of `action.payload`
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.pageNumber += action.payload;
-    },
     setQuestionId: (state, action: PayloadAction<string>) => {
       state.questionId = action.payload;
     },
@@ -120,6 +109,7 @@ export const createQuestionSlice = createSlice({
       console.log(action);
       state.activate = action.payload;
     },
+    clear: () => initialState,
   },
   extraReducers: (builder) => {
     builder
@@ -155,8 +145,16 @@ export const createQuestionSlice = createSlice({
 });
 
 export const {
-  increment, decrement, incrementByAmount, setQuestionId, setTitle, setDescription, setEnableMoveTo2, setEnableMoveTo3, setActivate,
+  setQuestionId, setTitle, setDescription, setEnableMoveTo2, setEnableMoveTo3, setActivate, clear
 } = createQuestionSlice.actions;
+
+export const saveDraft = () => async (dispatch: AppDispatch, getState: Function) => {
+  const state = getState()
+  const { title, description, image } = state.newQuestion
+  if (!title) return
+  const qid = await createUpdateQuestion(title, description, image);
+  dispatch(setQuestionId(qid));
+}
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectQuestion = (state: RootState) => state.newQuestion;
