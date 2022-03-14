@@ -1,48 +1,67 @@
-import React, { FC } from 'react';
-
+import React, { FC, useEffect } from 'react';
 import {
   Switch,
   Route,
-  useRouteMatch,
+  useLocation,
+  useRouteMatch, useHistory
 } from 'react-router-dom';
-
+import { useAppDispatch } from "redux/hooks";
+import { saveDraft, clear } from "redux/reducers/createQuestionReducer";
+import InternalHeader from "components/InternalHeader";
+import { WizardSteps } from "components/Wizard";
 import CreateQuestion0 from './CreateQuestion0';
 import CreateQuestion1 from './CreateQuestion1';
 import CreateQuestion2 from './CreateQuestion2';
 import CreateQuestion3 from './CreateQuestion3';
 import CreateQuestion4 from './CreateQuestion4';
-import TopIndecator from '../../components/TopIndicator/TopIndecator';
+import CreateQuestion5 from './CreateQuestion5';
 
 const CreateQuestion: FC = () => {
+  const history = useHistory();
+  const dispatch = useAppDispatch()
   const { path } = useRouteMatch();
-  const pages = ['1', '2', '3', '4'];
+  const { pathname } = useLocation()
+  const routeNames = ['1', '2', '3', '4', '5'];
+
+  const hasStarted = pathname !== '/create_question'
+
+  useEffect(() => { // eslint-disable-line
+    return () => {
+      dispatch(clear())
+    }
+  }, [])
+
+  const saveAndExit = async () => {
+    await dispatch(saveDraft())
+    history.push("/questions");
+  }
 
   return (
-    <div>
-
+    <div className="page create-question">
+      <InternalHeader title="Create Question" backUrl="/questions">
+        {hasStarted && (<span onClick={saveAndExit}>Save & Exit</span>)}
+      </InternalHeader>
+      <WizardSteps routeNames={routeNames} isVisible={hasStarted} />
       <Switch>
         <Route exact path={path}>
-
           <CreateQuestion0 path={path} />
         </Route>
         <Route exact path={`${path}/1`}>
-          <TopIndecator pages={pages} path={path} />
           <CreateQuestion1 path={path} />
         </Route>
         <Route exact path={`${path}/2`}>
-          <TopIndecator pages={pages} path={path} />
           <CreateQuestion2 path={path} />
         </Route>
         <Route exact path={`${path}/3`}>
-          <TopIndecator pages={pages} path={path} />
           <CreateQuestion3 path={path} />
         </Route>
         <Route exact path={`${path}/4`}>
-          <TopIndecator pages={pages} path={path} />
           <CreateQuestion4 path={path} />
         </Route>
+        <Route exact path={`${path}/5`}>
+          <CreateQuestion5 path={path} />
+        </Route>
       </Switch>
-
     </div>
   );
 };

@@ -1,20 +1,14 @@
 import React, { FC, useState } from 'react';
-import { Link } from 'react-router-dom';
-
-// redux
-
 // matrial UI
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { NextButton } from "components/Wizard";
 import {
   selectTitle,
   selectEnableMoveTo2,
   setTitle,
   setEnableMoveTo2,
-} from '../../redux/reducers/createQuestionReducer';
-import { useAppSelector, useAppDispatch } from '../../redux/hooks';
-
+} from 'redux/reducers/createQuestionReducer';
+import { useAppSelector, useAppDispatch } from 'redux/hooks';
 import CreateQuestionProps from './CreateQuestionProps';
 
 const CreateQuestion1: FC<CreateQuestionProps> = (props: CreateQuestionProps) => {
@@ -60,13 +54,7 @@ const CreateQuestion1: FC<CreateQuestionProps> = (props: CreateQuestionProps) =>
         </div>
       </div>
       <div className="bottomNavButtons">
-        {enableNext
-          ? (
-            <Link to={`${path}/2`}>
-              <Button variant="contained" endIcon={<ArrowForwardIosIcon />}>Next</Button>
-            </Link>
-          )
-          : <Button variant="contained" endIcon={<ArrowForwardIosIcon />} disabled>Next</Button>}
+        <NextButton linkTo={enableNext ? `${path}/2` : ''} disabled={!enableNext} />
       </div>
     </div>
   );
