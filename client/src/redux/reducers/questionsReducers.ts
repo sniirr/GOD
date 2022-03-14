@@ -70,7 +70,7 @@ export const likeSolution = (qid: string, sid: string, userId: string, vote: boo
     console.log('likeSolution', { data });
 
     dispatch(questionsSlice.actions.likeSolution({
-      qid, sid, vote, userId,
+      qid, sid, vote: data.resolvedVote, userId,
     }));
   } catch (error) {
     console.error(error);
