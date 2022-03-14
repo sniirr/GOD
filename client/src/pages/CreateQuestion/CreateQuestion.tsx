@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import {
   Switch,
   Route,
@@ -6,7 +6,7 @@ import {
   useRouteMatch, useHistory
 } from 'react-router-dom';
 import { useAppDispatch } from "redux/hooks";
-import { saveDraft } from "redux/reducers/createQuestionReducer";
+import { saveDraft, clear } from "redux/reducers/createQuestionReducer";
 import InternalHeader from "components/InternalHeader";
 import { WizardSteps } from "components/Wizard";
 import CreateQuestion0 from './CreateQuestion0';
@@ -24,6 +24,12 @@ const CreateQuestion: FC = () => {
   const routeNames = ['1', '2', '3', '4', '5'];
 
   const hasStarted = pathname !== '/create_question'
+
+  useEffect(() => { // eslint-disable-line
+    return () => {
+      dispatch(clear())
+    }
+  }, [])
 
   const saveAndExit = async () => {
     await dispatch(saveDraft())

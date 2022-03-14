@@ -87,16 +87,6 @@ export const createQuestionSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    increment: (state) => {
-      if (state.pageNumber < 4) state.pageNumber += 1;
-    },
-    decrement: (state) => {
-      if (state.pageNumber > 1) state.pageNumber -= 1;
-    },
-    // Use the PayloadAction type to declare the contents of `action.payload`
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.pageNumber += action.payload;
-    },
     setQuestionId: (state, action: PayloadAction<string>) => {
       state.questionId = action.payload;
     },
@@ -119,6 +109,7 @@ export const createQuestionSlice = createSlice({
       console.log(action);
       state.activate = action.payload;
     },
+    clear: () => initialState,
   },
   extraReducers: (builder) => {
     builder
@@ -154,12 +145,13 @@ export const createQuestionSlice = createSlice({
 });
 
 export const {
-  increment, decrement, incrementByAmount, setQuestionId, setTitle, setDescription, setEnableMoveTo2, setEnableMoveTo3, setActivate,
+  setQuestionId, setTitle, setDescription, setEnableMoveTo2, setEnableMoveTo3, setActivate, clear
 } = createQuestionSlice.actions;
 
 export const saveDraft = () => async (dispatch: AppDispatch, getState: Function) => {
   const state = getState()
   const { title, description, image } = state.newQuestion
+  if (!title) return
   const qid = await createUpdateQuestion(title, description, image);
   dispatch(setQuestionId(qid));
 }
