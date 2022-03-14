@@ -21,7 +21,13 @@ const CreateQuestion: FC = () => {
   const dispatch = useAppDispatch()
   const { path } = useRouteMatch();
   const { pathname } = useLocation()
-  const routeNames = ['1', '2', '3', '4', '5'];
+  const wizardSteps = [
+    { routeName: '1', caption: 'Problem' },
+    { routeName: '2', caption: 'Goal' },
+    { routeName: '3', caption: 'Upload' },
+    { routeName: '4', caption: 'Schedule' },
+    { routeName: '5', caption: 'Review' },
+  ];
 
   const hasStarted = pathname !== '/create_question'
 
@@ -41,7 +47,7 @@ const CreateQuestion: FC = () => {
       <InternalHeader title="Create Question" backUrl="/questions">
         {hasStarted && (<span onClick={saveAndExit}>Save & Exit</span>)}
       </InternalHeader>
-      <WizardSteps routeNames={routeNames} isVisible={hasStarted} />
+      <WizardSteps steps={wizardSteps} isVisible={hasStarted} />
       <Switch>
         <Route exact path={path}>
           <CreateQuestion0 path={path} />
