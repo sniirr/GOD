@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-import { UserSchema } from './UserModel';
+const mongoose = require("mongoose");
+import { UserSchema } from "./UserModel";
 
 // Define a schema
 const Schema = mongoose.Schema;
@@ -8,6 +8,8 @@ const FileSchema = new Schema({
   fileName: String,
   fileUrl: String,
 });
+
+
 
 export const QuestionSchema = new Schema({
   title: String,
@@ -30,12 +32,14 @@ export const QuestionSchema = new Schema({
     closed: Boolean,
     deleted: Boolean,
   },
-  solutions: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Solution',
-  }],
+  solutions: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Solution",
+    },
+  ],
 });
 
-export const Question = mongoose.model('Question', QuestionSchema);
+export const Question = mongoose.model("Question", QuestionSchema);
 
 export default Question;
