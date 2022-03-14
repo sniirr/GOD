@@ -46,9 +46,6 @@ const CreateQuestion: FC = () => {
         <Route exact path={`${path}/5`}>
           <CreateQuestion5 path={path} />
         </Route>
-        <Route exact path={`${path}/success`}>
-          <div>SUCCESS</div>
-        </Route>
       </Switch>
     </div>
   );
