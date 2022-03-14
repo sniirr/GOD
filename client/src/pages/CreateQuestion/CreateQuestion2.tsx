@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import TextField from '@mui/material/TextField';
+import { NextButton, BackButton } from "components/Wizard";
 import {
   selectDescription,
   selectEnableMoveTo3,
@@ -8,7 +9,6 @@ import {
 } from '../../redux/reducers/createQuestionReducer';
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import CreateQuestionProps from './CreateQuestionProps';
-import { NextButton, BackButton } from "./Buttons";
 
 const CreateQuestion2: FC<CreateQuestionProps> = (props: CreateQuestionProps) => {
   const description = useAppSelector(selectDescription);

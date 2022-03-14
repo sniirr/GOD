@@ -6,7 +6,7 @@ import {
   useRouteMatch
 } from 'react-router-dom';
 import InternalHeader from "components/InternalHeader";
-import TopIndicator from 'components/TopIndicator';
+import { WizardSteps } from "components/Wizard";
 import CreateQuestion0 from './CreateQuestion0';
 import CreateQuestion1 from './CreateQuestion1';
 import CreateQuestion2 from './CreateQuestion2';
@@ -17,7 +17,7 @@ import CreateQuestion5 from './CreateQuestion5';
 const CreateQuestion: FC = () => {
   const { path } = useRouteMatch();
   const { pathname } = useLocation()
-  const pages = ['1', '2', '3', '4', '5'];
+  const routeNames = ['1', '2', '3', '4', '5'];
 
   const hasStarted = pathname !== '/create_question'
 
@@ -26,7 +26,7 @@ const CreateQuestion: FC = () => {
       <InternalHeader title="Create Question" backUrl="/questions">
         {hasStarted && (<span>Save & Exit</span>)}
       </InternalHeader>
-      <TopIndicator pages={pages} path={pathname} isVisible={hasStarted} />
+      <WizardSteps routeNames={routeNames} isVisible={hasStarted} />
       <Switch>
         <Route exact path={path}>
           <CreateQuestion0 path={path} />

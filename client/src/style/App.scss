@@ -123,14 +123,29 @@ h2 {
 }
 
 //components
-.wrapper {
-  max-width: 550px;
-  margin: auto;
-}
+//.wrapper {
+//  max-width: 550px;
+//  margin: auto;
+//}
+//
+//@media only screen and (max-width: 550px) {
+//  .wrapper {
+//    margin: 0rem 2rem;
+//  }
+//}
 
-@media only screen and (max-width: 550px) {
-  .wrapper {
-    margin: 0rem 2rem;
+.wrapper {
+  margin: 0 2rem;
+
+  .preview {
+    h2 {
+      font-weight: 700;
+      font-size: 1.3em;
+    }
+
+    img {
+      width: 100%;
+    }
   }
 }
 

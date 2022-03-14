@@ -6,12 +6,14 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 interface NextButtonProps {
   disabled?: boolean;
   linkTo?: string;
-  Icon?: React.ReactNode;
+  text?: string;
+  Icon?: any;
+  onClick?: Function;
 }
 
-export const NextButton = ({ disabled, linkTo, Icon = () => <ArrowForwardIosIcon /> }: NextButtonProps) => (
-  <Button linkTo={linkTo} disabled={disabled}>
-    Next{Icon}
+export const NextButton = ({ disabled, linkTo, text = "Next", Icon = () => <ArrowForwardIosIcon />, ...props }: NextButtonProps) => (
+  <Button linkTo={linkTo} disabled={disabled} {...props}>
+    {text}{Icon()}
   </Button>
 )
 

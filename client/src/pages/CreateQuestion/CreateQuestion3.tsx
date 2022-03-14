@@ -5,11 +5,12 @@ import ImageIcon from '@mui/icons-material/Image';
 import { AdvancedImage } from '@cloudinary/react';
 import { Cloudinary } from '@cloudinary/url-gen';
 import { fill } from '@cloudinary/url-gen/actions/resize';
+
+import { NextButton, BackButton } from "components/Wizard";
 import CreateQuestionProps from './CreateQuestionProps';
 import Loader from '../../components/Loader/Loader';
 import { uploadFileThunk, selectLoader, selectImage } from '../../redux/reducers/createQuestionReducer';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { BackButton, NextButton } from "./Buttons";
 
 // https://www.youtube.com/watch?v=Y-VgaRwWS3o
 

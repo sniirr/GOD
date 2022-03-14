@@ -1,15 +1,15 @@
 import React, { FC, useState } from 'react';
 // matrial UI
 import TextField from '@mui/material/TextField';
+import { NextButton } from "components/Wizard";
 import {
   selectTitle,
   selectEnableMoveTo2,
   setTitle,
   setEnableMoveTo2,
-} from '../../redux/reducers/createQuestionReducer';
-import { useAppSelector, useAppDispatch } from '../../redux/hooks';
+} from 'redux/reducers/createQuestionReducer';
+import { useAppSelector, useAppDispatch } from 'redux/hooks';
 import CreateQuestionProps from './CreateQuestionProps';
-import { NextButton } from "./Buttons";
 
 const CreateQuestion1: FC<CreateQuestionProps> = (props: CreateQuestionProps) => {
   const title = useAppSelector(selectTitle);

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
+import { NextButton, BackButton } from "components/Wizard";
 import CreateQuestionProps from './CreateQuestionProps';
-import { BackButton, NextButton } from "./Buttons";
 
 const CreateQuestion4: FC<CreateQuestionProps> = (
   props: CreateQuestionProps,

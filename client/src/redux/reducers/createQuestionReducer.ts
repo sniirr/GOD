@@ -25,13 +25,24 @@ export async function createUpdateQuestion(title: string, description: string, i
       title, description, image, questionId,
     });
 
-    if (data) return data.questionId;
-    return undefined;
+    return data?.questionId;
   } catch (error) {
     console.error(error);
-    return undefined;
   }
+  return undefined
 }
+
+// export const saveQuestion = (title: string, description: string, image: any) => async (dispatch: AppDispatch) => {
+//   const qid = await createUpdateQuestion(title, description, image);
+//   dispatch(setQuestionId(qid));
+//   const activate = await activateQuestion(true, qid)
+//   dispatch(setActivate(activate));
+// }
+
+// export const publishDraft = async (questionId: string) => async (dispatch: AppDispatch) => {
+//   const activate = await activateQuestion(true, questionId)
+//   dispatch(setActivate(activate));
+// }
 
 // thunk for upload image
 export const uploadFileThunk = createAsyncThunk(
