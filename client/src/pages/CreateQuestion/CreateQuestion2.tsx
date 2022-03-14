@@ -1,10 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Link } from 'react-router-dom';
-
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import {
   selectDescription,
   selectEnableMoveTo3,
@@ -12,8 +7,8 @@ import {
   setEnableMoveTo3,
 } from '../../redux/reducers/createQuestionReducer';
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
-
 import CreateQuestionProps from './CreateQuestionProps';
+import { NextButton, BackButton } from "./Buttons";
 
 const CreateQuestion2: FC<CreateQuestionProps> = (props: CreateQuestionProps) => {
   const description = useAppSelector(selectDescription);
@@ -68,17 +63,8 @@ const CreateQuestion2: FC<CreateQuestionProps> = (props: CreateQuestionProps) =>
         </div>
       </div>
       <div className="bottomNavButtons">
-
-        <Link to={`${path}/1`}>
-          <Button variant="outlined" startIcon={<ArrowBackIosIcon />}>Back</Button>
-        </Link>
-        {enableNext
-          ? (
-            <Link to={`${path}/3`}>
-              <Button variant="contained" endIcon={<ArrowForwardIosIcon />}>Next</Button>
-            </Link>
-          )
-          : <Button variant="contained" endIcon={<ArrowForwardIosIcon />} disabled>Next</Button>}
+        <BackButton linkTo={`${path}/1`} />
+        <NextButton linkTo={enableNext ? `${path}/3` : ''} disabled={!enableNext} />
       </div>
     </div>
   );

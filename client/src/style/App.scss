@@ -137,26 +137,36 @@ h2 {
 .bottomNavButtons {
   display: flex;
   justify-content: center;
-  margin-top: 3rem;
-  background-color: none;
+  padding: 0 20px;
+  //margin-top: 3rem;
+  //background-color: none;
 
   a {
     text-decoration: none;
-    margin: 0rem 1rem;
+    width: 100%;
+
+    &.secondary {
+      width: unset;
+    }
+    //&.full-width {
+    //  width: 100%;
+    //}
+    //margin: 0rem 1rem;
   }
 }
 
 @media only screen and (max-width: 550px) {
   .bottomNavButtons {
     position: fixed;
-    bottom: 0px;
-    left: 0px;
+    bottom: 0;
+    left: 0;
     background-color: $main;
     width: 100%;
     justify-content: center;
     display: flex;
-    min-height: 4rem;
+    //min-height: 4rem;
     align-items: center;
+    padding: 12px 20px;
   }
 }
 
@@ -189,19 +199,21 @@ h2 {
 .indicator {
   width: 100%;
   background-color: $main;
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-  max-width: 550px;
-  margin: auto;
+  padding: 0 20px;
+  margin-bottom: 35px;
+
+  .indicator-internal {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+  }
 
   hr {
     position: absolute;
     width: 98%;
     top: 50%;
     transform: translateY(-1px);
-    margin: 0px;
-    // z-index: -1;
+    margin: 0;
   }
 
   a, .step{
@@ -233,10 +245,10 @@ h2 {
 }
 
 @media only screen and (max-width: 550px) {
-  .indicator {
-    margin: 0rem 2rem;
-    width: calc(100vw - 6rem);
-  }
+  //.indicator {
+  //  margin: 0rem 2rem;
+  //  width: calc(100vw - 6rem);
+  //}
 }
 
 
