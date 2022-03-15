@@ -13,13 +13,6 @@ import ButtonAppBar from 'components/ButtonAppBar/ButtonAppBar';
 import ApiData from 'components/ApiData/ApiData';
 import Tabs from 'components/Tabs';
 
-// export interface Group {
-//   status: string;
-//   votes: number;
-//   title: string;
-//   questionId: string;
-// }
-
 const Questions: FC = () => {
   const dispatch = useAppDispatch();
 
@@ -44,7 +37,7 @@ const Questions: FC = () => {
         <Tabs
           id="questions"
           tabs={[
-            { title: 'My Questions', component: () => renderList(questions) },
+            { title: 'Watchlist', component: () => renderList(questions) },
             { title: 'Ongoing', component: () => renderList(questions.filter((item: any) => item.active)) },
             { title: 'Pending', component: () => renderList([]) },
             { title: 'Past', component: () => renderList(questions.filter((item: any) => !item.active)) },
