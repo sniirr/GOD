@@ -20,12 +20,9 @@ export async function createQuestion(req: any, res: any) {
       res.send({ update: true, response });
     } else {
       // create new question
-      question.active = false;
-      const results = await Question.create(question);
+      const result = await Question.create(question);
 
-      const { _id: questionId } = results;
-
-      res.send({ questionId, results });
+      res.send(result);
     }
   } catch (error: any) {
     console.error(error);
@@ -37,7 +34,7 @@ export async function activateQuestion(req: any, res: any): Promise<void> {
   try {
     const { activate, questionId } = req.body;
     if (typeof activate === 'boolean' && typeof questionId === 'string') {
-      const result = await Question.updateOne({ _id: new ObjectId(questionId) }, { activate });
+      const result = await Question.updateOne({ _id: new ObjectId(questionId) }, { active: activate });
       res.send({ result, ok: true });
     } else {
       throw new Error(`activate should be bollean but was ${typeof activate}`);
@@ -56,12 +53,6 @@ export async function getAllQuestions(req: any, res: any): Promise<void> {
       members: userId,
     })
       .populate('solutions');
-
-    // for (let i in result) {
-    //   result[i].members = [req.user.id];
-    //
-    //   result[i].admins = [];
-    // }
 
     res.send({ result, ok: true });
   } catch (error: any) {

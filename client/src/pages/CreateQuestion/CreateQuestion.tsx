@@ -5,8 +5,9 @@ import {
   useLocation,
   useRouteMatch, useHistory
 } from 'react-router-dom';
-import { useAppDispatch } from "redux/hooks";
-import { saveDraft, clear } from "redux/reducers/createQuestionReducer";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
+import { clear, newQuestionSelector } from "redux/reducers/createQuestionReducer";
+import { createQuestion } from "redux/reducers/questionsReducers";
 import InternalHeader from "components/InternalHeader";
 import { WizardSteps } from "components/Wizard";
 import CreateQuestion0 from './CreateQuestion0';
@@ -19,6 +20,7 @@ import CreateQuestion5 from './CreateQuestion5';
 const CreateQuestion: FC = () => {
   const history = useHistory();
   const dispatch = useAppDispatch()
+  const newQuestion = useAppSelector(newQuestionSelector)
   const { path } = useRouteMatch();
   const { pathname } = useLocation()
   const wizardSteps = [
@@ -37,10 +39,7 @@ const CreateQuestion: FC = () => {
     }
   }, [])
 
-  const saveAndExit = async () => {
-    await dispatch(saveDraft())
-    history.push("/questions");
-  }
+  const saveAndExit = () => dispatch(createQuestion(newQuestion, () => history.push("/questions")))
 
   return (
     <div className="page create-question">

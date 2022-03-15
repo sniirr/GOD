@@ -7,17 +7,16 @@ import { Cloudinary } from '@cloudinary/url-gen';
 import { fill } from '@cloudinary/url-gen/actions/resize';
 
 import { NextButton, BackButton } from "components/Wizard";
+import Loader from 'components/Loader/Loader';
+import { uploadFileThunk, newQuestionSelector } from 'redux/reducers/createQuestionReducer';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import CreateQuestionProps from './CreateQuestionProps';
-import Loader from '../../components/Loader/Loader';
-import { uploadFileThunk, selectLoader, selectImage } from '../../redux/reducers/createQuestionReducer';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 
 // https://www.youtube.com/watch?v=Y-VgaRwWS3o
 
 const CreateQuestion3: FC<CreateQuestionProps> = (props: CreateQuestionProps) => {
   const dispatch = useAppDispatch();
-  const loader = useAppSelector(selectLoader);
-  const image = useAppSelector(selectImage);
+  const { loader, image } = useAppSelector(newQuestionSelector);
   const { path } = props;
 
   const cld = new Cloudinary({

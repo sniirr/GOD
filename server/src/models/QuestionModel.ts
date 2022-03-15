@@ -9,8 +9,6 @@ const FileSchema = new Schema({
   fileUrl: String,
 });
 
-
-
 export const QuestionSchema = new Schema({
   title: String,
   description: String,
