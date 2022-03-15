@@ -2,9 +2,9 @@ import Question from '../models/QuestionModel';
 import User from '../models/UserModel';
 import Solution from '../models/SuggestionModel';
 
-var ObjectId = require('mongoose').Types.ObjectId;
+const ObjectId = require('mongoose').Types.ObjectId;
 
-export async function createQuestion(req: any, res: any) {
+export async function upsertQuestion(req: any, res: any) {
   try {
     // get question
     const question = req.body;
@@ -12,16 +12,13 @@ export async function createQuestion(req: any, res: any) {
     question.creatorId = req.user.id;
     question.members = [req.user.id];
 
-    if (question.questionId) {
+    if (question._id) {
       // update
-
-      const response = await Question.findOneAndUpdate({ _id: new ObjectId(question.questionId) }, question);
-
+      const response = await Question.findOneAndUpdate({ _id: new ObjectId(question._id) }, question);
       res.send({ update: true, response });
     } else {
       // create new question
       const result = await Question.create(question);
-
       res.send(result);
     }
   } catch (error: any) {
@@ -32,12 +29,12 @@ export async function createQuestion(req: any, res: any) {
 
 export async function activateQuestion(req: any, res: any): Promise<void> {
   try {
-    const { activate, questionId } = req.body;
-    if (typeof activate === 'boolean' && typeof questionId === 'string') {
-      const result = await Question.updateOne({ _id: new ObjectId(questionId) }, { active: activate });
+    const { questionId } = req.body;
+    if (typeof questionId === 'string') {
+      const result = await Question.updateOne({ _id: new ObjectId(questionId) }, { status: 'pending' });
       res.send({ result, ok: true });
     } else {
-      throw new Error(`activate should be bollean but was ${typeof activate}`);
+      res.send({ error: `Error updating question ${questionId}` });
     }
   } catch (error: any) {
     res.send({ error: error.message });

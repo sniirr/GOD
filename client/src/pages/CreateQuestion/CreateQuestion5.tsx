@@ -8,7 +8,7 @@ import { Cloudinary } from '@cloudinary/url-gen';
 import { NextButton, BackButton } from "components/Wizard";
 import { newQuestionSelector } from 'redux/reducers/createQuestionReducer';
 import { useAppSelector, useAppDispatch } from 'redux/hooks';
-import { createQuestion } from "redux/reducers/questionsReducers";
+import { upsertQuestion } from "redux/reducers/questionsReducers";
 import CreateQuestionProps from './CreateQuestionProps';
 
 const CreateQuestion5: FC<CreateQuestionProps> = (
@@ -33,7 +33,7 @@ const CreateQuestion5: FC<CreateQuestionProps> = (
   }
 
   const submit = () => dispatch(
-    createQuestion({ title, description, image, active: true }, () => history.push('/create_question/success'))
+    upsertQuestion({ title, description, image, status: 'pending' }, () => history.push('/create_question/success'))
   )
 
   return (

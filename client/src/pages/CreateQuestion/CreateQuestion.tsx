@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { clear, newQuestionSelector } from "redux/reducers/createQuestionReducer";
-import { createQuestion } from "redux/reducers/questionsReducers";
+import { upsertQuestion } from "redux/reducers/questionsReducers";
 import InternalHeader from "components/InternalHeader";
 import { WizardSteps } from "components/Wizard";
 import CreateQuestion0 from './CreateQuestion0';
@@ -39,7 +39,7 @@ const CreateQuestion: FC = () => {
     }
   }, [])
 
-  const saveAndExit = () => dispatch(createQuestion(newQuestion, () => history.push("/questions")))
+  const saveAndExit = () => dispatch(upsertQuestion(newQuestion, () => history.push("/questions")))
 
   return (
     <div className="page create-question">

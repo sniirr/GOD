@@ -27,7 +27,7 @@ export const questionsSlice = createSlice({
   name: 'questions',
   initialState: {},
   reducers: {
-    addQuestion: (state, action: PayloadAction<any>) => {
+    upsertQuestion: (state, action: PayloadAction<any>) => {
       const { payload: question } = action;
       // @ts-ignore
       state[question._id] = question
@@ -53,7 +53,7 @@ export const questionsSlice = createSlice({
     publishQuestion: (state, action: PayloadAction<any>) => {
       const { payload: { questionId } } = action;
       const question = _.get(state, questionId) as QuestionSchema;
-      question.active = true
+      question.status = 'pending'
     }
   },
   extraReducers: (builder) => {
@@ -67,14 +67,14 @@ interface NewQuestionPayload {
   title: string,
   description: string,
   image: any,
-  active?: boolean;
+  status?: string;
 }
 
-export const createQuestion = (question: NewQuestionPayload, cb?: Function) => async (dispatch: any) => {
+export const upsertQuestion = (question: NewQuestionPayload, cb?: Function) => async (dispatch: any) => {
   try {
     if (!question.title) return
-    const { data } = await axios.post('/questions/create', question);
-    dispatch(questionsSlice.actions.addQuestion(data))
+    const { data } = await axios.post('/questions/upsert', question);
+    dispatch(questionsSlice.actions.upsertQuestion(data))
     if (cb) cb()
   } catch (error) {
     console.error(error);

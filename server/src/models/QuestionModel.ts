@@ -13,23 +13,28 @@ export const QuestionSchema = new Schema({
   title: String,
   description: String,
   files: [FileSchema],
-  coverImage: String,
+  // coverImage: String,
   members: { type: [String], index: true },
   creatorId: String,
   admins: [UserSchema],
   last_entered: Date,
   role: String,
   image: Map,
-  active: Boolean, // legacy
-  draft: Boolean, // legacy
+  // active: Boolean, // legacy
+  // draft: Boolean, // legacy
   status: {
-    draft: Boolean,
-    active: Boolean,
-    suggestions: Boolean,
-    vote: Boolean,
-    closed: Boolean,
-    deleted: Boolean,
+    type: String,
+    enum: ['draft', 'pending', 'suggestions', 'vote', 'closed', 'deleted'],
+    default: 'draft',
   },
+  // status: {
+  //   draft: Boolean,
+  //   pending: Boolean,
+  //   suggestions: Boolean,
+  //   vote: Boolean,
+  //   closed: Boolean,
+  //   deleted: Boolean,
+  // },
   solutions: [
     {
       type: mongoose.Schema.Types.ObjectId,

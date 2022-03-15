@@ -33,7 +33,7 @@ export const WizardSteps: FC<WizardStepsProps> = (props:WizardStepsProps) => {
             'indicator--disabled': parseInt(routeName, 10) > parseInt(pageFromUrl, 10),
           }
           return (
-            <div className={classNames('indicator-step', classes)}>
+            <div key={`wizard-step-${routeName}`} className={classNames('indicator-step', classes)}>
               <div>{i + 1}</div>
               <div className="indicator-label">{caption}</div>
             </div>

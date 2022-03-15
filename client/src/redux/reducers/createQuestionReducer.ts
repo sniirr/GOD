@@ -34,7 +34,7 @@ const initialState = {
   title: '',
   description: '',
   image: {},
-  status: '',
+  status: 'draft',
   loader: false,
   enableMoveTo2: false,
   enableMoveTo3: false,

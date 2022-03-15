@@ -37,7 +37,7 @@ const VoteCard: FC<VoteCardProps> = (props: VoteCardProps) => {
         <div className="card__status">{info.active ? 'Published' : 'Draft'}</div>
       </div>
       <div className="card__info">
-        {info.active ? (
+        {info.status !== 'draft' ? (
           <>
             <div className="card__info__votes">
               <i className="card__info__voteCount__icon">
