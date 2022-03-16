@@ -257,6 +257,16 @@ h2 {
     text-align: center;
     justify-content: center;
     user-select: none;
+    position: relative;
+  }
+
+  .indicator-label {
+    color: #0F344F;
+    font-size: .75em;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   &--complete {
@@ -271,6 +281,10 @@ h2 {
 
   &--disabled {
     background-color: #c4c4c4 !important;
+
+    .indicator-label {
+      color: #C4C4C4;
+    }
   }
 }
 

@@ -5,13 +5,18 @@ import {
 } from 'react-router-dom';
 import classNames from "classnames";
 
+interface StepProps {
+  routeName:string;
+  caption: string;
+}
+
 export interface WizardStepsProps {
-  routeNames: Array<string>;
+  steps: Array<StepProps>;
   isVisible?: boolean;
 }
 
 export const WizardSteps: FC<WizardStepsProps> = (props:WizardStepsProps) => {
-  const { routeNames, isVisible } = props;
+  const { steps, isVisible } = props;
   // const { path: basePath } = useRouteMatch();
   const { pathname } = useLocation()
   const urlSplit = pathname.split('/');
@@ -21,14 +26,17 @@ export const WizardSteps: FC<WizardStepsProps> = (props:WizardStepsProps) => {
     <div className="indicator">
       <div className="indicator-internal">
         <hr />
-        {routeNames.map((routeName, i) => {
+        {steps.map(({ routeName, caption }, i) => {
           const classes = {
             'indicator--complete': parseInt(routeName, 10) < parseInt(pageFromUrl, 10),
             'indicator--current': routeName === pageFromUrl,
             'indicator--disabled': parseInt(routeName, 10) > parseInt(pageFromUrl, 10),
           }
           return (
-            <div className={classNames('indicator-step', classes)}>{i + 1}</div>
+            <div key={`wizard-step-${routeName}`} className={classNames('indicator-step', classes)}>
+              <div>{i + 1}</div>
+              <div className="indicator-label">{caption}</div>
+            </div>
           )
           // return (
           //   <Link key={`page-${routeName}`} to={`${basePath}/${routeName}`}>

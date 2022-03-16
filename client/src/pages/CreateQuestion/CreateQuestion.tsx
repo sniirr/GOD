@@ -5,8 +5,9 @@ import {
   useLocation,
   useRouteMatch, useHistory
 } from 'react-router-dom';
-import { useAppDispatch } from "redux/hooks";
-import { saveDraft, clear } from "redux/reducers/createQuestionReducer";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
+import { clear, newQuestionSelector } from "redux/reducers/createQuestionReducer";
+import { upsertQuestion } from "redux/reducers/questionsReducers";
 import InternalHeader from "components/InternalHeader";
 import { WizardSteps } from "components/Wizard";
 import CreateQuestion0 from './CreateQuestion0';
@@ -19,9 +20,16 @@ import CreateQuestion5 from './CreateQuestion5';
 const CreateQuestion: FC = () => {
   const history = useHistory();
   const dispatch = useAppDispatch()
+  const newQuestion = useAppSelector(newQuestionSelector)
   const { path } = useRouteMatch();
   const { pathname } = useLocation()
-  const routeNames = ['1', '2', '3', '4', '5'];
+  const wizardSteps = [
+    { routeName: '1', caption: 'Problem' },
+    { routeName: '2', caption: 'Goal' },
+    { routeName: '3', caption: 'Upload' },
+    { routeName: '4', caption: 'Schedule' },
+    { routeName: '5', caption: 'Review' },
+  ];
 
   const hasStarted = pathname !== '/create_question'
 
@@ -31,17 +39,14 @@ const CreateQuestion: FC = () => {
     }
   }, [])
 
-  const saveAndExit = async () => {
-    await dispatch(saveDraft())
-    history.push("/questions");
-  }
+  const saveAndExit = () => dispatch(upsertQuestion(newQuestion, () => history.push("/questions")))
 
   return (
     <div className="page create-question">
       <InternalHeader title="Create Question" backUrl="/questions">
         {hasStarted && (<span onClick={saveAndExit}>Save & Exit</span>)}
       </InternalHeader>
-      <WizardSteps routeNames={routeNames} isVisible={hasStarted} />
+      <WizardSteps steps={wizardSteps} isVisible={hasStarted} />
       <Switch>
         <Route exact path={path}>
           <CreateQuestion0 path={path} />

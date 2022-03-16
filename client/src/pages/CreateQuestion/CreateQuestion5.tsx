@@ -5,20 +5,11 @@ import PublishIcon from '@mui/icons-material/Publish';
 import { AdvancedImage } from '@cloudinary/react';
 import { Cloudinary } from '@cloudinary/url-gen';
 // functions
-import {
-  createUpdateQuestion,
-  activateQuestion,
-} from 'redux/reducers/createQuestionReducer';
 import { NextButton, BackButton } from "components/Wizard";
+import { newQuestionSelector } from 'redux/reducers/createQuestionReducer';
+import { useAppSelector, useAppDispatch } from 'redux/hooks';
+import { upsertQuestion } from "redux/reducers/questionsReducers";
 import CreateQuestionProps from './CreateQuestionProps';
-import {
-  selectTitle,
-  selectDescription,
-  selectImage,
-  setQuestionId,
-  setActivate,
-} from '../../redux/reducers/createQuestionReducer';
-import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 
 const CreateQuestion5: FC<CreateQuestionProps> = (
   props: CreateQuestionProps,
@@ -27,9 +18,7 @@ const CreateQuestion5: FC<CreateQuestionProps> = (
 
   const history = useHistory();
   const dispatch = useAppDispatch();
-  const title = useAppSelector(selectTitle);
-  const description = useAppSelector(selectDescription);
-  const image = useAppSelector(selectImage);
+  const { title, description, image } = useAppSelector(newQuestionSelector);
 
   const cld = new Cloudinary({
     cloud: {
@@ -43,13 +32,9 @@ const CreateQuestion5: FC<CreateQuestionProps> = (
     myImage = cld.image(imagePublicId);
   }
 
-  const submit = async () => {
-    const qid = await createUpdateQuestion(title, description, image);
-    dispatch(setQuestionId(qid));
-    const activate = await activateQuestion(true, qid)
-    dispatch(setActivate(activate));
-    history.push('/create_question/success');
-  }
+  const submit = () => dispatch(
+    upsertQuestion({ title, description, image, status: 'pending' }, () => history.push('/create_question/success'))
+  )
 
   return (
     <div>
