@@ -54,7 +54,12 @@ export const questionsSlice = createSlice({
       const { payload: { questionId } } = action;
       const question = _.get(state, questionId) as QuestionSchema;
       question.status = 'pending'
-    }
+    },
+    toggleWatch: (state, action: PayloadAction<any>) => {
+      const { payload: { questionId, userId } } = action;
+      const question = _.get(state, questionId) as QuestionSchema;
+      _.set(question.watchlist, userId, !_.get(question.watchlist, userId, false))
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -105,8 +110,6 @@ export const likeSolution = (qid: string, sid: string, userId: string, vote: boo
   try {
     const { data } = await axios.post('/questions/like-solution', { sid, vote });
 
-    console.log('likeSolution', { data });
-
     dispatch(questionsSlice.actions.likeSolution({
       qid, sid, vote: data.resolvedVote, userId,
     }));
@@ -114,6 +117,16 @@ export const likeSolution = (qid: string, sid: string, userId: string, vote: boo
     console.error(error);
   }
 };
+
+export const toggleWatch = (questionId: string, userId: string) => async (dispatch: any) => {
+  try {
+    const { data } = await axios.post('/questions/toggle-watch', { questionId, userId });
+
+    dispatch(questionsSlice.actions.toggleWatch({ questionId, userId }))
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 // selectors
 export const allQuestions = (state: RootState) => state.questions;
