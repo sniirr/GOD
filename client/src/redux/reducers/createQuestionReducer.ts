@@ -21,8 +21,6 @@ export interface QuestionSchema {
   status: string,
   description: string,
   loader: boolean,
-  enableMoveTo2: boolean,
-  enableMoveTo3: boolean,
   active: boolean,
   solutions: any,
 }
@@ -34,10 +32,8 @@ const initialState = {
   title: '',
   description: '',
   image: {},
-  status: 'draft',
+  status: 'new',
   loader: false,
-  enableMoveTo2: false,
-  enableMoveTo3: false,
   active: false,
   solutions: [],
 } as QuestionSchema;
@@ -55,12 +51,6 @@ export const createQuestionSlice = createSlice({
     },
     setImage: (state, action) => {
       state.image = action.payload;
-    },
-    setEnableMoveTo2: (state, action) => {
-      state.enableMoveTo2 = action.payload;
-    },
-    setEnableMoveTo3: (state, action) => {
-      state.enableMoveTo3 = action.payload;
     },
     clear: () => initialState,
   },
@@ -83,12 +73,27 @@ export const createQuestionSlice = createSlice({
   },
 });
 
-export const {
-  setTitle, setDescription, setEnableMoveTo2, setEnableMoveTo3, clear
-} = createQuestionSlice.actions;
+export const { setTitle, setDescription, clear } = createQuestionSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const newQuestionSelector = (state: RootState) => state.newQuestion;
+
+export const isTitleSet = (title: string) => title.length > 6 && title.length < 140
+export const isDescriptionSet = (description: string) => description.length > 6 && description.length < 500
+export const stepEnabledSelector = (currentStep: number, step: Number) => (state: RootState) => {
+  const { title, description, status } = state.newQuestion
+  console.log('stepEnabledSelector', { currentStep, step, q: state.newQuestion })
+  switch (step) {
+    case 1:
+      return true
+    case 2:
+      return isTitleSet(title) && (status === 'draft' || currentStep >= 2)
+    case 3:
+      return isDescriptionSet(description) && (status === 'draft' || currentStep >= 3)
+    default:
+      return isTitleSet(title) && isDescriptionSet(description) && (status === 'draft' || currentStep >= step)
+  }
+}
 
 const createQuestionReducer = createQuestionSlice.reducer;
 
