@@ -24,21 +24,13 @@ export const QuestionSchema = new Schema({
     enum: ['draft', 'pending', 'suggestions', 'vote', 'closed', 'deleted'],
     default: 'draft',
   },
-  // status: {
-  //   draft: Boolean,
-  //   pending: Boolean,
-  //   suggestions: Boolean,
-  //   vote: Boolean,
-  //   closed: Boolean,
-  //   deleted: Boolean,
-  // },
   solutions: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Solution",
     },
   ],
-  watchlist: Object,
+  watchlist: { type: Object, default: {} },
 });
 
 export const Question = mongoose.model("Question", QuestionSchema);

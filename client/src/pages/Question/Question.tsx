@@ -111,10 +111,7 @@ const Question: FC = () => {
           onClick={() => dispatch(toggleWatch(questionId, user.id))}
           className={classNames({ on: isWatching, off: !isWatching })} />
       </InternalHeader>
-      <div
-        className="question-header"
-        style={{ backgroundImage: imageUrl ? `url(${imageUrl}` : "none" }}>
-      </div>
+      <div className="question-header" style={{ backgroundImage: imageUrl ? `url(${imageUrl}` : "none" }} />
       <Tabs
         id="questions"
         isMenu

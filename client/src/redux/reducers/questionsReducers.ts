@@ -110,8 +110,6 @@ export const likeSolution = (qid: string, sid: string, userId: string, vote: boo
   try {
     const { data } = await axios.post('/questions/like-solution', { sid, vote });
 
-    console.log('likeSolution', { data });
-
     dispatch(questionsSlice.actions.likeSolution({
       qid, sid, vote: data.resolvedVote, userId,
     }));
@@ -121,7 +119,13 @@ export const likeSolution = (qid: string, sid: string, userId: string, vote: boo
 };
 
 export const toggleWatch = (questionId: string, userId: string) => async (dispatch: any) => {
-  dispatch(questionsSlice.actions.toggleWatch({ questionId, userId }))
+  try {
+    const { data } = await axios.post('/questions/toggle-watch', { questionId, userId });
+
+    dispatch(questionsSlice.actions.toggleWatch({ questionId, userId }))
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 // selectors
