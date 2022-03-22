@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from 'redux/store';
 import { uploadFile } from 'utils/uploadFile';
@@ -14,7 +15,6 @@ export const uploadFileThunk = createAsyncThunk(
 
 // Define a type for the slice state
 export interface QuestionSchema {
-  // questionId: string | boolean;
   title: string,
   image: Image,
   status: string,
@@ -25,7 +25,6 @@ export interface QuestionSchema {
 
 // Define the initial state using that type
 const initialState = {
-  // questionId: false,
   title: '',
   description: '',
   image: {},
@@ -38,6 +37,9 @@ export const createQuestionSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
+    loadDraft: (state, action: PayloadAction<string>) => {
+      _.merge(state, action.payload)
+    },
     setTitle: (state, action: PayloadAction<string>) => {
       state.title = action.payload;
     },
@@ -65,7 +67,7 @@ export const createQuestionSlice = createSlice({
   },
 });
 
-export const { setTitle, setDescription, clear } = createQuestionSlice.actions;
+export const { loadDraft, setTitle, setDescription, clear } = createQuestionSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const newQuestionSelector = (state: RootState) => state.newQuestion;
