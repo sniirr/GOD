@@ -14,27 +14,22 @@ export const uploadFileThunk = createAsyncThunk(
 
 // Define a type for the slice state
 export interface QuestionSchema {
-  questionId: string | boolean;
-  pageNumber: number, // number of page
+  // questionId: string | boolean;
   title: string,
   image: Image,
   status: string,
   description: string,
-  loader: boolean,
-  active: boolean,
+  imageUploading: boolean,
   solutions: any,
 }
 
 // Define the initial state using that type
 const initialState = {
-  questionId: false,
-  pageNumber: 1,
+  // questionId: false,
   title: '',
   description: '',
   image: {},
-  status: 'new',
-  loader: false,
-  active: false,
+  imageUploading: false,
   solutions: [],
 } as QuestionSchema;
 
@@ -57,18 +52,15 @@ export const createQuestionSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(uploadFileThunk.pending, (state: any) => {
-        state.status = 'pending';
-        state.loader = true;
+        state.imageUploading = true;
       })
       .addCase(uploadFileThunk.fulfilled, (state: any, action: any) => {
         state.image = JSON.parse(action.payload);
-        state.status = 'success';
-        state.loader = false;
+        state.imageUploading = false;
       })
       .addCase(uploadFileThunk.rejected, (state: any, action: any) => {
         state.image = action.payload;
-        state.status = 'failed';
-        state.loader = false;
+        state.imageUploading = false;
       })
   },
 });
@@ -82,7 +74,6 @@ export const isTitleSet = (title: string) => title.length > 6 && title.length < 
 export const isDescriptionSet = (description: string) => description.length > 6 && description.length < 500
 export const stepEnabledSelector = (currentStep: number, step: Number) => (state: RootState) => {
   const { title, description, status } = state.newQuestion
-  console.log('stepEnabledSelector', { currentStep, step, q: state.newQuestion })
   switch (step) {
     case 1:
       return true
