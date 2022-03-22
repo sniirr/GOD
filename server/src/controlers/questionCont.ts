@@ -8,9 +8,7 @@ export async function upsertQuestion(req: any, res: any) {
   try {
     // get question
     const question = req.body;
-
-    question.creatorId = req.user.id;
-    question.members = [req.user.id];
+    const creatorId = req.user.id
 
     if (question._id) {
       // update
@@ -18,6 +16,9 @@ export async function upsertQuestion(req: any, res: any) {
       res.send({ update: true, response });
     } else {
       // create new question
+      question.creatorId = creatorId;
+      question.members = [creatorId];
+      question.watchlist = { [creatorId]: true }
       const result = await Question.create(question);
       res.send(result);
     }

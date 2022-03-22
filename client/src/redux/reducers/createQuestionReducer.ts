@@ -21,6 +21,7 @@ export interface QuestionSchema {
   description: string,
   imageUploading: boolean,
   solutions: any,
+  watchlist: any,
 }
 
 // Define the initial state using that type
@@ -30,6 +31,7 @@ const initialState = {
   image: {},
   imageUploading: false,
   solutions: [],
+  watchlist: {},
 } as QuestionSchema;
 
 export const createQuestionSlice = createSlice({

@@ -13,15 +13,12 @@ export const QuestionSchema = new Schema({
   title: String,
   description: String,
   files: [FileSchema],
-  // coverImage: String,
   members: { type: [String], index: true },
   creatorId: String,
   admins: [UserSchema],
   last_entered: Date,
   role: String,
   image: Map,
-  // active: Boolean, // legacy
-  // draft: Boolean, // legacy
   status: {
     type: String,
     enum: ['draft', 'pending', 'suggestions', 'vote', 'closed', 'deleted'],
@@ -41,6 +38,7 @@ export const QuestionSchema = new Schema({
       ref: "Solution",
     },
   ],
+  watchlist: Object,
 });
 
 export const Question = mongoose.model("Question", QuestionSchema);

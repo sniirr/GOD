@@ -54,7 +54,12 @@ export const questionsSlice = createSlice({
       const { payload: { questionId } } = action;
       const question = _.get(state, questionId) as QuestionSchema;
       question.status = 'pending'
-    }
+    },
+    toggleWatch: (state, action: PayloadAction<any>) => {
+      const { payload: { questionId, userId } } = action;
+      const question = _.get(state, questionId) as QuestionSchema;
+      _.set(question.watchlist, userId, !_.get(question.watchlist, userId, false))
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -114,6 +119,10 @@ export const likeSolution = (qid: string, sid: string, userId: string, vote: boo
     console.error(error);
   }
 };
+
+export const toggleWatch = (questionId: string, userId: string) => async (dispatch: any) => {
+  dispatch(questionsSlice.actions.toggleWatch({ questionId, userId }))
+}
 
 // selectors
 export const allQuestions = (state: RootState) => state.questions;
