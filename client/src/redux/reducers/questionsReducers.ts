@@ -69,6 +69,7 @@ export const questionsSlice = createSlice({
 
 // actions
 interface NewQuestionPayload {
+  _id?: string,
   title: string,
   description: string,
   image: any,

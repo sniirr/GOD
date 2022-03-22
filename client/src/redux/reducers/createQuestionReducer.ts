@@ -15,6 +15,7 @@ export const uploadFileThunk = createAsyncThunk(
 
 // Define a type for the slice state
 export interface QuestionSchema {
+  _id?: string,
   title: string,
   image: Image,
   status: string,
