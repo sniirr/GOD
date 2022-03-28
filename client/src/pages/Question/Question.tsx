@@ -101,6 +101,7 @@ const Question: FC = () => {
         // tempMessageId = msg.id;
       }
     }
+    ev.target.reset()
   };
 
   return (

@@ -1,25 +1,75 @@
-import React from "react";
+import React, { useState } from "react";
 import { get } from "lodash";
+import TruncateMarkup from 'react-truncate-markup';
+import Parser from 'html-react-parser';
+import './Message.scss';
 
 interface MessageProps {
-  msg: any;
+  msg: any,
+  isPreview?: boolean,
 }
 
 const Message = (props: MessageProps) => {
-  const { msg } = props;
+  const { msg, isPreview, } = props;
+  const [truncate, setTruncate] = useState(!isPreview);
 
   const displayName = get(msg, "roles.creator.displayName", "");
   if (displayName.length === 0) {
     console.warn(`message ${msg._id} has no creator`);
     console.log(JSON.stringify(msg));
   }
+
+  function elapsedTime(date: any){
+    //convert to unix the message timestamp
+    const myDate = new Date(date)
+    const timestamp = myDate.getTime()
+    const secondsOld = Math.floor(timestamp / 1000)
+
+    //get the time now
+    const timeNow = new Date()
+    const recentTimeTimestamp = timeNow.getTime()
+    const secondsNow = Math.floor(recentTimeTimestamp / 1000)
+
+    const difference = secondsNow - secondsOld
+
+    if (difference < 60) {
+      return `${difference} seconds ago`
+    } if (difference < 3600) {
+      // Less than an hour has passed:
+      return `${Math.floor(difference / 60)} minutes ago`;
+    } if (difference < 86400) {
+      // Less than a day has passed:
+      return `${Math.floor(difference / 3600)} hours ago`;
+    } if (difference < 2620800) {
+      // Less than a month has passed:
+      return `${Math.floor(difference / 86400)} days ago`;
+    } if (difference < 31449600) {
+      // Less than a year has passed:
+      return `${Math.floor(difference / 2620800)} months ago`;
+    }
+    // More than a year has passed:
+    return `${Math.floor(difference / 31449600)} years ago`;
+  }
+
   try {
     return (
       <div className="message">
         <div className="creator">
-          {displayName}-{msg.date}
+          {displayName}-{elapsedTime(msg.date)}
         </div>
-        <div className="content">{msg.text}</div>
+        {truncate ? (
+          <TruncateMarkup lines={7} ellipsis={<div onClick={() => setTruncate(!truncate)} className="ellipsis">Show more</div>}>
+            <div className="content">{Parser(msg.text)}</div>
+          </TruncateMarkup>
+        ) : (
+          <>
+            <div className="content">{Parser(msg.text)}</div>
+            {!isPreview && (
+            <div onClick={() => setTruncate(!truncate)} className="ellipsis">Show less</div>
+            )}
+          </>
+        )
+      }
       </div>
     );
   } catch (error) {
