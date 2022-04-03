@@ -3,6 +3,11 @@ import { get } from "lodash";
 import TruncateMarkup from 'react-truncate-markup';
 import Parser from 'html-react-parser';
 import './Message.scss';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import ReplyIcon from '@mui/icons-material/Reply';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Avatar from '@mui/material/Avatar';
 
 interface MessageProps {
   msg: any,
@@ -54,22 +59,46 @@ const Message = (props: MessageProps) => {
   try {
     return (
       <div className="message">
-        <div className="creator">
-          {displayName}-{elapsedTime(msg.date)}
+        <div className="avatar">
+          <Avatar sx={{ width: 28, height: 28 }} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
         </div>
-        {truncate ? (
-          <TruncateMarkup lines={7} ellipsis={<div onClick={() => setTruncate(!truncate)} className="ellipsis">Show more</div>}>
-            <div className="content">{Parser(msg.text)}</div>
-          </TruncateMarkup>
-        ) : (
-          <>
-            <div className="content">{Parser(msg.text)}</div>
-            {!isPreview && (
-            <div onClick={() => setTruncate(!truncate)} className="ellipsis">Show less</div>
-            )}
-          </>
-        )
-      }
+        <div className="message-container">
+          <div className="creator">
+            {displayName} - {elapsedTime(msg.date)}
+          </div>
+          {truncate ? (
+            <TruncateMarkup lines={6} ellipsis={<span onClick={() => setTruncate(!truncate)} className="message-truncate"> ... Read more</span>}>
+              <div className="content">{Parser(msg.text)}</div>
+            </TruncateMarkup>
+          ) : (
+            <div>
+              {!isPreview && (
+              <div className="content">{Parser(msg.text)}
+                <span onClick={() => setTruncate(!truncate)} className="message-truncate"> Show less</span>
+              </div>
+              )}
+            </div>
+          )
+          }
+          <div className="bottom-nav-buttons">
+            <div className="bottom-buttons-left">
+              <div>
+                <ThumbUpIcon />
+                <div className="upvote">0</div>
+              </div>
+              <div>
+                <ThumbDownIcon />
+                <div className="downvote">0</div>
+              </div>
+              <div>
+                <ReplyIcon />
+              </div>
+            </div>
+            <div className="bottom--buttons-right">
+              <MoreVertIcon />
+            </div>
+          </div>
+        </div>
       </div>
     );
   } catch (error) {
