@@ -18,6 +18,7 @@ export interface QuestionSchema {
   _id?: string,
   title: string,
   image: Image,
+  schedule: string[],
   status: string,
   description: string,
   imageUploading: boolean,
@@ -30,6 +31,7 @@ const initialState = {
   title: '',
   description: '',
   image: {},
+  schedule: [''],
   imageUploading: false,
   solutions: [],
   watchlist: {},
@@ -52,6 +54,18 @@ export const createQuestionSlice = createSlice({
     setImage: (state, action) => {
       state.image = action.payload;
     },
+    setStartScedule: (state, action: PayloadAction<string>) => {
+      state.schedule[0] = action.payload;
+    },
+    setEndScedule: (state, action: PayloadAction<string>) => {
+      state.schedule[1] = action.payload;
+    },
+    setVoteEndScedule: (state, action: PayloadAction<string>) => {
+      state.schedule[2] = action.payload;
+    },
+    removeScedules: (state) => {
+      state.schedule = [];
+    },
     clear: () => initialState,
   },
   extraReducers: (builder) => {
@@ -70,7 +84,7 @@ export const createQuestionSlice = createSlice({
   },
 });
 
-export const { loadDraft, setTitle, setDescription, clear } = createQuestionSlice.actions;
+export const { loadDraft, setTitle, setDescription, clear, removeScedules, setEndScedule, setStartScedule, setVoteEndScedule } = createQuestionSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const newQuestionSelector = (state: RootState) => state.newQuestion;
