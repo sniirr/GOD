@@ -52,4 +52,9 @@
 
     }
   }
+
+  .expanded {
+    margin: -10px 0 20px;
+    border-bottom: solid 1px $border_gray;
+  }
 }
