@@ -41,9 +41,9 @@ const Questions: FC = () => {
           id="questions"
           tabs={[ // todo - memoize lists
             { title: 'Watchlist', component: () => renderList(questions.filter((q: any) => includes(q.members, userId))) },
-            { title: 'Ongoing', component: () => renderList(questions.filter((q: any) => q.status === 'suggestions' || q.status === 'vote')) },
-            { title: 'Pending', component: () => renderList(questions.filter((q: any) => q.status === 'pending')) },
-            { title: 'Past', component: () => renderList(questions.filter((q: any) => q.status === 'closed')) },
+            { title: 'Active', component: () => renderList(questions.filter((q: any) => includes(['active', 'suggestions', 'vote'], q.status))) },
+            { title: 'Drafts', component: () => renderList(questions.filter((q: any) => q.status === 'draft')) },
+            { title: 'Ended', component: () => renderList(questions.filter((q: any) => q.status === 'closed')) },
           ]}
         />
       </div>
