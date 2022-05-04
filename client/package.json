@@ -27,6 +27,7 @@
     "axios": "^0.21.4",
     "classnames": "^2.3.1",
     "cloudinary": "^1.27.1",
+    "dayjs": "^1.11.1",
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
     "history": "^5.1.0",
