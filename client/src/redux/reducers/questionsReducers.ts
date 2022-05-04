@@ -60,12 +60,39 @@ export const questionsSlice = createSlice({
       const question = _.get(state, questionId) as QuestionSchema;
       _.set(question.watchlist, userId, !_.get(question.watchlist, userId, false))
     },
+    setVotes: (state, action: PayloadAction<any>) => {
+      const { payload: { qid, votes } } = action
+      const question = _.get(state, qid) as QuestionSchema;
+      question.voteCounters = votes
+    },
+    setUserVote: (state, action: PayloadAction<any>) => {
+      const { payload: { uid, qid, sid } } = action
+      const question = _.get(state, qid) as QuestionSchema;
+      _.set(question.votes, uid, sid)
+    }
   },
   extraReducers: (builder) => {
     builder
       .addCase(getQuestionsThunk.fulfilled, (state: any, action: any) => _.keyBy(action.payload, '_id'));
   },
 });
+
+export const getQuestionsVotes = (qid: string) => async (dispatch: any) => {
+  try {
+    const res = await axios.post('/questions/get-votes', { qid })
+
+    const voteCounters = res.data
+
+    const sumVotes = _.sum(_.values(voteCounters))
+    const votes = _.mapValues(voteCounters, (count) => ({ count, percent: (count / sumVotes) * 100 }))
+
+    console.log({ voteCounters, sumVotes, votes })
+    dispatch(questionsSlice.actions.setVotes({ qid, votes }))
+  }
+  catch (e) {
+    console.error(e)
+  }
+}
 
 // actions
 interface NewQuestionPayload {
@@ -115,6 +142,21 @@ export const likeSolution = (qid: string, sid: string, userId: string, vote: boo
     dispatch(questionsSlice.actions.likeSolution({
       qid, sid, vote: data.resolvedVote, userId,
     }));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const vote = (qid: string, sid: string, uid: string) => async (dispatch: any, getState: any) => {
+  try {
+    const { data } = await axios.post('/questions/vote', { qid, sid });
+
+    dispatch(getQuestionsVotes(qid))
+    dispatch(questionsSlice.actions.setUserVote({
+      qid,
+      sid: data.resolvedVote,
+      uid,
+    }))
   } catch (error) {
     console.error(error);
   }

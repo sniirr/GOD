@@ -1,7 +1,7 @@
 import Question from '../models/QuestionModel';
 import User from '../models/UserModel';
 import Solution from '../models/SuggestionModel';
-import { get } from 'lodash'
+import { get, countBy, groupBy, identity, omit } from 'lodash'
 
 const ObjectId = require('mongoose').Types.ObjectId;
 
@@ -59,6 +59,21 @@ export async function getAllQuestions(req: any, res: any): Promise<void> {
   }
 }
 
+export async function getQuestionVotes(req: any, res: any): Promise<void> {
+  try {
+    if (!{}.hasOwnProperty.call(req, 'user')) throw new Error('No user in request');
+
+    const { qid } = req.body
+    const question = await Question.findById(qid)
+    const votes = Object.fromEntries(question.votes);
+    const counters = countBy(votes, identity)
+
+    res.send(omit(counters, null));
+  } catch (error: any) {
+    res.send({ error: error.message });
+  }
+}
+
 export async function addSolution(req: any, res: any) {
   try {
     const user = await User.findOne({ id: req.user.id });
@@ -110,6 +125,32 @@ export const setSolutionLike = async (req: any, res: any) => {
     res.status(500).send({ error: error.message });
   }
 };
+
+export const voteForSolution = async (req: any, res: any) => {
+  try {
+    const { qid, sid } = req.body;
+    const userId = req.user.id;
+
+    const key = `votes.${userId}`;
+
+    const question = await Question.findById(qid)
+    const userVote = question.votes.get(userId)
+    const resolvedVote = userVote === sid ? null : sid
+
+    await Question.updateOne(
+      { _id: qid },
+      {
+        $set: {
+          [key]: resolvedVote,
+        },
+      },
+    );
+
+    res.send({ resolvedVote });
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }}
 
 export const toggleWatch = async (req: any, res: any) => {
   try {

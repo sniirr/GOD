@@ -32,6 +32,7 @@ export const QuestionSchema = new Schema({
     },
   ],
   watchlist: { type: Object, default: {} },
+  votes: { type: Map, of: String, default: new Map() },
 });
 
 export const Question = mongoose.model("Question", QuestionSchema);
