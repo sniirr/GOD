@@ -34,7 +34,7 @@ const CreateQuestion5: FC<CreateQuestionProps> = (
   }
 
   const submit = () => dispatch(
-    upsertQuestion({ _id, title, description, image, schedule, status: 'pending' }, () => history.push('/create_question/success'))
+    upsertQuestion({ _id, title, description, image, schedule, status: 'active' }, () => history.push('/create_question/success'))
   )
 
   return (

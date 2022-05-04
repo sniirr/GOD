@@ -28,8 +28,9 @@ const CreateQuestion: FC = () => {
     { stepNumber: 1, caption: 'Problem' },
     { stepNumber: 2, caption: 'Goal' },
     { stepNumber: 3, caption: 'Upload' },
-    { stepNumber: 4, caption: 'Schedule' },
-    { stepNumber: 5, caption: 'Review' },
+    // { stepNumber: 4, caption: 'Schedule' },
+    // { stepNumber: 5, caption: 'Review' },
+    { stepNumber: 4, caption: 'Review' },
   ];
 
   const hasStarted = pathname !== '/create_question'
@@ -61,10 +62,13 @@ const CreateQuestion: FC = () => {
         <Route exact path={`${path}/3`}>
           <CreateQuestion3 path={path} />
         </Route>
+        {/*<Route exact path={`${path}/4`}>*/}
+        {/*  <CreateQuestion4 path={path} />*/}
+        {/*</Route>*/}
+        {/*<Route exact path={`${path}/5`}>*/}
+        {/*  <CreateQuestion5 path={path} />*/}
+        {/*</Route>*/}
         <Route exact path={`${path}/4`}>
-          <CreateQuestion4 path={path} />
-        </Route>
-        <Route exact path={`${path}/5`}>
           <CreateQuestion5 path={path} />
         </Route>
       </Switch>

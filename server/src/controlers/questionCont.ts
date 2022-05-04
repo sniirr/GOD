@@ -33,7 +33,7 @@ export async function activateQuestion(req: any, res: any): Promise<void> {
   try {
     const { questionId } = req.body;
     if (typeof questionId === 'string') {
-      const result = await Question.updateOne({ _id: new ObjectId(questionId) }, { status: 'pending' });
+      const result = await Question.updateOne({ _id: new ObjectId(questionId) }, { status: 'active' });
       res.send({ result, ok: true });
     } else {
       res.send({ error: `Error updating question ${questionId}` });

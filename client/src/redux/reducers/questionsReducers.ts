@@ -53,7 +53,7 @@ export const questionsSlice = createSlice({
     publishQuestion: (state, action: PayloadAction<any>) => {
       const { payload: { questionId } } = action;
       const question = _.get(state, questionId) as QuestionSchema;
-      question.status = 'pending'
+      question.status = 'active'
     },
     toggleWatch: (state, action: PayloadAction<any>) => {
       const { payload: { questionId, userId } } = action;

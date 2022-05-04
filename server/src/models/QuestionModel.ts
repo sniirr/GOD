@@ -22,7 +22,7 @@ export const QuestionSchema = new Schema({
   image: Map,
   status: {
     type: String,
-    enum: ['draft', 'pending', 'suggestions', 'vote', 'closed', 'deleted'],
+    enum: ['draft', 'pending', 'active', 'suggestions', 'vote', 'closed', 'deleted'],
     default: 'draft',
   },
   solutions: [
