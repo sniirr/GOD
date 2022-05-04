@@ -3,7 +3,7 @@
 .chat {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  margin-bottom: 46px;
 
   .guideline {
     display: flex;
@@ -22,6 +22,7 @@
 
   .messages {
     flex-grow: 2;
+    overflow-y: auto;
 
     .message {
       border-bottom: solid 1px $light_gray;

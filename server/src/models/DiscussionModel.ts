@@ -1,4 +1,3 @@
-import { UserSchema } from './UserModel';
 const mongoose = require('mongoose');
 
 // Define a schema
@@ -18,10 +17,10 @@ export const MessageSchema = new Schema({
   image: String,
   date: Date,
   evaluations: EvaluationsSchema,
-  roles: {
-    creator: UserSchema,
+  creator: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
   },
-
 });
 
-export const MessageModel = mongoose.model('message', MessageSchema)
+export const Message = mongoose.model('Message', MessageSchema)

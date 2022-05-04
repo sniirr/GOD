@@ -7,9 +7,13 @@
 }
 .bottom-nav-buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-top: 15px;
   width: 100%;
+
+  .bottom-nav-btn {
+    margin-right: 24px;
+  }
 }
 .bottom-buttons-left {
   display: flex;

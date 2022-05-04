@@ -1,15 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { filter } from 'lodash'
 import type { RootState } from "../store";
 
 export interface Message {
   id: string;
   text: string;
-  creatorId: string;
-  creatorDisplayName: string;
+  creator: any;
   parentId: string;
   parentType: "question";
   error: boolean;
+  isPending: boolean;
 }
 interface Chat {
   messages: Array<Message>;
@@ -47,8 +48,10 @@ export const chatSlice = createSlice({
   initialState,
   reducers: {
     addMessage: (state, action: { payload: Message; type: string }) => {
-      console.log("add message");
       state.messages = [...state.messages, action.payload];
+    },
+    replaceMessage: (state, action: { payload: Message; type: string }) => {
+      state.messages = [...filter(state.messages, (m) => !m.isPending), action.payload];
     },
   },
   extraReducers: (builder) => {
@@ -58,7 +61,7 @@ export const chatSlice = createSlice({
   },
 });
 
-export const { addMessage } = chatSlice.actions;
+export const { addMessage, replaceMessage } = chatSlice.actions;
 
 // selectors
 export const allMessages = (state: RootState) => state.chats.messages;

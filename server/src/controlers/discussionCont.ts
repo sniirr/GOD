@@ -1,12 +1,13 @@
-import { MessageModel } from "../models/DiscussionModel";
+import { Message } from "../models/DiscussionModel";
 import UserModel from "../models/UserModel";
 
 export async function getDiscussion(req: any, res: any): Promise<void> {
   try {
-    const result = await MessageModel.find({
+    const result = await Message.find({
       parentType: "question",
       parentId: req.body.qid,
-    });
+    })
+      .populate('creator');
 
     res.send({ result, ok: true });
   } catch (error: any) {
@@ -19,7 +20,7 @@ export async function addMessage(
   msgObj: any,
 ): Promise<any> {
   try {
-    const user = await UserModel.findOne({ id: msgObj.creatorId });
+    const user = await UserModel.findOne({ id: msgObj.creator?.creatorId });
 
     if (user) {
       const inMessage = {
@@ -27,12 +28,10 @@ export async function addMessage(
         parentId: msgObj.parentId,
         parentType: msgObj.parentType,
         date: new Date(),
-        roles: {
-          creator: user,
-        },
+        creator: user,
       };
 
-      const message = new MessageModel(inMessage);
+      const message = new Message(inMessage);
       const res = await message.save();
       return res;
     }

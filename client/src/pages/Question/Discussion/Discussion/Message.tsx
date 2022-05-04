@@ -5,8 +5,8 @@ import Parser from 'html-react-parser';
 import './Message.scss';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-import ReplyIcon from '@mui/icons-material/Reply';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+// import ReplyIcon from '@mui/icons-material/Reply';
+// import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Avatar from '@mui/material/Avatar';
 
 interface MessageProps {
@@ -18,7 +18,7 @@ const Message = (props: MessageProps) => {
   const { msg, isPreview, } = props;
   const [truncate, setTruncate] = useState(!isPreview);
 
-  const displayName = get(msg, "roles.creator.displayName", "");
+  const displayName = get(msg, "creator.displayName", "");
   if (displayName.length === 0) {
     console.warn(`message ${msg._id} has no creator`);
     console.log(JSON.stringify(msg));
@@ -60,11 +60,11 @@ const Message = (props: MessageProps) => {
     return (
       <div className="message">
         <div className="avatar">
-          <Avatar sx={{ width: 28, height: 28 }} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+          <Avatar sx={{ width: 28, height: 28 }} src="/static/images/avatar/1.jpg" />
         </div>
         <div className="message-container">
           <div className="creator">
-            {displayName} - {elapsedTime(msg.date)}
+            {displayName} - {msg.date ? elapsedTime(msg.date) : 'Sending'}
           </div>
           {truncate ? (
             <TruncateMarkup lines={6} ellipsis={<span onClick={() => setTruncate(!truncate)} className="message-truncate"> ... Read more</span>}>
@@ -81,22 +81,30 @@ const Message = (props: MessageProps) => {
           )
           }
           <div className="bottom-nav-buttons">
-            <div className="bottom-buttons-left">
-              <div>
-                <ThumbUpIcon />
-                <div className="upvote">0</div>
-              </div>
-              <div>
-                <ThumbDownIcon />
-                <div className="downvote">0</div>
-              </div>
-              <div>
-                <ReplyIcon />
-              </div>
+            <div className="bottom-nav-btn">
+              <ThumbUpIcon />
+              <div className="upvote">0</div>
             </div>
-            <div className="bottom--buttons-right">
-              <MoreVertIcon />
+            <div className="bottom-nav-btn">
+              <ThumbDownIcon />
+              <div className="downvote">0</div>
             </div>
+            {/*<div className="bottom-buttons-left">*/}
+            {/*  <div>*/}
+            {/*    <ThumbUpIcon />*/}
+            {/*    <div className="upvote">0</div>*/}
+            {/*  </div>*/}
+            {/*  <div>*/}
+            {/*    <ThumbDownIcon />*/}
+            {/*    <div className="downvote">0</div>*/}
+            {/*  </div>*/}
+            {/*  <div>*/}
+            {/*    <ReplyIcon />*/}
+            {/*  </div>*/}
+            {/*</div>*/}
+            {/*<div className="bottom--buttons-right">*/}
+            {/*  <MoreVertIcon />*/}
+            {/*</div>*/}
           </div>
         </div>
       </div>

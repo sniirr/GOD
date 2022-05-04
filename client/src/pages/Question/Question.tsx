@@ -1,35 +1,26 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect } from "react";
+import _ from "lodash";
+import classNames from "classnames";
 import {
   Redirect,
   Route,
   Switch,
   useParams,
   useRouteMatch,
-  useLocation,
-  Link,
 } from "react-router-dom";
 import Tabs from "components/Tabs";
-import "./Question.scss";
-import { Button } from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ShareIcon from "@mui/icons-material/Share";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-// controlers
-import { uid, getLastParamsFromURL } from "utils/helpers";
-import { sendMessage, joinRoom, leaveRoom } from "utils/socket";
-// redux
-import { addMessage, Message } from "redux/reducers/chatReducer";
+import { joinRoom, leaveRoom } from "utils/socket";
+import { addMessage, replaceMessage } from "redux/reducers/chatReducer";
 import { questionById, toggleWatch } from "redux/reducers/questionsReducers";
 import { User, userSelector } from "redux/reducers/userReducer";
 import { useAppSelector, useAppDispatch } from "redux/hooks";
-// components
 import InternalHeader from "components/InternalHeader";
-import _ from "lodash";
-import classNames from "classnames";
 import Discussion from "./Discussion";
 import QuestionInfo from "./Information";
 import Vote from "./Vote/Vote";
+import "./Question.scss";
 
 interface QuestionParams {
   questionId: string;
@@ -37,10 +28,8 @@ interface QuestionParams {
 
 const Question: FC = () => {
   const params = useParams<QuestionParams>();
-  const location = useLocation();
   const { path, url } = useRouteMatch();
   const user: User = useAppSelector(userSelector);
-  const [subLocation, setSubLocation] = useState<string | boolean>("");
 
   let questionId = "";
   if ("questionId" in params) {
@@ -53,7 +42,9 @@ const Question: FC = () => {
 
   useEffect(() => {
     joinRoom(questionId, (messageObj: any) => {
-      dispatch(addMessage(messageObj));
+      const isThisUser = messageObj.creator.id === user.id
+      console.log({ messageObj, isThisUser, user })
+      dispatch(isThisUser ? replaceMessage(messageObj) : addMessage(messageObj));
     });
 
     return () => {
@@ -61,48 +52,7 @@ const Question: FC = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (getLastParamsFromURL(location) === "discussion") {
-      setSubLocation("discussion");
-    } else {
-      setSubLocation(false);
-    }
-  }, [location]);
-
   const imageUrl = question.image?.secure_url;
-
-  const formatMessage = (message: string): Message | null => {
-    try {
-      return {
-        // messageId,
-        id: uid(),
-        text: message,
-        creatorId: user.id,
-        creatorDisplayName: user.displayName,
-        parentId: questionId,
-        parentType: "question",
-        error: false,
-      };
-    } catch (err) {
-      console.error(err);
-      return null;
-    }
-  };
-
-  const handleSendMessage = (ev: any) => {
-    ev.preventDefault();
-    const message: string = ev.target.elements.message.value;
-
-    if (message) {
-      const msg = formatMessage(message);
-      if (msg) {
-        dispatch(addMessage(msg));
-        sendMessage(msg);
-        // tempMessageId = msg.id;
-      }
-    }
-    ev.target.reset()
-  };
 
   return (
     <div className="page page-question">
@@ -135,33 +85,6 @@ const Question: FC = () => {
           </Route>
           <Redirect to={`${path}/info`} />
         </Switch>
-      </div>
-      <div className="bottom-bar">
-        {subLocation === "discussion" ? (
-          <form onSubmit={handleSendMessage} className="bottom-bar__input">
-            <input
-              type="text"
-              name="message"
-              autoComplete="off"
-              placeholder="add message"
-            />
-            <button type="submit">
-              <SendIcon />
-            </button>
-          </form>
-        ) : null}
-        {/*<div*/}
-        {/*  className="bottom-nav"*/}
-        {/*  style={{*/}
-        {/*    boxShadow:*/}
-        {/*      subLocation === "discussion" ? "none" : "0 12px 8px 10px grey",*/}
-        {/*  }}>*/}
-        {/*  <Link to="/questions" style={{ textDecoration: "none" }}>*/}
-        {/*    <Button>*/}
-        {/*      <ArrowBackIcon />*/}
-        {/*    </Button>*/}
-        {/*  </Link>*/}
-        {/*</div>*/}
       </div>
     </div>
   );

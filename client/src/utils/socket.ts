@@ -8,17 +8,23 @@ export const initiateSocket = (room?: string) => {
   console.log('Connecting socket...');
   if (socket && room) socket.emit('join', room);
 };
+
 export const disconnectSocket = () => {
   console.log('Disconnecting socket...');
   if (socket) socket.disconnect();
 };
+
 export const joinRoom = (room: string, messageCallback: Function) => {
-  if (!socket) return;
+  if (!socket) {
+    setTimeout(() => joinRoom(room, messageCallback), 500)
+    return
+  }
+
   socket.emit('join-room', room);
 
   socket.off('chat-message');
   socket.on('chat-message', (msg: any) => {
-    console.log('Websocket event received!');
+    console.log('chat-message received!', { msg });
     return messageCallback(msg);
   });
 };

@@ -3,6 +3,7 @@
 .page.page-question {
   height: 100vh;
   display: flex;
+
   .tabs {
     .tabs-header {
       .tab-header {
@@ -50,6 +51,8 @@
   .internal-page {
     flex: auto;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
   }
 
   .solution-card {
@@ -62,6 +65,9 @@
     box-shadow: 0 12px 8px 10px grey;
     justify-content: center;
     z-index: 10;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
 
     &__input {
       width: revert;

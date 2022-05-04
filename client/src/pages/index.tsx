@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import React, { useEffect } from 'react';
-import { useAppDispatch } from 'redux/hooks';
-import { getUserThunkReducer } from 'redux/reducers/userReducer';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { getUserThunkReducer, User, userSelector } from 'redux/reducers/userReducer';
 import { getQuestionsThunk } from 'redux/reducers/questionsReducers';
 import About from './About';
 import Questions from './Questions';
@@ -21,10 +21,14 @@ function Fail() {
 function AppRoutes() {
   const dispatch = useAppDispatch();
 
+  const user: User = useAppSelector(userSelector);
+
   useEffect(() => {
     dispatch(getUserThunkReducer());
     dispatch(getQuestionsThunk());
   }, []);
+
+  if (!user?.id) return null
 
   return (
     <Router>
