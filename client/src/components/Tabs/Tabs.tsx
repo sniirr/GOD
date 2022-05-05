@@ -35,10 +35,8 @@ function Tabs(props: TabsProps) {
   }, [_.size(tabs)]);
 
   useEffect(() => {
-    const match = _.reduce(tabs, (memo, { link }, i) => {
-      console.log({ link });
-      return link === location.pathname ? i : memo;
-    }, -1);
+    // eslint-disable-next-line
+    const match = _.reduce(tabs, (memo, { link }, i) => link === location.pathname ? i : memo, -1);
     if (match > -1) {
       setActiveTab(match);
     }

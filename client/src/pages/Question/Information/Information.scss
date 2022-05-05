@@ -1,7 +1,7 @@
 @import "style/vars";
 
 .page.page-question .question-info {
-  padding: 30px 25px 40px;
+  padding: 30px 25px;
 
   .title {
     color: $gold;
@@ -10,12 +10,21 @@
   }
 
   .description {
-    margin: 12px 0;
+    margin: 20px 0;
   }
 
   .section-title {
     color: $dark_blue;
     font-weight: 700;
-    margin-top: 30px;
+    margin-top: 40px;
+    font-size: 1.2em;
+  }
+
+  .centered-button {
+    margin: 30px 0;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }

@@ -1,17 +1,17 @@
 import React from 'react';
-import { Button } from '@mui/material';
 import './Information.scss';
-import AddIcon from '@mui/icons-material/Add';
-import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
-import SolutionCard from '../../../components/SolutionCard';
+import SolutionCard from 'components/SolutionCard';
+import { useAppSelector } from "redux/hooks";
+import { apiSelector } from "redux/modules/api";
+import { SuggestButton } from "components/Buttons";
 
 export interface QuestionInfoProps {
   question: any;
 }
 
 function QuestionInfo(props: QuestionInfoProps) {
-  const history = useHistory();
+  const { status } = useAppSelector(apiSelector('questions/getQuestions'));
 
   const { question } = props;
 
@@ -22,17 +22,16 @@ function QuestionInfo(props: QuestionInfoProps) {
       <div className="title">{title}</div>
       <div className="description">{description}</div>
       <div className="section-title">Suggested solutions</div>
-      {_.map(question.solutions, (solution, i: number) => (<SolutionCard key={`solution-${i}`} solution={solution} number={i + 1} questionId={question._id} />))}
-      <div className="toolbar">
-        <Button
-          variant="contained"
-          onClick={() => {
-            history.push(`/question/${question._id}/add-solution`);
-          }}
-        >
-          <AddIcon />
-        </Button>
-      </div>
+      {status !== 'fulfilled' || _.size(question.solutions) > 0
+        ? (
+          <>
+            <SuggestButton questionId={question._id} />
+            {_.map(question.solutions, (solution, i: number) => (<SolutionCard key={`solution-${i}`} solution={solution} number={i + 1} questionId={question._id} />))}
+          </>
+        )
+        : (<div className="no-suggestions-text">No one suggested a solution yet</div>)
+      }
+      <SuggestButton questionId={question._id} />
     </div>
   );
 }

@@ -18,46 +18,57 @@ function Fail() {
   );
 }
 
+function LoggedInRoutes() {
+  const user: User = useAppSelector(userSelector);
+
+  if (!user?.id) return null
+
+  return (
+    <Switch>
+      <Route path="/questions">
+        <Questions />
+      </Route>
+      <Route path="/question/:questionId/add-solution">
+        <AddSolution />
+      </Route>
+      <Route path="/question/:questionId">
+        <Question />
+      </Route>
+      <Route exact path="/create_question/success">
+        <CreateQuestionSuccess />
+      </Route>
+      <Route path="/create_question">
+        <CreateQuestion />
+      </Route>
+      <Route path="/notifications">
+        <Notifications />
+      </Route>
+    </Switch>
+  );
+}
+
 function AppRoutes() {
   const dispatch = useAppDispatch();
-
-  const user: User = useAppSelector(userSelector);
 
   useEffect(() => {
     dispatch(getUserThunkReducer());
     dispatch(getQuestionsThunk());
   }, []);
 
-  if (!user?.id) return null
-
   return (
     <Router>
+      <LoggedInRoutes />
       <Switch>
         <Route path="/about">
           <About />
         </Route>
-        <Route path="/questions">
-          <Questions />
-        </Route>
-        <Route path="/question/:questionId/add-solution">
-          <AddSolution />
-        </Route>
-        <Route path="/question/:questionId">
-          <Question />
-        </Route>
         <Route path="/fail">
           <Fail />
         </Route>
-        <Route exact path="/create_question/success">
-          <CreateQuestionSuccess />
+        <Route path="/login">
+          <Login />
         </Route>
-        <Route path="/create_question">
-          <CreateQuestion />
-        </Route>
-        <Route path="/notifications">
-          <Notifications />
-        </Route>
-        <Route path="/">
+        <Route exact path="/">
           <Login />
         </Route>
       </Switch>

@@ -12,14 +12,14 @@ const Login: FC = () => {
 
   useEffect(() => {
     // check if logged in
-
     if (isLogged()) history.push('/questions');
   }, []);
+
   return (
     <div className="page login">
       <div className="login__wrapper">
         <h1>Global Online Democracy</h1>
-        <img src={logo} alt="Global online deomcracy logo" />
+        <img src={logo} alt="Global online democracy logo" />
         <a href="http://localhost:4000/auth" target="_blank" rel="noreferrer">
           {' '}
           <Button
@@ -35,10 +35,9 @@ const Login: FC = () => {
         <div className="login__delib">
           <h2>A Delib app instance</h2>
           <p>
-            Created based on the
-            <a href="http://delib.org" target="_blank" rel="noreferrer">Deliberative Democracy Instetiute's</a>
+            Created based on the <a href="http://delib.org" target="_blank" rel="noreferrer">Deliberative Democracy Institute's</a>
             {' '}
-            design & thoeires
+            design & theories
           </p>
           <p><a href="https://github.com/delib-org/GOD">Code in GitHub</a></p>
         </div>
