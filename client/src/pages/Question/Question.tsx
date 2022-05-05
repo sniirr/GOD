@@ -12,7 +12,7 @@ import Tabs from "components/Tabs";
 import ShareIcon from "@mui/icons-material/Share";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { joinRoom, leaveRoom } from "utils/socket";
-import { addMessage, replaceMessage } from "redux/reducers/chatReducer";
+import { addMessage, replaceMessage, clearChat } from "redux/reducers/chatReducer";
 import { questionById, toggleWatch } from "redux/reducers/questionsReducers";
 import { User, userSelector } from "redux/reducers/userReducer";
 import { useAppSelector, useAppDispatch } from "redux/hooks";
@@ -48,6 +48,7 @@ const Question: FC = () => {
     });
 
     return () => {
+      dispatch(clearChat())
       leaveRoom(questionId);
     };
   }, []);

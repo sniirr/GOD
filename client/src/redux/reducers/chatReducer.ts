@@ -53,6 +53,7 @@ export const chatSlice = createSlice({
     replaceMessage: (state, action: { payload: Message; type: string }) => {
       state.messages = [...filter(state.messages, (m) => !m.isPending), action.payload];
     },
+    clearChat: () => initialState,
   },
   extraReducers: (builder) => {
     builder.addCase(getDiscussionThunk.fulfilled, (state: any, action: any) => {
@@ -61,7 +62,7 @@ export const chatSlice = createSlice({
   },
 });
 
-export const { addMessage, replaceMessage } = chatSlice.actions;
+export const { addMessage, replaceMessage, clearChat } = chatSlice.actions;
 
 // selectors
 export const allMessages = (state: RootState) => state.chats.messages;
