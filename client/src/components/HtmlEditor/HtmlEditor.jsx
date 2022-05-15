@@ -5,11 +5,11 @@ import htmlToDraft from 'html-to-draftjs';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import useDebounce from 'hooks/useDebounce'; // eslint-disable-line import/no-unresolved
-import _ from 'lodash';
+import { isEmpty } from 'lodash';
 import './HtmlEditor.scss';
 
 const getInitialDraftState = (html) => {
-  if (_.isEmpty(html)) return EditorState.createEmpty();
+  if (isEmpty(html)) return EditorState.createEmpty();
 
   const blocksFromHtml = htmlToDraft(html);
   const { contentBlocks, entityMap } = blocksFromHtml;

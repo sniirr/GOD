@@ -5,11 +5,11 @@ import { arrowCircle, arrowCircleActive } from 'img/icons';
 import SVG from 'components/SVG';
 import TruncateMarkup from 'react-truncate-markup';
 import Parser from 'html-react-parser';
-import _ from 'lodash';
+import { get, countBy, identity } from 'lodash';
 import classNames from 'classnames';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { likeSolution } from '../../redux/reducers/questionsReducers';
-import { userSelector } from '../../redux/reducers/userReducer';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { likeSolution } from 'redux/reducers/questionsReducers';
+import { userSelector } from 'redux/reducers/userReducer';
 
 interface SolutionCardProps {
   solution: Solution,
@@ -27,9 +27,9 @@ function SolutionCard(props: SolutionCardProps) {
   const [truncate, setTruncate] = useState(!isPreview);
   const { id: userId } = useAppSelector(userSelector);
 
-  const userVote = _.get(solution, ['likes', userId]);
+  const userVote = get(solution, ['likes', userId]);
   // todo - memoize this:
-  const { true: upvotes = 0, false: downvotes = 0 } = _.countBy(solution.likes, _.identity);
+  const { true: upvotes = 0, false: downvotes = 0 } = countBy(solution.likes, identity);
 
   const vote = (v: boolean) => solution._id !== undefined && dispatch(likeSolution(questionId, solution._id, userId, v));
 

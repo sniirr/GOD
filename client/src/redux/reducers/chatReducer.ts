@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { filter, reverse } from 'lodash'
+import { filter, reverse, find } from 'lodash'
 import type { RootState } from "../store";
 
 export interface Message {
@@ -11,6 +11,7 @@ export interface Message {
   parentType: "question";
   error: boolean;
   isPending: boolean;
+  likes: any;
 }
 interface Chat {
   messages: Array<Message>;
@@ -53,6 +54,18 @@ export const chatSlice = createSlice({
     replaceMessage: (state, action: { payload: Message; type: string }) => {
       state.messages = [action.payload, ...filter(state.messages, (m) => !m.isPending)];
     },
+    likeMessage: (state, action: PayloadAction<any>) => {
+      const {
+        payload: {
+          mid, userId, vote,
+        },
+      } = action;
+      const message = find(state.messages, { _id: mid }) as Message;
+      if (!message.likes) {
+        message.likes = {};
+      }
+      message.likes[userId] = vote;
+    },
     clearChat: () => initialState,
   },
   extraReducers: (builder) => {
@@ -61,6 +74,18 @@ export const chatSlice = createSlice({
     });
   },
 });
+
+export const likeMessage = (mid: string, userId: string, vote: boolean) => async (dispatch: any) => {
+  try {
+    const { data } = await axios.post('/discussion/like-message', { mid, vote });
+
+    dispatch(chatSlice.actions.likeMessage({
+      mid, vote: data.resolvedVote, userId,
+    }));
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 export const { addMessage, replaceMessage, clearChat } = chatSlice.actions;
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import './Information.scss';
-import _ from 'lodash';
+import { size, map } from 'lodash';
 import SolutionCard from 'components/SolutionCard';
 import { useAppSelector } from "redux/hooks";
 import { apiSelector } from "redux/modules/api";
@@ -22,11 +22,11 @@ function QuestionInfo(props: QuestionInfoProps) {
       <div className="title">{title}</div>
       <div className="description">{description}</div>
       <div className="section-title">Suggested solutions</div>
-      {status !== 'fulfilled' || _.size(question.solutions) > 0
+      {status !== 'fulfilled' || size(question.solutions) > 0
         ? (
           <>
             <SuggestButton questionId={question._id} />
-            {_.map(question.solutions, (solution, i: number) => (<SolutionCard key={`solution-${i}`} solution={solution} number={i + 1} questionId={question._id} />))}
+            {map(question.solutions, (solution, i: number) => (<SolutionCard key={`solution-${i}`} solution={solution} number={i + 1} questionId={question._id} />))}
           </>
         )
         : (<div className="no-suggestions-text">No one suggested a solution yet</div>)

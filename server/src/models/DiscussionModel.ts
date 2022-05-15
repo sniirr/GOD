@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 
-// Define a schema
 const Schema = mongoose.Schema;
-
-const EvaluationsSchema = new Schema({
-  likes: Object,
-});
 
 export const MessageSchema = new Schema({
   id: String,
@@ -16,7 +11,7 @@ export const MessageSchema = new Schema({
   // language: String, //hebrew, arabic, english, etc
   image: String,
   date: Date,
-  evaluations: EvaluationsSchema,
+  likes: { type: Map, of: Boolean, default: new Map() },
   creator: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

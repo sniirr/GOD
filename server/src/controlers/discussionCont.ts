@@ -41,3 +41,30 @@ export async function addMessage(
     return false;
   }
 }
+
+export const setMessageLike = async (req: any, res: any) => {
+  try {
+    const { mid, vote } = req.body;
+    const userId = req.user.id;
+
+    const key = `likes.${userId}`;
+
+    const message = await Message.findById(mid)
+    const userVote = message.likes.get(userId)
+    const resolvedVote = vote === userVote ? null : vote
+
+    await Message.updateOne(
+      { _id: mid },
+      {
+        $set: {
+          [key]: resolvedVote,
+        },
+      },
+    );
+
+    res.send({ resolvedVote });
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
+  }
+};

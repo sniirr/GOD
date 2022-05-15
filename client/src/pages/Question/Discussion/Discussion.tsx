@@ -41,6 +41,7 @@ const Discussion: FC<DiscussionProps> = (props: DiscussionProps) => {
         parentType: "question",
         error: false,
         isPending: true,
+        likes: {},
       };
     } catch (err) {
       console.error(err);

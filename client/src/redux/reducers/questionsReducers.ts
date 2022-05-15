@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import _ from 'lodash';
+import { get, set, findIndex, keyBy, values, mapValues, sum } from 'lodash';
 import { Solution } from 'types';
 import { QuestionSchema } from './createQuestionReducer';
 import type { RootState } from '../store';
@@ -34,7 +34,7 @@ export const questionsSlice = createSlice({
     },
     addSolution: (state, action: PayloadAction<any>) => {
       const { payload: solution } = action;
-      const question = _.get(state, solution.parentId) as QuestionSchema;
+      const question = get(state, solution.parentId) as QuestionSchema;
       question.solutions.push(solution);
     },
     likeSolution: (state, action: PayloadAction<any>) => {
@@ -43,8 +43,8 @@ export const questionsSlice = createSlice({
           qid, sid, userId, vote,
         },
       } = action;
-      const question = _.get(state, qid) as QuestionSchema;
-      const i = _.findIndex(question.solutions, (s: Solution) => s._id === sid);
+      const question = get(state, qid) as QuestionSchema;
+      const i = findIndex(question.solutions, (s: Solution) => s._id === sid);
       if (!question.solutions[i].likes) {
         question.solutions[i].likes = {};
       }
@@ -52,28 +52,28 @@ export const questionsSlice = createSlice({
     },
     publishQuestion: (state, action: PayloadAction<any>) => {
       const { payload: { questionId } } = action;
-      const question = _.get(state, questionId) as QuestionSchema;
+      const question = get(state, questionId) as QuestionSchema;
       question.status = 'active'
     },
     toggleWatch: (state, action: PayloadAction<any>) => {
       const { payload: { questionId, userId } } = action;
-      const question = _.get(state, questionId) as QuestionSchema;
-      _.set(question.watchlist, userId, !_.get(question.watchlist, userId, false))
+      const question = get(state, questionId) as QuestionSchema;
+      set(question.watchlist, userId, !get(question.watchlist, userId, false))
     },
     setVotes: (state, action: PayloadAction<any>) => {
       const { payload: { qid, votes } } = action
-      const question = _.get(state, qid) as QuestionSchema;
+      const question = get(state, qid) as QuestionSchema;
       question.voteCounters = votes
     },
     setUserVote: (state, action: PayloadAction<any>) => {
       const { payload: { uid, qid, sid } } = action
-      const question = _.get(state, qid) as QuestionSchema;
-      _.set(question.votes, uid, sid)
+      const question = get(state, qid) as QuestionSchema;
+      set(question.votes, uid, sid)
     }
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getQuestionsThunk.fulfilled, (state: any, action: any) => _.keyBy(action.payload, '_id'));
+      .addCase(getQuestionsThunk.fulfilled, (state: any, action: any) => keyBy(action.payload, '_id'));
   },
 });
 
@@ -83,8 +83,8 @@ export const getQuestionsVotes = (qid: string) => async (dispatch: any) => {
 
     const voteCounters = res.data
 
-    const sumVotes = _.sum(_.values(voteCounters))
-    const votes = _.mapValues(voteCounters, (count) => ({ count, percent: (count / sumVotes) * 100 }))
+    const sumVotes = sum(values(voteCounters))
+    const votes = mapValues(voteCounters, (count) => ({ count, percent: (count / sumVotes) * 100 }))
 
     console.log({ voteCounters, sumVotes, votes })
     dispatch(questionsSlice.actions.setVotes({ qid, votes }))
@@ -147,7 +147,7 @@ export const likeSolution = (qid: string, sid: string, userId: string, vote: boo
   }
 };
 
-export const vote = (qid: string, sid: string, uid: string) => async (dispatch: any, getState: any) => {
+export const vote = (qid: string, sid: string, uid: string) => async (dispatch: any) => {
   try {
     const { data } = await axios.post('/questions/vote', { qid, sid });
 
@@ -164,7 +164,7 @@ export const vote = (qid: string, sid: string, uid: string) => async (dispatch: 
 
 export const toggleWatch = (questionId: string, userId: string) => async (dispatch: any) => {
   try {
-    const { data } = await axios.post('/questions/toggle-watch', { questionId, userId });
+    await axios.post('/questions/toggle-watch', { questionId, userId });
 
     dispatch(questionsSlice.actions.toggleWatch({ questionId, userId }))
   } catch (error) {
@@ -174,8 +174,8 @@ export const toggleWatch = (questionId: string, userId: string) => async (dispat
 
 // selectors
 export const allQuestions = (state: RootState) => state.questions;
-export const allQuestionsArray = (state: RootState) => _.values(state.questions);
-export const questionById = (qid: string) => (state: RootState) => _.get(state, ['questions', qid], {}) as QuestionSchema;
+export const allQuestionsArray = (state: RootState) => values(state.questions);
+export const questionById = (qid: string) => (state: RootState) => get(state, ['questions', qid], {}) as QuestionSchema;
 
 const questionsReducer = questionsSlice.reducer;
 

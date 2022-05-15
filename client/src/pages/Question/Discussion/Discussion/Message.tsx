@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { get } from "lodash";
+import { get, countBy, identity } from "lodash";
 import TruncateMarkup from 'react-truncate-markup';
 import Parser from 'html-react-parser';
 import './Message.scss';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-// import ReplyIcon from '@mui/icons-material/Reply';
-// import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Avatar from '@mui/material/Avatar';
+import { useAppDispatch, useAppSelector } from "redux/hooks";
+import { likeMessage } from "redux/reducers/chatReducer";
+import { userSelector } from "redux/reducers/userReducer";
+import classNames from "classnames";
 
 interface MessageProps {
   msg: any,
@@ -15,8 +17,15 @@ interface MessageProps {
 }
 
 const Message = (props: MessageProps) => {
+  const dispatch = useAppDispatch()
+
   const { msg, isPreview, } = props;
+  console.log({ msg })
   const [truncate, setTruncate] = useState(!isPreview);
+  const { id: userId } = useAppSelector(userSelector);
+  const userLike = get(msg, ['likes', userId]);
+  // todo - memoize this:
+  const { true: upvotes = 0, false: downvotes = 0 } = countBy(msg.likes, identity);
 
   const displayName = get(msg, "creator.displayName", "");
   if (displayName.length === 0) {
@@ -56,6 +65,8 @@ const Message = (props: MessageProps) => {
     return `${Math.floor(difference / 31449600)} years ago`;
   }
 
+  const like = (v: boolean) => dispatch(likeMessage(msg._id, userId, v));
+
   try {
     return (
       <div className="message">
@@ -82,22 +93,14 @@ const Message = (props: MessageProps) => {
           }
           <div className="bottom-nav-buttons">
             <div className="bottom-nav-btn">
-              <ThumbUpIcon />
-              <div className="upvote">0</div>
+              <ThumbUpIcon onClick={() => like(true)} className={classNames({ active: userLike === true })} />
+              <div className="upvote">{upvotes}</div>
             </div>
             <div className="bottom-nav-btn">
-              <ThumbDownIcon />
-              <div className="downvote">0</div>
+              <ThumbDownIcon onClick={() => like(false)} className={classNames({ active: userLike === false })} />
+              <div className="downvote">{`${downvotes > 0 ? '-' : ''}${downvotes}`}</div>
             </div>
             {/*<div className="bottom-buttons-left">*/}
-            {/*  <div>*/}
-            {/*    <ThumbUpIcon />*/}
-            {/*    <div className="upvote">0</div>*/}
-            {/*  </div>*/}
-            {/*  <div>*/}
-            {/*    <ThumbDownIcon />*/}
-            {/*    <div className="downvote">0</div>*/}
-            {/*  </div>*/}
             {/*  <div>*/}
             {/*    <ReplyIcon />*/}
             {/*  </div>*/}

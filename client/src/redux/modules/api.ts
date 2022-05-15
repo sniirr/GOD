@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import _ from 'lodash';
+import { get, isNil } from 'lodash';
 
 export const apiSlice = createSlice({
   name: 'api',
@@ -20,7 +20,7 @@ export const apiSlice = createSlice({
 export const apiMiddleware = (store: any) => (next: any) => (action: any) => {
   const status = action.meta?.requestStatus;
 
-  if (!_.isNil(status)) {
+  if (!isNil(status)) {
     const { setPending, setFulfilled, setRejected } = apiSlice.actions;
 
     const apiKey = action.type.replace(`/${status}`, '');
@@ -41,4 +41,4 @@ export const apiMiddleware = (store: any) => (next: any) => (action: any) => {
   return next(action);
 };
 
-export const apiSelector = (apiKey: string) => (state: any) => _.get(state, ['api', apiKey], {});
+export const apiSelector = (apiKey: string) => (state: any) => get(state, ['api', apiKey], {});

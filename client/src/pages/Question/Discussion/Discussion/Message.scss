@@ -1,38 +1,52 @@
 @import 'style/vars';
 
-.message-truncate {
-  color: $gray;
-  text-align: right;
-  cursor: pointer;
-}
-.bottom-nav-buttons {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 15px;
-  width: 100%;
-
-  .bottom-nav-btn {
-    margin-right: 24px;
+.message {
+  .message-truncate {
+    color: $gray;
+    text-align: right;
+    cursor: pointer;
   }
-}
-.bottom-buttons-left {
-  display: flex;
-  align-items: center;
-}
-.bottom-buttons-left > div {
-  margin-right: 30px;
-  display: flex;
-}
-.upvote, .downvote {
-  margin-left: 10px;
-}
-.avatar {
-  margin-right: 12px;
-}
-.content {
-  padding-right: 5px;
-  width: 100%;
-}
-.message-container {
-  width: 100%;
+  .bottom-nav-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    width: 100%;
+
+    .bottom-nav-btn {
+      margin-right: 24px;
+
+      svg {
+        path {
+          fill: $gray;
+        }
+
+        &.active {
+          path {
+            fill: black;
+          }
+        }
+      }
+    }
+  }
+  .bottom-buttons-left {
+    display: flex;
+    align-items: center;
+  }
+  .bottom-buttons-left > div {
+    margin-right: 30px;
+    display: flex;
+  }
+  .upvote, .downvote {
+    margin-left: 10px;
+  }
+  .avatar {
+    margin-right: 12px;
+  }
+  .content {
+    padding-right: 5px;
+    width: 100%;
+  }
+  .message-container {
+    width: 100%;
+  }
 }

@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import { merge } from 'lodash'
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from 'redux/store';
 import { uploadFile } from 'utils/uploadFile';
@@ -47,7 +47,7 @@ export const createQuestionSlice = createSlice({
   initialState,
   reducers: {
     loadDraft: (state, action: PayloadAction<string>) => {
-      _.merge(state, action.payload)
+      merge(state, action.payload)
     },
     setTitle: (state, action: PayloadAction<string>) => {
       state.title = action.payload;
@@ -59,7 +59,7 @@ export const createQuestionSlice = createSlice({
       state.image = action.payload;
     },
     setSchedule: (state, action: PayloadAction<any>) => {
-      _.merge(state.schedule, action.payload)
+      merge(state.schedule, action.payload)
     },
     resetSchedule: (state) => {
       state.schedule = {};

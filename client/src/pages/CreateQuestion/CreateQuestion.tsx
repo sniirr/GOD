@@ -14,7 +14,7 @@ import CreateQuestion0 from './CreateQuestion0';
 import CreateQuestion1 from './CreateQuestion1';
 import CreateQuestion2 from './CreateQuestion2';
 import CreateQuestion3 from './CreateQuestion3';
-import CreateQuestion4 from './CreateQuestion4';
+// import CreateQuestion4 from './CreateQuestion4';
 import CreateQuestion5 from './CreateQuestion5';
 
 const CreateQuestion: FC = () => {

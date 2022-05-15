@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import _ from 'lodash';
+import { size, map, reduce, isFunction } from 'lodash';
 import './Tabs.scss';
 import classNames from 'classnames';
 import { NavLink, useLocation } from 'react-router-dom';
@@ -29,20 +29,20 @@ function Tabs(props: TabsProps) {
   const [activeTab, setActiveTab] = useState(inActiveTab);
 
   useEffect(() => {
-    if (activeTab >= _.size(tabs)) {
+    if (activeTab >= size(tabs)) {
       setActiveTab(0);
     }
-  }, [_.size(tabs)]);
+  }, [size(tabs)]);
 
   useEffect(() => {
     // eslint-disable-next-line
-    const match = _.reduce(tabs, (memo, { link }, i) => link === location.pathname ? i : memo, -1);
+    const match = reduce(tabs, (memo, { link }, i) => link === location.pathname ? i : memo, -1);
     if (match > -1) {
       setActiveTab(match);
     }
   }, []);
 
-  if (activeTab >= _.size(tabs)) return null;
+  if (activeTab >= size(tabs)) return null;
 
   const renderTabHeader = ({ title, hidden, link }: TabProps, i: number) => {
     if (hidden) return null;
@@ -62,16 +62,16 @@ function Tabs(props: TabsProps) {
 
   return (
     <div className="tabs">
-      {_.size(tabs) > 1 && (
+      {size(tabs) > 1 && (
         <div className="center-aligned-row tabs-header">
-          {_.map(tabs, renderTabHeader)}
+          {map(tabs, renderTabHeader)}
         </div>
       )}
       {!isMenu && (
         <div className="active-tab">
-          {_.isFunction(before) && before()}
+          {isFunction(before) && before()}
           {tabs[activeTab].component()}
-          {_.isFunction(after) && after()}
+          {isFunction(after) && after()}
         </div>
       )}
     </div>
