@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { filter } from 'lodash'
+import { filter, reverse } from 'lodash'
 import type { RootState } from "../store";
 
 export interface Message {
@@ -48,16 +48,16 @@ export const chatSlice = createSlice({
   initialState,
   reducers: {
     addMessage: (state, action: { payload: Message; type: string }) => {
-      state.messages = [...state.messages, action.payload];
+      state.messages = [action.payload, ...state.messages];
     },
     replaceMessage: (state, action: { payload: Message; type: string }) => {
-      state.messages = [...filter(state.messages, (m) => !m.isPending), action.payload];
+      state.messages = [action.payload, ...filter(state.messages, (m) => !m.isPending)];
     },
     clearChat: () => initialState,
   },
   extraReducers: (builder) => {
     builder.addCase(getDiscussionThunk.fulfilled, (state: any, action: any) => {
-      state.messages = action.payload;
+      state.messages = reverse(action.payload);
     });
   },
 });

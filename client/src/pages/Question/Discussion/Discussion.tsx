@@ -65,7 +65,7 @@ const Discussion: FC<DiscussionProps> = (props: DiscussionProps) => {
   try {
     return (
       <>
-        <div className="chat">
+        <div id="discussion" className="chat">
           <div className="guideline">
             <p>Remember to keep the discussion respectful and to follow the <a href="https://">Community Guidelines</a></p>
           </div>
