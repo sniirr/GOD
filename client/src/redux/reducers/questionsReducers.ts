@@ -5,27 +5,27 @@ import { Solution } from 'types';
 import { QuestionSchema } from './createQuestionReducer';
 import type { RootState } from '../store';
 
-function getAllQuestions() {
-  return new Promise((resolve, reject) => {
-    axios.post('/questions/get-all', {})
-      .then(({ data }) => {
-        if (Array.isArray(data.result)) resolve(data.result);
-        else reject();
-      }).catch((e: Error) => {
-        console.error(e);
-        reject(e);
-      });
-  });
+const getQuestionsByOrgId = async (orgId: string) => {
+  try {
+    const response = await axios.post('/questions/get-by-org', { orgId })
+    return response.data
+  }
+  catch (e) {
+    console.error(`Failed to getQuestionsByOrgId for orgId ${orgId}`, { e })
+    return []
+  }
 }
 
-export const getQuestionsThunk = createAsyncThunk(
+export const getQuestionsByOrgIdThunk = createAsyncThunk(
   'questions/getQuestions',
-  async () => getAllQuestions(),
+  getQuestionsByOrgId,
 );
+
+const initialState = {}
 
 export const questionsSlice = createSlice({
   name: 'questions',
-  initialState: {},
+  initialState,
   reducers: {
     upsertQuestion: (state, action: PayloadAction<any>) => {
       const { payload: question } = action;
@@ -73,7 +73,11 @@ export const questionsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getQuestionsThunk.fulfilled, (state: any, action: any) => keyBy(action.payload, '_id'));
+      .addCase(getQuestionsByOrgIdThunk.pending, () => initialState)
+      .addCase(getQuestionsByOrgIdThunk.fulfilled, (state: any, action: any) => {
+        console.log({ questions: action.payload })
+        return keyBy(action.payload, '_id')
+      });
   },
 });
 
@@ -174,9 +178,8 @@ export const toggleWatch = (questionId: string, userId: string) => async (dispat
 }
 
 // selectors
-export const allQuestions = (state: RootState) => state.questions;
-export const allQuestionsArray = (state: RootState) => values(state.questions);
-export const questionById = (qid: string) => (state: RootState) => get(state, ['questions', qid], {}) as QuestionSchema;
+export const questionsSelector = (state: RootState) => values(state.questions);
+export const questionByIdSelector = (qid: string) => (state: RootState) => get(state, ['questions', qid], {}) as QuestionSchema;
 
 const questionsReducer = questionsSlice.reducer;
 

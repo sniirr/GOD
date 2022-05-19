@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { getUser, User, userSelector } from 'redux/reducers/userReducer';
-import { getQuestionsThunk } from 'redux/reducers/questionsReducers';
+import { getQuestionsByOrgIdThunk } from 'redux/reducers/questionsReducers';
 import About from './About';
 import Questions from './Questions';
 import Question from './Question';
@@ -11,6 +11,7 @@ import Notifications from './Notifications';
 import Login from './Login';
 import AddSolution from './Question/AddSolution';
 import CreateQuestionSuccess from "./CreateQuestion/CreateQuestionSuccess";
+import { selectedOrgIdSelector } from "../redux/reducers/mainReducer";
 
 function Fail() {
   return (
@@ -49,11 +50,15 @@ function LoggedInRoutes() {
 
 function AppRoutes() {
   const dispatch = useAppDispatch();
+  const orgId = useAppSelector(selectedOrgIdSelector)
 
   useEffect(() => {
     dispatch(getUser());
-    dispatch(getQuestionsThunk());
   }, []);
+
+  useEffect(() => {
+    dispatch(getQuestionsByOrgIdThunk(orgId));
+  }, [orgId]);
 
   return (
     <Router>

@@ -59,6 +59,19 @@ export async function getAllQuestions(req: any, res: any): Promise<void> {
   }
 }
 
+export async function getQuestionsByOrgId(req: any, res: any): Promise<void> {
+  try {
+    const { orgId } = req.body;
+
+    const questions = await Question.find({ orgId })
+      .populate('solutions');
+
+    res.send(questions);
+  } catch (error: any) {
+    res.send({ error: error.message });
+  }
+}
+
 export async function getQuestionVotes(req: any, res: any): Promise<void> {
   try {
     if (!{}.hasOwnProperty.call(req, 'user')) throw new Error('No user in request');
