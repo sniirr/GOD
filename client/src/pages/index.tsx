@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { getUserThunkReducer, User, userSelector } from 'redux/reducers/userReducer';
+import { getUser, User, userSelector } from 'redux/reducers/userReducer';
 import { getQuestionsThunk } from 'redux/reducers/questionsReducers';
 import About from './About';
 import Questions from './Questions';
@@ -51,7 +51,7 @@ function AppRoutes() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getUserThunkReducer());
+    dispatch(getUser());
     dispatch(getQuestionsThunk());
   }, []);
 

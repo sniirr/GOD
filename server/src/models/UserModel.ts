@@ -13,8 +13,9 @@ export const UserSchema = new Schema({
   email: String,
   picture: String,
   last_entered: Date,
+  organizations: [{ type: Schema.Types.ObjectId, ref: "Organization"}]
 });
 
-const UserModel = mongoose.model('User', UserSchema);
+export const User = mongoose.model('User', UserSchema);
 
-export default UserModel;
+export default User;

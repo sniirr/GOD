@@ -1,8 +1,6 @@
 import isLoggedIn from '../middlewares/isLoggedIn';
-
+import { getDiscussion, setMessageLike } from '../controlers/discussionCtrl';
 const router = require('express').Router();
-
-import { getDiscussion, setMessageLike } from '../controlers/discussionCont';
 
 router
   .post('/get-discussion', isLoggedIn, getDiscussion)

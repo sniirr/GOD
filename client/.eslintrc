@@ -43,6 +43,7 @@
     "semi": "off",
     "@typescript-eslint/semi": ["off"],
     "@typescript-eslint/no-unused-vars": "warn",
-    "spaced-comment": "off"
+    "spaced-comment": "off",
+    "import/no-named-as-default": 0
   }
 }

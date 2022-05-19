@@ -1,4 +1,5 @@
 import { userValidate } from '../models/userValidation';
+import User from "../models/UserModel";
 
 export function login(req: any, res: any): void {
   try {
@@ -17,11 +18,11 @@ export function login(req: any, res: any): void {
   }
 }
 
-export function getUser(req: any, res: any): void {
+export async function getUser(req: any, res: any) {
   try {
-    const user = req.user;
+    const user = await User.findOne({ id: req.user.id }).populate('organizations');
 
-    res.send({ user });
+    res.send(user);
   } catch (err: any) {
     console.log(err);
     res.status(500).send(err.message);

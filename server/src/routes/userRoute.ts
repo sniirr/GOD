@@ -1,8 +1,6 @@
 import isLoggedIn from '../middlewares/isLoggedIn';
-
+import { login, secret, getUser } from '../controlers/userCtrl';
 const router = require('express').Router();
-
-import { login, secret, getUser } from '../controlers/userCont';
 
 router
   .post('/login', login)

@@ -1,7 +1,4 @@
 import isLoggedIn from '../middlewares/isLoggedIn';
-
-const router = require('express').Router();
-
 import {
   activateQuestion,
   addSolution,
@@ -11,7 +8,8 @@ import {
   voteForSolution,
   toggleWatch,
   getQuestionVotes,
-} from '../controlers/questionCont';
+} from '../controlers/questionCtrl';
+const router = require('express').Router();
 
 router
   .post('/upsert', isLoggedIn, upsertQuestion)

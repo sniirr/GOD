@@ -3,6 +3,7 @@ import { UserSchema } from "./UserModel";
 
 // Define a schema
 const Schema = mongoose.Schema;
+const ObjectId = Schema.Types.ObjectId
 
 const FileSchema = new Schema({
   fileName: String,
@@ -10,12 +11,13 @@ const FileSchema = new Schema({
 });
 
 export const QuestionSchema = new Schema({
-  title: String,
+  orgId: { type: String, required: true },
+  title: { type: String, required: true },
   description: String,
   schedule:{ type: Object, default: {} },
   files: [FileSchema],
   members: { type: [String], index: true },
-  creatorId: String,
+  creatorId: { type: String, required: true },
   admins: [UserSchema],
   last_entered: Date,
   role: String,
@@ -25,12 +27,7 @@ export const QuestionSchema = new Schema({
     enum: ['draft', 'pending', 'active', 'suggestions', 'vote', 'closed', 'deleted'],
     default: 'draft',
   },
-  solutions: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Solution",
-    },
-  ],
+  solutions: [{ type: ObjectId, ref: "Solution" }],
   watchlist: { type: Object, default: {} },
   votes: { type: Map, of: String, default: new Map() },
 });

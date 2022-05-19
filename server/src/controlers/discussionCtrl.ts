@@ -1,5 +1,5 @@
 import { Message } from "../models/DiscussionModel";
-import UserModel from "../models/UserModel";
+import { User } from "../models/UserModel";
 
 export async function getDiscussion(req: any, res: any): Promise<void> {
   try {
@@ -20,7 +20,7 @@ export async function addMessage(
   msgObj: any,
 ): Promise<any> {
   try {
-    const user = await UserModel.findOne({ id: msgObj.creator?.creatorId });
+    const user = await User.findOne({ id: msgObj.creator?.creatorId });
 
     if (user) {
       const inMessage = {
