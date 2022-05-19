@@ -74,10 +74,7 @@ export const questionsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getQuestionsByOrgIdThunk.pending, () => initialState)
-      .addCase(getQuestionsByOrgIdThunk.fulfilled, (state: any, action: any) => {
-        console.log({ questions: action.payload })
-        return keyBy(action.payload, '_id')
-      });
+      .addCase(getQuestionsByOrgIdThunk.fulfilled, (state: any, action: any) => keyBy(action.payload, '_id'));
   },
 });
 

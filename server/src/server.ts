@@ -3,6 +3,7 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const jwt = require("jwt-simple");
 const path = require("path");
+const { forEach } = require("lodash");
 require("dotenv").config();
 const app = express();
 const http = require("http").createServer(app);
@@ -142,18 +143,16 @@ http.listen(port, () => {
 // TODO - dev code - delete
 const populateDB = async () => {
   let godOrg = await Organization.findOne({ name: 'GOD' })
-  if (!godOrg) {
-    godOrg = await Organization.create({ name: 'GOD' })
-  }
   let testOrg = await Organization.findOne({ name: 'Test Org 1' })
-  if (!testOrg) {
+  if (!godOrg && !testOrg) {
+    godOrg = await Organization.create({ name: 'GOD' })
     testOrg = await Organization.create({ name: 'Test Org 1' })
-  }
 
-  const user = await User.findOne({ email: 'sniirr@gmail.com' })
-  if (!user.organizations || user.organizations.length === 0) {
-    user.organizations = [godOrg, testOrg]
-    await user.save()
+    const users = await User.find({})
+    forEach(users, user => {
+      user.organizations = [godOrg, testOrg]
+      user.save()
+    })
   }
 }
 
