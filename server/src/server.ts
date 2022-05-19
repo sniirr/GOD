@@ -143,17 +143,19 @@ http.listen(port, () => {
 // TODO - dev code - delete
 const populateDB = async () => {
   let godOrg = await Organization.findOne({ name: 'GOD' })
-  let testOrg = await Organization.findOne({ name: 'Test Org 1' })
-  if (!godOrg && !testOrg) {
+  if (!godOrg) {
     godOrg = await Organization.create({ name: 'GOD' })
-    testOrg = await Organization.create({ name: 'Test Org 1' })
-
-    const users = await User.find({})
-    forEach(users, user => {
-      user.organizations = [godOrg, testOrg]
-      user.save()
-    })
   }
+  let testOrg = await Organization.findOne({ name: 'Test Org 1' })
+  if (!testOrg) {
+    testOrg = await Organization.create({ name: 'Test Org 1' })
+  }
+
+  const users = await User.find({})
+  forEach(users, user => {
+    user.organizations = [godOrg, testOrg]
+    user.save()
+  })
 }
 
 populateDB()

@@ -10,6 +10,8 @@ import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { likeMessage } from "redux/reducers/chatReducer";
 import { userSelector } from "redux/reducers/userReducer";
 import classNames from "classnames";
+import { stringToColor } from "utils/colorUtils";
+import { isEmpty } from "@cloudinary/url-gen/backwards/utils/isEmpty";
 
 interface MessageProps {
   msg: any,
@@ -27,7 +29,8 @@ const Message = (props: MessageProps) => {
   // todo - memoize this:
   const { true: upvotes = 0, false: downvotes = 0 } = countBy(msg.likes, identity);
 
-  const displayName = get(msg, "creator.displayName", "");
+  const { creator } = msg
+  const displayName = get(creator, "displayName", "");
   if (displayName.length === 0) {
     console.warn(`message ${msg._id} has no creator`);
     console.log(JSON.stringify(msg));
@@ -67,11 +70,20 @@ const Message = (props: MessageProps) => {
 
   const like = (v: boolean) => dispatch(likeMessage(msg._id, userId, v));
 
+  const avatarProps = {
+    sx: { width: 28, height: 28, bgcolor: stringToColor(displayName) },
+    alt: displayName,
+    src: '',
+  }
+  if (!isEmpty(creator?.src)) {
+    avatarProps.src = creator.src
+  }
+
   try {
     return (
       <div className="message">
         <div className="avatar">
-          <Avatar sx={{ width: 28, height: 28 }} src="/static/images/avatar/1.jpg" />
+          <Avatar {...avatarProps} />
         </div>
         <div className="message-container">
           <div className="creator">
