@@ -8,7 +8,7 @@ export const setSelectedOrg = (orgId: string) => ({
   payload: orgId,
 })
 
-export const selectedOrgSelector = (state: RootState) => state.main.selectedOrgId;
+export const selectedOrgIdSelector = (state: RootState) => state.main.selectedOrgId;
 
 const mainReducer = makeReducer({
   SET_SELECTED_ORG: (state: any, action: PayloadAction<string>) => ({

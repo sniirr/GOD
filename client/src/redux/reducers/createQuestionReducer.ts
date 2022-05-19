@@ -16,6 +16,7 @@ export const uploadFileThunk = createAsyncThunk(
 // Define a type for the slice state
 export interface QuestionSchema {
   _id?: string,
+  orgId: string,
   title: string,
   image: Image,
   schedule: any,
@@ -30,8 +31,9 @@ export interface QuestionSchema {
 
 // Define the initial state using that type
 const initialState = {
-  title: '',
-  description: '',
+  orgId: '',
+  title: 'Question 1',
+  description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
   image: {},
   schedule: {},
   imageUploading: false,
@@ -48,6 +50,9 @@ export const createQuestionSlice = createSlice({
   reducers: {
     loadDraft: (state, action: PayloadAction<string>) => {
       merge(state, action.payload)
+    },
+    setOrgId: (state, action: PayloadAction<string>) => {
+      state.orgId = action.payload;
     },
     setTitle: (state, action: PayloadAction<string>) => {
       state.title = action.payload;
@@ -84,6 +89,7 @@ export const createQuestionSlice = createSlice({
 
 export const {
   loadDraft,
+  setOrgId,
   setTitle,
   setDescription,
   clear,

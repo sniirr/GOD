@@ -19,7 +19,8 @@ const CreateQuestion5: FC<CreateQuestionProps> = (
   const history = useHistory();
   const dispatch = useAppDispatch();
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  const { title, description, image, schedule, _id } = useAppSelector(newQuestionSelector);
+  const newQuestion = useAppSelector(newQuestionSelector);
+  const { title, description, image } = newQuestion
 
   const cld = new Cloudinary({
     cloud: {
@@ -34,7 +35,7 @@ const CreateQuestion5: FC<CreateQuestionProps> = (
   }
 
   const submit = () => dispatch(
-    upsertQuestion({ _id, title, description, image, schedule, status: 'active' }, () => history.push('/create_question/success'))
+    upsertQuestion({ ...newQuestion, status: 'active' }, () => history.push('/create_question/success'))
   )
 
   return (

@@ -3,14 +3,14 @@ import { map, size, keys } from 'lodash'
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from '@mui/material/MenuItem';
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { selectedOrgSelector, setSelectedOrg } from "../redux/reducers/mainReducer";
+import { selectedOrgIdSelector, setSelectedOrg } from "../redux/reducers/mainReducer";
 import { organizationsSelector } from "../redux/reducers/organizationsReducer";
 
 const OrganizationPicker = () => {
   const dispatch = useAppDispatch();
 
   const organizations = useAppSelector(organizationsSelector)
-  const selectedOrgId = useAppSelector(selectedOrgSelector)
+  const selectedOrgId = useAppSelector(selectedOrgIdSelector)
 
   useEffect(() => {
     if (!selectedOrgId && size(organizations) > 0) {

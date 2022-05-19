@@ -95,16 +95,17 @@ export const getQuestionsVotes = (qid: string) => async (dispatch: any) => {
 }
 
 // actions
-interface NewQuestionPayload {
-  _id?: string,
-  title: string,
-  description: string,
-  image: any,
-  schedule: any,
+interface UpsertQuestionPayload {
+  _id?: string;
+  orgId: string;
+  title: string;
+  description: string;
+  image: any;
+  schedule: any;
   status?: string;
 }
 
-export const upsertQuestion = (question: NewQuestionPayload, cb?: Function) => async (dispatch: any) => {
+export const upsertQuestion = (question: UpsertQuestionPayload, cb?: Function) => async (dispatch: any) => {
   try {
     if (!question.title) return
     const { data } = await axios.post('/questions/upsert', question);
