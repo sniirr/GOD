@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import { includes, isEmpty } from 'lodash'
+import { get, includes, isEmpty } from 'lodash'
 import VoteCard from 'components/QuestionCard/QuestionCard';
 import Header from 'components/Header';
 import './Questions.scss';
@@ -39,7 +39,7 @@ const Questions: FC = () => {
         <Tabs
           id="questions"
           tabs={[ // todo - memoize lists
-            { title: 'Watchlist', component: () => renderList(questions.filter((q: any) => includes(q.members, userId))) },
+            { title: 'Watchlist', component: () => renderList(questions.filter((q: any) => get(q.watchlist, userId) === true)) },
             { title: 'Active', component: () => renderList(questions.filter((q: any) => includes(['active', 'suggestions', 'vote'], q.status))) },
             { title: 'Drafts', component: () => renderList(questions.filter((q: any) => q.status === 'draft')) },
             { title: 'Ended', component: () => renderList(questions.filter((q: any) => q.status === 'closed')) },
