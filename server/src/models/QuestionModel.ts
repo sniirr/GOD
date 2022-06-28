@@ -27,7 +27,6 @@ export const QuestionSchema = new Schema({
     default: 'draft',
   },
   solutions: [{ type: ObjectId, ref: "Solution" }],
-  watchlist: { type: Object, default: {} },
   votes: { type: Map, of: String, default: new Map() },
 });
 

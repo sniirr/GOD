@@ -66,11 +66,6 @@ export const questionsSlice = createSlice({
       const question = get(state, questionId) as QuestionSchema;
       question.status = 'active'
     },
-    toggleWatch: (state, action: PayloadAction<any>) => {
-      const { payload: { questionId, userId } } = action;
-      const question = get(state, questionId) as QuestionSchema;
-      set(question.watchlist, userId, !get(question.watchlist, userId, false))
-    },
     setVotes: (state, action: PayloadAction<any>) => {
       const { payload: { qid, votes } } = action
       const question = get(state, qid) as QuestionSchema;
@@ -173,16 +168,6 @@ export const vote = (qid: string, sid: string, uid: string) => async (dispatch: 
     console.error(error);
   }
 };
-
-export const toggleWatch = (questionId: string, userId: string) => async (dispatch: any) => {
-  try {
-    await axios.post('/questions/toggle-watch', { questionId, userId });
-
-    dispatch(questionsSlice.actions.toggleWatch({ questionId, userId }))
-  } catch (error) {
-    console.error(error);
-  }
-}
 
 // selectors
 export const questionsSelector = (state: RootState) => values(state.questions);

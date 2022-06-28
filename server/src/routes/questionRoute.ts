@@ -6,7 +6,6 @@ import {
   getAllQuestions,
   setSolutionLike,
   voteForSolution,
-  toggleWatch,
   getQuestionVotes,
   getQuestionById,
 } from '../controlers/questionCtrl';
@@ -20,7 +19,6 @@ router
   .post('/get-votes', isLoggedIn, getQuestionVotes)
   .post('/add-solution', isLoggedIn, addSolution)
   .post('/like-solution', isLoggedIn, setSolutionLike)
-  .post('/vote', isLoggedIn, voteForSolution)
-  .post('/toggle-watch', isLoggedIn, toggleWatch);
+  .post('/vote', isLoggedIn, voteForSolution);
 
 export default router;

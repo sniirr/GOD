@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import { get, includes } from 'lodash'
+import { includes } from 'lodash'
 import VoteCard from 'components/QuestionCard/QuestionCard';
 import Header from 'components/Header';
 import './Questions.scss';
@@ -8,13 +8,11 @@ import { getMemberQuestionsThunk, questionsSelector } from 'redux/reducers/quest
 import ButtonAppBar from 'components/ButtonAppBar/ButtonAppBar';
 import ApiData from 'components/ApiData/ApiData';
 import Tabs from 'components/Tabs';
-import { userSelector } from "../../redux/reducers/userReducer";
 
 const Questions: FC = () => {
   const dispatch = useAppDispatch();
 
   const questions = useAppSelector(questionsSelector);
-  const { _id: userId } = useAppSelector(userSelector)
 
   useEffect(() => {
     dispatch(getMemberQuestionsThunk());
@@ -35,7 +33,7 @@ const Questions: FC = () => {
         <Tabs
           id="questions"
           tabs={[ // todo - memoize lists
-            { title: 'Watchlist', component: () => renderList(questions.filter((q: any) => get(q.watchlist, userId) === true)) },
+            { title: 'All', component: () => renderList(questions) },
             { title: 'Active', component: () => renderList(questions.filter((q: any) => includes(['active', 'suggestions', 'vote'], q.status))) },
             { title: 'Drafts', component: () => renderList(questions.filter((q: any) => q.status === 'draft')) },
             { title: 'Ended', component: () => renderList(questions.filter((q: any) => q.status === 'closed')) },

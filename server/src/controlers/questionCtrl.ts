@@ -19,7 +19,6 @@ export async function upsertQuestion(req: any, res: any) {
       // create new question
       question.creatorId = creatorId;
       question.members = [user];
-      question.watchlist = { [creatorId]: true }
       const result = await Question.create(question);
       res.send(result);
     }
@@ -158,30 +157,5 @@ export const voteForSolution = async (req: any, res: any) => {
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });
-  }}
-
-export const toggleWatch = async (req: any, res: any) => {
-  try {
-    const { questionId } = req.body;
-    if (typeof questionId !== 'string') {
-      return res.send({ error: `Error updating question ${questionId}` });
-    }
-
-    const { _id: userId } = req.user;
-    const question = await Question.findById(new ObjectId(questionId))
-    const isWatching = get(question.watchlist, userId, false)
-
-    await Question.updateOne(
-      { _id: questionId },
-      {
-        $set: {
-          [`watchlist.${userId}`]: !isWatching,
-        },
-      },
-    );
-
-    res.send({ isWatching: !isWatching });
-  } catch (error: any) {
-    res.send({ error: error.message });
   }
 }

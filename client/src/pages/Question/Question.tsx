@@ -1,6 +1,5 @@
 import React, { FC, useEffect } from "react";
-import { get, isEmpty, isNil } from "lodash";
-import classNames from "classnames";
+import { isEmpty, isNil } from "lodash";
 import {
   Redirect,
   Route,
@@ -10,10 +9,9 @@ import {
 } from "react-router-dom";
 import Tabs from "components/Tabs";
 import ShareIcon from "@mui/icons-material/Share";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import { joinRoom, leaveRoom } from "utils/socket";
 import { addMessage, replaceMessage, clearChat } from "redux/reducers/chatReducer";
-import { questionByIdSelector, toggleWatch } from "redux/reducers/questionsReducers";
+import { questionByIdSelector } from "redux/reducers/questionsReducers";
 import { User, userSelector } from "redux/reducers/userReducer";
 import { useAppSelector, useAppDispatch } from "redux/hooks";
 import InternalHeader from "components/InternalHeader";
@@ -54,16 +52,12 @@ const Question: FC = () => {
 
   if (isNil(question)) return null
 
-  const isWatching = get(question, ['watchlist', user._id], false)
   const imageUrl = question.image?.secure_url;
 
   return (
     <div className="page page-question">
       <InternalHeader backUrl="/questions">
         <ShareIcon />
-        <VisibilityIcon
-          onClick={() => dispatch(toggleWatch(questionId, user._id))}
-          className={classNames({ on: isWatching, off: !isWatching })} />
       </InternalHeader>
       {!isEmpty(imageUrl) && (
         <div className="question-header" style={{ backgroundImage: `url(${imageUrl}` }} />

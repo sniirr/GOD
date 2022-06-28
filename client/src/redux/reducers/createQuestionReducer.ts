@@ -23,7 +23,6 @@ export interface QuestionSchema {
   description: string,
   imageUploading: boolean,
   solutions: any,
-  watchlist: any,
   votes: any,
   voteCounters?: any;
 }
@@ -36,7 +35,6 @@ const initialState = {
   schedule: {},
   imageUploading: false,
   solutions: [],
-  watchlist: {},
   votes: {},
   voteCounters: {},
 } as QuestionSchema;
