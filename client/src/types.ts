@@ -5,4 +5,5 @@ export interface Solution {
   parentId?: string;
   parentType?: string;
   likes?: Object;
+  creator: Object;
 }
