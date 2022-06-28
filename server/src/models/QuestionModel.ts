@@ -18,8 +18,6 @@ export const QuestionSchema = new Schema({
   members: [{ type: ObjectId, ref: "User", index: true }],
   creatorId: { type: String, required: true },
   admins: [UserSchema],
-  last_entered: Date,
-  role: String,
   image: Map,
   status: {
     type: String,
