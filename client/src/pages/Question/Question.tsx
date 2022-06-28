@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from "react";
-import _ from "lodash";
+import { get, isEmpty } from "lodash";
 import classNames from "classnames";
 import {
   Redirect,
@@ -38,7 +38,7 @@ const Question: FC = () => {
 
   const dispatch = useAppDispatch();
   const question = useAppSelector(questionByIdSelector(questionId));
-  const isWatching = _.get(question, ['watchlist', user._id], false)
+  const isWatching = get(question, ['watchlist', user._id], false)
 
   useEffect(() => {
     joinRoom(questionId, (messageObj: any) => {
@@ -63,7 +63,9 @@ const Question: FC = () => {
           onClick={() => dispatch(toggleWatch(questionId, user._id))}
           className={classNames({ on: isWatching, off: !isWatching })} />
       </InternalHeader>
-      <div className="question-header" style={{ backgroundImage: imageUrl ? `url(${imageUrl}` : "none" }} />
+      {!isEmpty(imageUrl) && (
+        <div className="question-header" style={{ backgroundImage: `url(${imageUrl}` }} />
+      )}
       <Tabs
         id="questions"
         isMenu

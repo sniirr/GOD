@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Vote.scss";
-import _, { map, get } from "lodash";
+import { map, get, size } from "lodash";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { getQuestionsVotes, vote } from "redux/reducers/questionsReducers";
@@ -42,7 +42,7 @@ function Vote(props: QuestionInfoProps) {
   try {
     return (
       <div className="vote-tab">
-        {status !== 'fulfilled' || _.size(question.solutions) > 0
+        {status !== 'fulfilled' || size(question.solutions) > 0
           ? map(question.solutions, (solution, i: number) => {
             const { count, percent } = get(voteCounters, solution._id, { count: 0, percent: 0 })
             const isUserVote = get(votes, user._id) === solution._id

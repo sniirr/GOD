@@ -82,7 +82,8 @@ const Discussion: FC<DiscussionProps> = (props: DiscussionProps) => {
               type="text"
               name="message"
               autoComplete="off"
-              placeholder="add message"
+              placeholder="Add Message"
+              autoFocus
             />
             <button type="submit">
               <SendIcon />

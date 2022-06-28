@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import { get, includes, isEmpty } from 'lodash'
+import { get, includes } from 'lodash'
 import VoteCard from 'components/QuestionCard/QuestionCard';
 import Header from 'components/Header';
 import './Questions.scss';

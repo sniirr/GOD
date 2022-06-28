@@ -1,7 +1,7 @@
-import _ from "lodash"
+import { isFunction } from "lodash"
 
 export const makeReducer = (actionHandlers: any = {}, initialState: any = {}) => (state: any = initialState, action: any = {}) => {
-  if (_.isFunction(actionHandlers[action.type])) {
+  if (isFunction(actionHandlers[action.type])) {
     return actionHandlers[action.type](state, action)
   }
   return state
