@@ -22,28 +22,30 @@ function SolutionCard(props: SolutionCardProps) {
   const {
     solution, number, questionId, isPreview,
   } = props;
+  const { _id: sid, creator, title, description, likes } = solution
 
   const dispatch = useAppDispatch();
   const [truncate, setTruncate] = useState(!isPreview);
   const { _id: userId } = useAppSelector(userSelector);
 
-  const userVote = get(solution, ['likes', userId]);
+  const userVote = get(likes, userId);
   // todo - memoize this:
-  const { true: upvotes = 0, false: downvotes = 0 } = countBy(solution.likes, identity);
+  const { true: upvotes = 0, false: downvotes = 0 } = countBy(likes, identity);
 
-  const vote = (v: boolean) => solution._id !== undefined && dispatch(likeSolution(questionId, solution._id, userId, v));
+  const vote = (v: boolean) => sid !== undefined && dispatch(likeSolution(questionId, sid, userId, v));
 
   return (
     <div className="solution-card">
       <div className="card-top">
-        <div className="solution-title">{`${number > -1 ? `#${number} ` : ''} ${solution.title}`}</div>
+        <div className="solution-title">{`${number > -1 ? `#${number} ` : ''} ${title}`}</div>
+        <div className="creator">Suggested by {creator.displayName}</div>
         {truncate ? (
           <TruncateMarkup lines={7} ellipsis={<div onClick={() => setTruncate(!truncate)} className="ellipsis">Show more</div>}>
-            <div>{Parser(solution.description)}</div>
+            <div>{Parser(description)}</div>
           </TruncateMarkup>
         ) : (
           <>
-            <div>{Parser(solution.description)}</div>
+            <div>{Parser(description)}</div>
             {!isPreview && (
             <div onClick={() => setTruncate(!truncate)} className="ellipsis">Show less</div>
             )}

@@ -50,7 +50,7 @@ const CreateQuestion5: FC<CreateQuestionProps> = (
         </div>
       </div>
       <div className="bottomNavButtons">
-        <BackButton linkTo={`${path}/4`} />
+        <BackButton linkTo={`${path}/3`} />
         {/* eslint-disable-next-line */}
         <NextButton onClick={submit} text="Publish" Icon={() => <PublishIcon />} />
       </div>

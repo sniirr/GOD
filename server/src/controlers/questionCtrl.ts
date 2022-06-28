@@ -91,9 +91,7 @@ export async function addSolution(req: any, res: any) {
     const solutionData = {
       ...req.body,
       date: new Date(),
-      roles: {
-        creator: user,
-      },
+      creator: user,
     };
 
     const solution = await Solution.create(solutionData);

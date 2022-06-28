@@ -17,12 +17,7 @@ export const SuggestionSchema = new Schema({
   // image: String,
   date: Date,
   likes: { type: Map, of: Boolean, default: new Map() },
-  roles: {
-    creator: UserSchema,
-    // admins:[UserSchema],
-    // participants:[UserSchema]
-  },
-
+  creator: UserSchema,
 });
 
 export const Solution = mongoose.model('Solution', SuggestionSchema);
