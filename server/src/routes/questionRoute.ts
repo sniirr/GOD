@@ -7,15 +7,16 @@ import {
   setSolutionLike,
   voteForSolution,
   toggleWatch,
-  getQuestionVotes, getQuestionsByOrgId,
+  getQuestionVotes,
+  getQuestionById,
 } from '../controlers/questionCtrl';
 const router = require('express').Router();
 
 router
   .post('/upsert', isLoggedIn, upsertQuestion)
   .post('/activate', isLoggedIn, activateQuestion)
+  .post('/get-by-id', isLoggedIn, getQuestionById)
   .post('/get-all', isLoggedIn, getAllQuestions)
-  .post('/get-by-org', isLoggedIn, getQuestionsByOrgId)
   .post('/get-votes', isLoggedIn, getQuestionVotes)
   .post('/add-solution', isLoggedIn, addSolution)
   .post('/like-solution', isLoggedIn, setSolutionLike)

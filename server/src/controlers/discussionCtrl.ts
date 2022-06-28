@@ -45,7 +45,7 @@ export async function addMessage(
 export const setMessageLike = async (req: any, res: any) => {
   try {
     const { mid, vote } = req.body;
-    const userId = req.user.id;
+    const userId = req.user._id;
 
     const key = `likes.${userId}`;
 

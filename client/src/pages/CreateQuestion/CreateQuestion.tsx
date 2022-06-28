@@ -6,7 +6,7 @@ import {
   useRouteMatch, useHistory
 } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { clear, newQuestionSelector, setOrgId } from "redux/reducers/createQuestionReducer";
+import { clear, newQuestionSelector } from "redux/reducers/createQuestionReducer";
 import { upsertQuestion } from "redux/reducers/questionsReducers";
 import InternalHeader from "components/InternalHeader";
 import { WizardSteps } from "components/Wizard";
@@ -16,7 +16,6 @@ import CreateQuestion2 from './CreateQuestion2';
 import CreateQuestion3 from './CreateQuestion3';
 // import CreateQuestion4 from './CreateQuestion4';
 import CreateQuestion5 from './CreateQuestion5';
-import { selectedOrgIdSelector } from "../../redux/reducers/mainReducer";
 
 const CreateQuestion: FC = () => {
   const history = useHistory();
@@ -24,7 +23,6 @@ const CreateQuestion: FC = () => {
   const newQuestion = useAppSelector(newQuestionSelector)
   const { path } = useRouteMatch();
   const { pathname } = useLocation()
-  const orgId = useAppSelector(selectedOrgIdSelector)
 
   const wizardSteps = [
     { stepNumber: 1, caption: 'Problem' },
@@ -38,8 +36,6 @@ const CreateQuestion: FC = () => {
   const hasStarted = pathname !== '/create_question'
 
   useEffect(() => {
-    dispatch(setOrgId(orgId))
-
     return () => {
       dispatch(clear())
     }

@@ -5,17 +5,14 @@ import type { RootState } from '../store';
 
 export interface User {
   displayName: string;
-  // _id: string;
-  id: string;
+  _id: string;
 }
 
 export const getUser = () => async (dispatch: any) => {
   try {
-    const { data } = await axios.get('/user/get-user');
-    const { organizations, ...user } = data;
+    const { data: user } = await axios.get('/user/get-user');
 
     dispatch({ type: 'SET_USER', payload: user })
-    dispatch({ type: 'SET_ORGANIZATIONS', payload: organizations })
   } catch (err) {
     console.error(err);
   }

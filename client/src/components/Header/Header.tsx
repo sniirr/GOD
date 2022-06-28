@@ -3,7 +3,6 @@ import { Button } from '@mui/material';
 import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import './Header.scss';
-import OrganizationPicker from "../OrganizationPicker";
 
 const Header: FC = () => {
   const history = useHistory();
@@ -14,7 +13,6 @@ const Header: FC = () => {
         src={`${process.env.PUBLIC_URL}/logo.png`}
         alt="no one"
       />
-      <OrganizationPicker />
       <Button
         variant="contained"
         style={{

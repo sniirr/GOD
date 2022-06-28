@@ -2,16 +2,16 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { getUser, User, userSelector } from 'redux/reducers/userReducer';
-import { getQuestionsByOrgIdThunk } from 'redux/reducers/questionsReducers';
+import { getMemberQuestionsThunk } from 'redux/reducers/questionsReducers';
 import About from './About';
 import Questions from './Questions';
 import Question from './Question';
 import CreateQuestion from './CreateQuestion';
 import Notifications from './Notifications';
 import Login from './Login';
+import JoinPage from './JoinPage';
 import AddSolution from './Question/AddSolution';
 import CreateQuestionSuccess from "./CreateQuestion/CreateQuestionSuccess";
-import { selectedOrgIdSelector } from "../redux/reducers/mainReducer";
 
 function Fail() {
   return (
@@ -22,7 +22,7 @@ function Fail() {
 function LoggedInRoutes() {
   const user: User = useAppSelector(userSelector);
 
-  if (!user?.id) return null
+  if (!user?._id) return null
 
   return (
     <Switch>
@@ -50,15 +50,14 @@ function LoggedInRoutes() {
 
 function AppRoutes() {
   const dispatch = useAppDispatch();
-  const orgId = useAppSelector(selectedOrgIdSelector)
 
   useEffect(() => {
     dispatch(getUser());
   }, []);
 
   useEffect(() => {
-    dispatch(getQuestionsByOrgIdThunk(orgId));
-  }, [orgId]);
+    dispatch(getMemberQuestionsThunk());
+  }, []);
 
   return (
     <Router>
@@ -72,6 +71,9 @@ function AppRoutes() {
         </Route>
         <Route path="/login">
           <Login />
+        </Route>
+        <Route path="/join">
+          <JoinPage />
         </Route>
         <Route exact path="/">
           <Login />

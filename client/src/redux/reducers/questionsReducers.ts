@@ -5,20 +5,31 @@ import { Solution } from 'types';
 import { QuestionSchema } from './createQuestionReducer';
 import type { RootState } from '../store';
 
-const getQuestionsByOrgId = async (orgId: string) => {
+const getMemberQuestions = async () => {
   try {
-    const response = await axios.post('/questions/get-by-org', { orgId })
+    const response = await axios.post('/questions/get-all')
     return response.data
   }
   catch (e) {
-    console.error(`Failed to getQuestionsByOrgId for orgId ${orgId}`, { e })
+    console.error(`Failed to getMemberQuestions`, { e })
     return []
   }
 }
 
-export const getQuestionsByOrgIdThunk = createAsyncThunk(
+export const getQuestionsById = async (qid: string) => {
+  try {
+    const response = await axios.post('/questions/get-by-id', { qid })
+    return response.data
+  }
+  catch (e) {
+    console.error(`Failed to getQuestionsById ${qid}`, { e })
+    return []
+  }
+}
+
+export const getMemberQuestionsThunk = createAsyncThunk(
   'questions/getQuestions',
-  getQuestionsByOrgId,
+  getMemberQuestions,
 );
 
 const initialState = {}
@@ -73,8 +84,8 @@ export const questionsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getQuestionsByOrgIdThunk.pending, () => initialState)
-      .addCase(getQuestionsByOrgIdThunk.fulfilled, (state: any, action: any) => keyBy(action.payload, '_id'));
+      .addCase(getMemberQuestionsThunk.pending, () => initialState)
+      .addCase(getMemberQuestionsThunk.fulfilled, (state: any, action: any) => keyBy(action.payload, '_id'));
   },
 });
 
@@ -98,7 +109,6 @@ export const getQuestionsVotes = (qid: string) => async (dispatch: any) => {
 // actions
 interface UpsertQuestionPayload {
   _id?: string;
-  orgId: string;
   title: string;
   description: string;
   image: any;

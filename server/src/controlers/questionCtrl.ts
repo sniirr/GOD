@@ -7,18 +7,18 @@ const ObjectId = require('mongoose').Types.ObjectId;
 
 export async function upsertQuestion(req: any, res: any) {
   try {
-    // get question
     const question = req.body;
-    const creatorId = req.user.id
+    const creatorId = req.user._id
 
     if (question._id) {
       // update
       const response = await Question.findOneAndUpdate({ _id: new ObjectId(question._id) }, question);
       res.send({ update: true, response });
     } else {
+      const user = await User.findById(creatorId)
       // create new question
       question.creatorId = creatorId;
-      question.members = [creatorId];
+      question.members = [user];
       question.watchlist = { [creatorId]: true }
       const result = await Question.create(question);
       res.send(result);
@@ -46,27 +46,24 @@ export async function activateQuestion(req: any, res: any): Promise<void> {
 export async function getAllQuestions(req: any, res: any): Promise<void> {
   try {
     if (!{}.hasOwnProperty.call(req, 'user')) throw new Error('No user in request');
-    const userId = req.user.id;
+    const userId = req.user._id;
 
-    const result = await Question.find({
-      members: userId,
+    const questions = await Question.find({
+      members: new ObjectId(userId),
     })
       .populate('solutions');
 
-    res.send({ result, ok: true });
+    res.send(questions);
   } catch (error: any) {
     res.send({ error: error.message });
   }
 }
 
-export async function getQuestionsByOrgId(req: any, res: any): Promise<void> {
+export async function getQuestionById(req: any, res: any): Promise<void> {
   try {
-    const { orgId } = req.body;
+    const { qid } = req.body;
 
-    const questions = await Question.find({ orgId })
-      .populate('solutions');
-
-    res.send(questions);
+    res.send(await Question.findById(qid));
   } catch (error: any) {
     res.send({ error: error.message });
   }
@@ -89,7 +86,7 @@ export async function getQuestionVotes(req: any, res: any): Promise<void> {
 
 export async function addSolution(req: any, res: any) {
   try {
-    const user = await User.findOne({ id: req.user.id });
+    const user = await User.findOne({ id: req.user._id });
 
     const solutionData = {
       ...req.body,
@@ -115,7 +112,7 @@ export async function addSolution(req: any, res: any) {
 export const setSolutionLike = async (req: any, res: any) => {
   try {
     const { sid, vote } = req.body;
-    const userId = req.user.id;
+    const { _id: userId } = req.user;
 
     const key = `likes.${userId}`;
 
@@ -142,7 +139,7 @@ export const setSolutionLike = async (req: any, res: any) => {
 export const voteForSolution = async (req: any, res: any) => {
   try {
     const { qid, sid } = req.body;
-    const userId = req.user.id;
+    const { _id: userId } = req.user;
 
     const key = `votes.${userId}`;
 
@@ -172,7 +169,7 @@ export const toggleWatch = async (req: any, res: any) => {
       return res.send({ error: `Error updating question ${questionId}` });
     }
 
-    const userId = req.user.id
+    const { _id: userId } = req.user;
     const question = await Question.findById(new ObjectId(questionId))
     const isWatching = get(question.watchlist, userId, false)
 

@@ -11,12 +11,11 @@ const FileSchema = new Schema({
 });
 
 export const QuestionSchema = new Schema({
-  orgId: { type: String, required: true },
   title: { type: String, required: true },
   description: String,
   schedule:{ type: Object, default: {} },
   files: [FileSchema],
-  members: { type: [String], index: true },
+  members: [{ type: ObjectId, ref: "User", index: true }],
   creatorId: { type: String, required: true },
   admins: [UserSchema],
   last_entered: Date,

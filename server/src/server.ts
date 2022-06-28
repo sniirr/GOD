@@ -9,10 +9,8 @@ const app = express();
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const port: number | string = process.env.PORT || 4000;
-import { Organization } from "./models/OrganizationModel";
 import { User } from "./models/UserModel";
 import userRoutes from "./routes/userRoute";
-import organizationRoutes from "./routes/organizationRoute";
 import questionRoutes from "./routes/questionRoute";
 import discussionRoutes from "./routes/discussionRoute";
 
@@ -32,7 +30,6 @@ app.use(express.static(path.join(__dirname, "client", "build")));
 app.use("/questions", questionRoutes);
 app.use("/user", userRoutes);
 app.use("/discussion", discussionRoutes);
-app.use("/org", organizationRoutes);
 
 // passport settings
 const PASSPORT_SECRET = process.env.PASSPORT_SECRET;
@@ -57,25 +54,22 @@ app.get(
   }),
   async (req, res) => {
     try {
+      console.log({ USER: req.user })
       const user = req.user;
 
       user.role = "public";
       user.last_entered = new Date();
       console.log(`user ${user.displayName} logged in`);
 
-      //   const UserModel = mongoose.model("user", UserSchema);
-
       // Try to update user
-      const userDB = await User.findOneAndUpdate({ id: user.id }, user);
-
+      let userDB = await User.findOneAndUpdate({ email: user.email }, user);
       if (!userDB) {
-        const newUser = new User(user);
-        const userData = await newUser.save();
-        console.log(userData);
+        userDB = new User(user);
+        await userDB.save();
       }
       res.user = user;
       const userJWT = jwt.encode(
-        { id: user.id, role: user.role, displayName: user.displayName },
+        { _id: userDB._id, role: user.role, displayName: user.displayName },
         JWT_SECRET,
       );
       res.cookie("user", userJWT, {
@@ -139,23 +133,3 @@ io.on("connection", (socket) => {
 http.listen(port, () => {
   console.log("Server listen on port", port);
 });
-
-// TODO - dev code - delete
-const populateDB = async () => {
-  let godOrg = await Organization.findOne({ name: 'GOD' })
-  if (!godOrg) {
-    godOrg = await Organization.create({ name: 'GOD' })
-  }
-  let testOrg = await Organization.findOne({ name: 'Test Org 1' })
-  if (!testOrg) {
-    testOrg = await Organization.create({ name: 'Test Org 1' })
-  }
-
-  const users = await User.find({})
-  forEach(users, user => {
-    user.organizations = [godOrg, testOrg]
-    user.save()
-  })
-}
-
-populateDB()

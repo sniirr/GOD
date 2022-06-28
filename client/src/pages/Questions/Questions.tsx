@@ -4,25 +4,21 @@ import VoteCard from 'components/QuestionCard/QuestionCard';
 import Header from 'components/Header';
 import './Questions.scss';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { getQuestionsByOrgIdThunk, questionsSelector } from 'redux/reducers/questionsReducers';
+import { getMemberQuestionsThunk, questionsSelector } from 'redux/reducers/questionsReducers';
 import ButtonAppBar from 'components/ButtonAppBar/ButtonAppBar';
 import ApiData from 'components/ApiData/ApiData';
 import Tabs from 'components/Tabs';
 import { userSelector } from "../../redux/reducers/userReducer";
-import { selectedOrgIdSelector } from "../../redux/reducers/mainReducer";
 
 const Questions: FC = () => {
   const dispatch = useAppDispatch();
 
   const questions = useAppSelector(questionsSelector);
-  const { id: userId } = useAppSelector(userSelector)
-  const orgId = useAppSelector(selectedOrgIdSelector)
+  const { _id: userId } = useAppSelector(userSelector)
 
   useEffect(() => {
-    if (!isEmpty(orgId)) {
-      dispatch(getQuestionsByOrgIdThunk(orgId));
-    }
-  }, [orgId]);
+    dispatch(getMemberQuestionsThunk());
+  }, []);
 
   const renderList = (qs: any) => (
     <ApiData apiKey="questions/getQuestions">

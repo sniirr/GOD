@@ -31,7 +31,7 @@ function Vote(props: QuestionInfoProps) {
   }, [])
 
   const voteForSolution = (solution: any) => {
-    dispatch(vote(question._id, solution._id, user.id))
+    dispatch(vote(question._id, solution._id, user._id))
   }
 
   const setExpanded = (sid: string, isExpanded: boolean) => setExpandedOptions({
@@ -45,7 +45,7 @@ function Vote(props: QuestionInfoProps) {
         {status !== 'fulfilled' || _.size(question.solutions) > 0
           ? map(question.solutions, (solution, i: number) => {
             const { count, percent } = get(voteCounters, solution._id, { count: 0, percent: 0 })
-            const isUserVote = get(votes, user.id) === solution._id
+            const isUserVote = get(votes, user._id) === solution._id
             // @ts-ignore
             const isExpanded = expandedOptions[solution._id]
             return (

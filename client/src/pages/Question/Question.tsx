@@ -38,11 +38,11 @@ const Question: FC = () => {
 
   const dispatch = useAppDispatch();
   const question = useAppSelector(questionByIdSelector(questionId));
-  const isWatching = _.get(question, ['watchlist', user.id], false)
+  const isWatching = _.get(question, ['watchlist', user._id], false)
 
   useEffect(() => {
     joinRoom(questionId, (messageObj: any) => {
-      const isThisUser = messageObj.creator.id === user.id
+      const isThisUser = messageObj.creator._id === user._id
       console.log({ messageObj, isThisUser, user })
       dispatch(isThisUser ? replaceMessage(messageObj) : addMessage(messageObj));
     });
@@ -60,7 +60,7 @@ const Question: FC = () => {
       <InternalHeader backUrl="/questions">
         <ShareIcon />
         <VisibilityIcon
-          onClick={() => dispatch(toggleWatch(questionId, user.id))}
+          onClick={() => dispatch(toggleWatch(questionId, user._id))}
           className={classNames({ on: isWatching, off: !isWatching })} />
       </InternalHeader>
       <div className="question-header" style={{ backgroundImage: imageUrl ? `url(${imageUrl}` : "none" }} />

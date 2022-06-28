@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 export const UserSchema = new Schema({
-  id: String,
   displayName: String,
   name: { givenName: String, familyName: String },
   email_verified: Boolean,
@@ -13,7 +12,6 @@ export const UserSchema = new Schema({
   email: String,
   picture: String,
   last_entered: Date,
-  organizations: [{ type: Schema.Types.ObjectId, ref: "Organization"}]
 });
 
 export const User = mongoose.model('User', UserSchema);

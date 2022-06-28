@@ -4,14 +4,10 @@ import questionsReducer from './reducers/questionsReducers';
 import userReducer from './reducers/userReducer';
 import chatReducer from './reducers/chatReducer';
 import { apiSlice, apiMiddleware } from './modules/api';
-import organizationsReducer from "./reducers/organizationsReducer";
-import mainReducer from "./reducers/mainReducer";
 
 const store = configureStore({
   reducer: {
-    main: mainReducer,
     api: apiSlice.reducer,
-    organizations: organizationsReducer,
     newQuestion: createQuestionReducer,
     questions: questionsReducer,
     user: userReducer,

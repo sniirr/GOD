@@ -36,7 +36,7 @@ const Discussion: FC<DiscussionProps> = (props: DiscussionProps) => {
       return {
         id: uid(),
         text: message,
-        creator: { creatorId: user.id, displayName: user.displayName },
+        creator: { creatorId: user._id, displayName: user.displayName },
         parentId: questionId,
         parentType: "question",
         error: false,
