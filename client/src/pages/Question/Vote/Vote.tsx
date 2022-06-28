@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import "./Vote.scss";
 import { map, get, size } from "lodash";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -24,7 +24,6 @@ function Vote(props: QuestionInfoProps) {
   const { status } = useAppSelector(apiSelector('questions/getQuestions'));
 
   const [expandedOptions, setExpandedOptions] = useState({})
-  console.log({ expandedOptions })
 
   useEffect(() => {
     dispatch(getQuestionsVotes(question._id))
@@ -49,7 +48,7 @@ function Vote(props: QuestionInfoProps) {
             // @ts-ignore
             const isExpanded = expandedOptions[solution._id]
             return (
-              <>
+              <Fragment key={`solution-${solution._id}`}>
                 <div className="vote-option">
                   <div className="option-bar" onClick={() => setExpanded(solution._id, !isExpanded)}>
                     <div className="fill" style={{ width: `${percent.toString()}%` }} />
@@ -65,7 +64,7 @@ function Vote(props: QuestionInfoProps) {
                 {isExpanded && (
                   <div className="expanded">{Parser(solution.description)}</div>
                 )}
-              </>
+              </Fragment>
             )
           })
           : (

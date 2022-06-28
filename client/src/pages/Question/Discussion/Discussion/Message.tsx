@@ -24,7 +24,7 @@ const Message = (props: MessageProps) => {
   const { msg, isPreview, } = props;
   console.log({ msg })
   const [truncate, setTruncate] = useState(!isPreview);
-  const { id: userId } = useAppSelector(userSelector);
+  const { _id: userId } = useAppSelector(userSelector);
   const userLike = get(msg, ['likes', userId]);
   // todo - memoize this:
   const { true: upvotes = 0, false: downvotes = 0 } = countBy(msg.likes, identity);

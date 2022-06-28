@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from "react";
-import { get, isEmpty } from "lodash";
+import { get, isEmpty, isNil } from "lodash";
 import classNames from "classnames";
 import {
   Redirect,
@@ -38,7 +38,6 @@ const Question: FC = () => {
 
   const dispatch = useAppDispatch();
   const question = useAppSelector(questionByIdSelector(questionId));
-  const isWatching = get(question, ['watchlist', user._id], false)
 
   useEffect(() => {
     joinRoom(questionId, (messageObj: any) => {
@@ -53,6 +52,9 @@ const Question: FC = () => {
     };
   }, []);
 
+  if (isNil(question)) return null
+
+  const isWatching = get(question, ['watchlist', user._id], false)
   const imageUrl = question.image?.secure_url;
 
   return (

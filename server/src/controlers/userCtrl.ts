@@ -20,7 +20,7 @@ export function login(req: any, res: any): void {
 
 export async function getUser(req: any, res: any) {
   try {
-    const user = await User.findOne({ id: req.user._id })
+    const user = await User.findOne({ _id: req.user._id })
 
     res.send(user);
   } catch (err: any) {

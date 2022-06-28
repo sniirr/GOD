@@ -86,7 +86,7 @@ export async function getQuestionVotes(req: any, res: any): Promise<void> {
 
 export async function addSolution(req: any, res: any) {
   try {
-    const user = await User.findOne({ id: req.user._id });
+    const user = await User.findById(req.user._id);
 
     const solutionData = {
       ...req.body,

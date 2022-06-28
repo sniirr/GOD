@@ -45,6 +45,7 @@
     "@typescript-eslint/no-unused-vars": "warn",
     "spaced-comment": "off",
     "import/no-named-as-default": 0,
-    "arrow-body-style": "off"
+    "arrow-body-style": "off",
+    "jsx-a11y/no-autofocus": "off"
   }
 }

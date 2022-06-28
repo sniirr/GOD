@@ -25,7 +25,7 @@ function SolutionCard(props: SolutionCardProps) {
 
   const dispatch = useAppDispatch();
   const [truncate, setTruncate] = useState(!isPreview);
-  const { id: userId } = useAppSelector(userSelector);
+  const { _id: userId } = useAppSelector(userSelector);
 
   const userVote = get(solution, ['likes', userId]);
   // todo - memoize this:

@@ -186,7 +186,7 @@ export const toggleWatch = (questionId: string, userId: string) => async (dispat
 
 // selectors
 export const questionsSelector = (state: RootState) => values(state.questions);
-export const questionByIdSelector = (qid: string) => (state: RootState) => get(state, ['questions', qid], {}) as QuestionSchema;
+export const questionByIdSelector = (qid: string) => (state: RootState) => get(state, ['questions', qid]) as QuestionSchema | null;
 
 const questionsReducer = questionsSlice.reducer;
 

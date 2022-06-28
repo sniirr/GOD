@@ -20,7 +20,7 @@ export async function addMessage(
   msgObj: any,
 ): Promise<any> {
   try {
-    const user = await User.findOne({ id: msgObj.creator?.creatorId });
+    const user = await User.findById(msgObj.creator?.creatorId);
 
     if (user) {
       const inMessage = {

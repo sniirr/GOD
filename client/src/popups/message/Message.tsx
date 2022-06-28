@@ -19,7 +19,7 @@ function createClasses(type: string): Classes {
   }
 }
 
-export default function App(props: IAppProps) {
+export default function Message(props: IAppProps) {
   const { type, message } = props;
   const classes = createClasses(type);
 
