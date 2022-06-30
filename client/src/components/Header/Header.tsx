@@ -3,9 +3,12 @@ import { Button } from '@mui/material';
 import React, { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import './Header.scss';
+import { useAppSelector } from "redux/hooks";
+import { userSelector } from "redux/reducers/userReducer";
 
 const Header: FC = () => {
   const history = useHistory();
+  const { displayName } = useAppSelector(userSelector)
 
   return (
     <div className="header">
@@ -13,6 +16,7 @@ const Header: FC = () => {
         src={`${process.env.PUBLIC_URL}/logo.png`}
         alt="no one"
       />
+      <div>{displayName}</div>
       <Button
         variant="contained"
         style={{

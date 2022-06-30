@@ -10,8 +10,8 @@ import {
 } from "react-router-dom";
 // import { useAppSelector, useAppDispatch } from "redux/hooks";
 import "./JoinPage.scss";
-import { getQuestionsById } from "redux/reducers/questionsReducers";
-import { QuestionSchema } from "../../redux/reducers/createQuestionReducer";
+import { getQuestionById } from "redux/reducers/questionsReducers";
+import { QuestionSchema } from "redux/reducers/createQuestionReducer";
 
 interface JoinParams {
   qid: string;
@@ -27,7 +27,7 @@ const JoinPage: FC = () => {
 
   useEffect(() => {
     const getQuestion = async () => {
-      setQuestion(await getQuestionsById(qid))
+      setQuestion(await getQuestionById(qid))
     }
     getQuestion()
   }, [])

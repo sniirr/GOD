@@ -50,6 +50,7 @@ export async function getAllQuestions(req: any, res: any): Promise<void> {
     const questions = await Question.find({
       members: new ObjectId(userId),
     })
+      .populate('members')
       .populate('solutions');
 
     res.send(questions);
@@ -70,8 +71,6 @@ export async function getQuestionById(req: any, res: any): Promise<void> {
 
 export async function getQuestionVotes(req: any, res: any): Promise<void> {
   try {
-    if (!{}.hasOwnProperty.call(req, 'user')) throw new Error('No user in request');
-
     const { qid } = req.body
     const question = await Question.findById(qid)
     const votes = Object.fromEntries(question.votes);
@@ -80,6 +79,29 @@ export async function getQuestionVotes(req: any, res: any): Promise<void> {
     res.send(omit(counters, null));
   } catch (error: any) {
     res.send({ error: error.message });
+  }
+}
+
+export async function addMembers(req: any, res: any) {
+  try {
+    const { qid, emails } = req.body
+
+    const question = await Question.findOne({ _id: new ObjectId(qid) }).populate('members');
+    // TODO - make sure only unique members are added + filter out in question members in autocomplete
+
+    const newMembers = await User.find({ email: { $in: emails } });
+    console.log('ADDING MEMBERS', { emails, newMembers })
+
+    const updatedQuestion = await Question.findOneAndUpdate({ _id: new ObjectId(qid) }, {
+      $push: {
+        members: { $each: newMembers },
+      }
+    })
+
+    res.send(updatedQuestion.members);
+  } catch (error: any) {
+    console.error(error);
+    res.status(500).send({ error: error.message });
   }
 }
 

@@ -4,6 +4,16 @@
   height: 100vh;
   display: flex;
 
+  .internal-header {
+    .members-icon {
+      justify-content: flex-end;
+
+      svg {
+        margin-left: 5px;
+      }
+    }
+  }
+
   .tabs {
     .tabs-header {
       .tab-header {

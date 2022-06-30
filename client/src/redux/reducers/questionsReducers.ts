@@ -16,7 +16,7 @@ const getMemberQuestions = async () => {
   }
 }
 
-export const getQuestionsById = async (qid: string) => {
+export const getQuestionById = async (qid: string) => {
   try {
     const response = await axios.post('/questions/get-by-id', { qid })
     return response.data
@@ -30,6 +30,11 @@ export const getQuestionsById = async (qid: string) => {
 export const getMemberQuestionsThunk = createAsyncThunk(
   'questions/getQuestions',
   getMemberQuestions,
+);
+
+export const getQuestionByIdThunk = createAsyncThunk(
+  'questions/getById',
+  getQuestionById,
 );
 
 const initialState = {}
@@ -80,7 +85,11 @@ export const questionsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getMemberQuestionsThunk.pending, () => initialState)
-      .addCase(getMemberQuestionsThunk.fulfilled, (state: any, action: any) => keyBy(action.payload, '_id'));
+      .addCase(getMemberQuestionsThunk.fulfilled, (state: any, action: any) => keyBy(action.payload, '_id'))
+      .addCase(getQuestionByIdThunk.fulfilled, (state: any, action: any) => {
+        const question = action.payload
+        state[question._id] = question
+      });
   },
 });
 
@@ -129,6 +138,15 @@ export const publishQuestion = (questionId: string, cb?: Function) => async (dis
     if (cb) cb()
   } catch (e) {
     console.error(e);
+  }
+}
+
+export const addUsersToQuestion = async (qid: string, emails: string[]) => {
+  try {
+    return await axios.post('/questions/add-members', { qid, emails });
+  } catch (e) {
+    console.error(e);
+    return null
   }
 }
 

@@ -18,6 +18,16 @@ export const getUser = () => async (dispatch: any) => {
   }
 }
 
+export const searchUsersByEmail = async (term: string) => {
+  try {
+    const { data: users } = await axios.post('/user/search', { term });
+    return users;
+  } catch (err) {
+    console.error(err);
+    return []
+  }
+}
+
 const initialState = {} as User;
 
 export const userSelector = (state: RootState) => state.user;

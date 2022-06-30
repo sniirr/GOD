@@ -38,7 +38,7 @@ function SolutionCard(props: SolutionCardProps) {
     <div className="solution-card">
       <div className="card-top">
         <div className="solution-title">{`${number > -1 ? `#${number} ` : ''} ${title}`}</div>
-        <div className="creator">Suggested by {creator.displayName}</div>
+        {!isPreview && (<div className="creator">Suggested by {creator.displayName}</div>)}
         {truncate ? (
           <TruncateMarkup lines={7} ellipsis={<div onClick={() => setTruncate(!truncate)} className="ellipsis">Show more</div>}>
             <div>{Parser(description)}</div>

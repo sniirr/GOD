@@ -1,5 +1,5 @@
-import React, { FC, useEffect } from "react";
-import { isEmpty, isNil } from "lodash";
+import React, { FC, useEffect, useState } from "react";
+import { isEmpty, isNil, size } from "lodash";
 import {
   Redirect,
   Route,
@@ -9,12 +9,14 @@ import {
 } from "react-router-dom";
 import Tabs from "components/Tabs";
 import ShareIcon from "@mui/icons-material/Share";
+import GroupIcon from '@mui/icons-material/Group';
 import { joinRoom, leaveRoom } from "utils/socket";
 import { addMessage, replaceMessage, clearChat } from "redux/reducers/chatReducer";
 import { questionByIdSelector } from "redux/reducers/questionsReducers";
 import { User, userSelector } from "redux/reducers/userReducer";
 import { useAppSelector, useAppDispatch } from "redux/hooks";
 import InternalHeader from "components/InternalHeader";
+import QuestionMembers from "popups/QuestionMembers/QuestionMembers";
 import Discussion from "./Discussion";
 import QuestionInfo from "./Information";
 import Vote from "./Vote/Vote";
@@ -28,6 +30,7 @@ const Question: FC = () => {
   const params = useParams<QuestionParams>();
   const { path, url } = useRouteMatch();
   const user: User = useAppSelector(userSelector);
+  const [showMembers, setShowMembers] = useState(false)
 
   let questionId = "";
   if ("questionId" in params) {
@@ -57,7 +60,10 @@ const Question: FC = () => {
   return (
     <div className="page page-question">
       <InternalHeader backUrl="/questions">
-        <ShareIcon />
+        <div className="center-aligned-row members-icon" onClick={() => setShowMembers(!showMembers)}>
+          <span>{size(question.members)}</span>
+          <GroupIcon />
+        </div>
       </InternalHeader>
       {!isEmpty(imageUrl) && (
         <div className="question-header" style={{ backgroundImage: `url(${imageUrl}` }} />
@@ -85,6 +91,7 @@ const Question: FC = () => {
           <Redirect to={`${path}/info`} />
         </Switch>
       </div>
+      <QuestionMembers isOpen={showMembers} close={() => setShowMembers(false)} questionId={questionId} />
     </div>
   );
 };

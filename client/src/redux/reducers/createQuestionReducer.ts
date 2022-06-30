@@ -25,18 +25,21 @@ export interface QuestionSchema {
   solutions: any,
   votes: any,
   voteCounters?: any;
+  members: any[];
 }
 
 // Define the initial state using that type
 const initialState = {
   title: 'Question 1',
   description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  image: {},
+  image: {} as Image,
   schedule: {},
+  status: '',
   imageUploading: false,
   solutions: [],
   votes: {},
   voteCounters: {},
+  members: [],
 } as QuestionSchema;
 
 export const createQuestionSlice = createSlice({

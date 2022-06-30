@@ -29,6 +29,18 @@ export async function getUser(req: any, res: any) {
   }
 }
 
+export const searchUsersByEmail = async (req: any, res: any) => {
+  try {
+    const { term } = req.body
+    const users = await User.find({ email: { $regex: term } }).select('email')
+
+    res.send(users.map(({ email }) => email));
+  } catch (err: any) {
+    console.log(err);
+    res.status(500).send(err.message);
+  }
+}
+
 export function secret(req: any, res: any): void {
   try {
     res.send({ secret: true });

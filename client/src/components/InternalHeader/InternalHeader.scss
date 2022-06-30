@@ -26,10 +26,6 @@
       svg {
         cursor: pointer;
 
-        &:not(:first-child) {
-          margin-left: 16px;
-        }
-
         &.off {
           opacity: .25;
         }
