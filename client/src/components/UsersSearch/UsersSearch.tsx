@@ -10,7 +10,7 @@ interface UsersSearchProps {
 }
 
 const UsersSearch: FC<UsersSearchProps> = (props: UsersSearchProps) => {
-  const { onValuesChange } = props;
+  const { questionId, onValuesChange } = props;
 
   const [inputValue, setInputValue] = useState('');
   const [options, setOptions] = useState<readonly string[]>([]);
@@ -22,7 +22,7 @@ const UsersSearch: FC<UsersSearchProps> = (props: UsersSearchProps) => {
           term: string,
           callback: (results?: readonly string[]) => void,
         ) => {
-          const opts = await searchUsersByEmail(term)
+          const opts = await searchUsersByEmail(term, { qid: questionId })
           callback(opts)
         },
         200,

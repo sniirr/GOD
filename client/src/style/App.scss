@@ -394,6 +394,12 @@ h2 {
   font-size: 1rem !important;
 }
 
+.MuiDialog-root {
+  .MuiPaper-root {
+    width: 80%;
+  }
+}
+
 .MuiDialogContent-root {
   padding: 18px !important;
 }

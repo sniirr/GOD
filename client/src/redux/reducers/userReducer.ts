@@ -18,9 +18,9 @@ export const getUser = () => async (dispatch: any) => {
   }
 }
 
-export const searchUsersByEmail = async (term: string) => {
+export const searchUsersByEmail = async (term: string, opts: any) => {
   try {
-    const { data: users } = await axios.post('/user/search', { term });
+    const { data: users } = await axios.post('/user/search', { term, opts });
     return users;
   } catch (err) {
     console.error(err);

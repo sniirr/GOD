@@ -1,5 +1,6 @@
 import { userValidate } from '../models/userValidation';
 import User from "../models/UserModel";
+import Question from "../models/QuestionModel";
 
 export function login(req: any, res: any): void {
   try {
@@ -31,8 +32,12 @@ export async function getUser(req: any, res: any) {
 
 export const searchUsersByEmail = async (req: any, res: any) => {
   try {
-    const { term } = req.body
-    const users = await User.find({ email: { $regex: term } }).select('email')
+    const { term, opts = {} } = req.body
+    const { qid } = opts
+    const question = await Question.findById(qid).populate('members')
+    const questionMemberEmails = question.members.map(m => m.email)
+    console.log(`Searching users by email`, { qid, question, term, questionMemberEmails})
+    const users = await User.find({ email: { $regex: term, $nin: questionMemberEmails } }).select('email')
 
     res.send(users.map(({ email }) => email));
   } catch (err: any) {

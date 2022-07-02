@@ -86,11 +86,15 @@ export async function addMembers(req: any, res: any) {
   try {
     const { qid, emails } = req.body
 
+    /*
+      TODO:
+       - notify existing users
+       - send invite email to new users
+     */
     const question = await Question.findOne({ _id: new ObjectId(qid) }).populate('members');
-    // TODO - make sure only unique members are added + filter out in question members in autocomplete
-
-    const newMembers = await User.find({ email: { $in: emails } });
-    console.log('ADDING MEMBERS', { emails, newMembers })
+    const questionMemberEmails = question.members.map(m => m.email)
+    const newMembers = await User.find({ email: { $in: emails, $nin: questionMemberEmails } });
+    console.log('ADDING MEMBERS', { emails, questionMemberEmails, newMembers })
 
     const updatedQuestion = await Question.findOneAndUpdate({ _id: new ObjectId(qid) }, {
       $push: {
