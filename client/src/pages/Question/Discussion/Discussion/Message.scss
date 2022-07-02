@@ -12,8 +12,12 @@
     margin-top: 15px;
     width: 100%;
 
+    &>div {
+      margin-left: 10px;
+    }
+
     .bottom-nav-btn {
-      margin-right: 24px;
+      //margin-right: 24px;
 
       svg {
         path {

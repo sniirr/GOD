@@ -106,11 +106,12 @@ const Message = (props: MessageProps) => {
           <div className="bottom-nav-buttons">
             <div className="bottom-nav-btn">
               <ThumbUpIcon onClick={() => like(true)} className={classNames({ active: userLike === true })} />
-              <div className="upvote">{upvotes}</div>
+              {/*<div className="upvote">{upvotes}</div>*/}
             </div>
+            <div className="upvote">{upvotes - downvotes}</div>
             <div className="bottom-nav-btn">
               <ThumbDownIcon onClick={() => like(false)} className={classNames({ active: userLike === false })} />
-              <div className="downvote">{`${downvotes > 0 ? '-' : ''}${downvotes}`}</div>
+              {/*<div className="downvote">{`${downvotes > 0 ? '-' : ''}${downvotes}`}</div>*/}
             </div>
             {/*<div className="bottom-buttons-left">*/}
             {/*  <div>*/}
