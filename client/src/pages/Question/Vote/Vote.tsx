@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Fragment } from "react";
 import "./Vote.scss";
-import { map, get, size } from "lodash";
+import { map, get, size, orderBy, find } from "lodash";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import { useAppDispatch, useAppSelector } from "redux/hooks";
@@ -16,6 +16,11 @@ export interface QuestionInfoProps {
   question: any;
 }
 
+const getOrder = (voteCounters: any) => {
+  const tmp = map(voteCounters, ({ total }, sid) => ({ total, sid }))
+  return orderBy(tmp, 'total', 'desc')
+}
+
 function Vote(props: QuestionInfoProps) {
   const { question } = props;
   const dispatch = useAppDispatch()
@@ -25,6 +30,8 @@ function Vote(props: QuestionInfoProps) {
   const { status } = useAppSelector(apiSelector('questions/getQuestions'));
 
   const [expandedOptions, setExpandedOptions] = useState({})
+  const order = getOrder(voteCounters)
+  console.log({ order })
 
   useEffect(() => {
     dispatch(getQuestionsVotes(question._id))
@@ -43,7 +50,9 @@ function Vote(props: QuestionInfoProps) {
     return (
       <div className="vote-tab">
         {status !== 'fulfilled' || size(question.solutions) > 0
-          ? map(question.solutions, (solution, i: number) => {
+          ? map(order, ({ sid }, i: number) => {
+            const solution = find(question.solutions, { _id: sid })
+            if (!solution) return null
             const optionVotes = get(voteCounters, [solution._id, 'options'], [0, 0])
             const solutionUserVote = get(votes, [user._id, solution._id])
             // @ts-ignore
