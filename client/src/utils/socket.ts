@@ -14,9 +14,9 @@ export const disconnectSocket = () => {
   if (socket) socket.disconnect();
 };
 
-export const joinRoom = (room: string, messageCallback: Function) => {
+export const joinRoom = (room: string, callbacks: any) => {
   if (!socket) {
-    setTimeout(() => joinRoom(room, messageCallback), 500)
+    setTimeout(() => joinRoom(room, callbacks), 500)
     return
   }
 
@@ -25,7 +25,11 @@ export const joinRoom = (room: string, messageCallback: Function) => {
   socket.off('chat-message');
   socket.on('chat-message', (msg: any) => {
     console.log('chat-message received!', { msg });
-    return messageCallback(msg);
+    return callbacks.onMessage(msg);
+  });
+  socket.on('question-vote', (userVotes: any) => {
+    console.log('question-vote received!', { userVotes });
+    return callbacks.onVote(userVotes);
   });
 };
 
@@ -35,4 +39,8 @@ export const leaveRoom = (room: string) => {
 
 export const sendMessage = (message: Message) => {
   if (socket) socket.emit('chat-message', message);
+};
+
+export const vote = (qid: string, sid: string, uid: string, value: number) => {
+  if (socket) socket.emit('question-vote', { qid, sid, value, userId: uid });
 };

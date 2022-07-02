@@ -8,11 +8,10 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import Tabs from "components/Tabs";
-import ShareIcon from "@mui/icons-material/Share";
 import GroupIcon from '@mui/icons-material/Group';
 import { joinRoom, leaveRoom } from "utils/socket";
 import { addMessage, replaceMessage, clearChat } from "redux/reducers/chatReducer";
-import { questionByIdSelector } from "redux/reducers/questionsReducers";
+import { onQuestionVote, questionByIdSelector } from "redux/reducers/questionsReducers";
 import { User, userSelector } from "redux/reducers/userReducer";
 import { useAppSelector, useAppDispatch } from "redux/hooks";
 import InternalHeader from "components/InternalHeader";
@@ -40,11 +39,16 @@ const Question: FC = () => {
   const dispatch = useAppDispatch();
   const question = useAppSelector(questionByIdSelector(questionId));
 
+  const onMessage = (messageObj: any) => {
+    const isThisUser = messageObj.creator._id === user._id
+    console.log({ messageObj, isThisUser, user })
+    dispatch(isThisUser ? replaceMessage(messageObj) : addMessage(messageObj));
+  }
+
   useEffect(() => {
-    joinRoom(questionId, (messageObj: any) => {
-      const isThisUser = messageObj.creator._id === user._id
-      console.log({ messageObj, isThisUser, user })
-      dispatch(isThisUser ? replaceMessage(messageObj) : addMessage(messageObj));
+    joinRoom(questionId, {
+      onMessage,
+      onVote: (userVotes: any) => dispatch(onQuestionVote(questionId, user._id, userVotes))
     });
 
     return () => {

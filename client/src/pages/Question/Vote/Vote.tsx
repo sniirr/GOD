@@ -4,13 +4,14 @@ import { map, get, size, orderBy, find } from "lodash";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { getQuestionsVotes, vote } from "redux/reducers/questionsReducers";
+import { getQuestionsVotes } from "redux/reducers/questionsReducers";
 import Button from "components/Button";
 import { User, userSelector } from "redux/reducers/userReducer";
 import classNames from "classnames";
 import Parser from 'html-react-parser';
 import { apiSelector } from "redux/modules/api";
 import { SuggestButton } from "components/Buttons";
+import { vote } from "utils/socket";
 
 export interface QuestionInfoProps {
   question: any;
@@ -38,7 +39,7 @@ function Vote(props: QuestionInfoProps) {
   }, [])
 
   const voteForSolution = (solution: any, value: number) => {
-    dispatch(vote(question._id, solution._id, user._id, value))
+    vote(question._id, solution._id, user._id, value)
   }
 
   const setExpanded = (sid: string, isExpanded: boolean) => setExpandedOptions({

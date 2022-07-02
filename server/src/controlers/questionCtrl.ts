@@ -86,7 +86,7 @@ export async function getQuestionVotes(req: any, res: any): Promise<void> {
       options: [0, 0],
     }))))
 
-    res.send(omit(counters, null));
+    res.send({ voteCounters: omit(counters, null), votes: question.votes });
   } catch (error: any) {
     res.send({ error: error.message });
   }
@@ -169,11 +169,8 @@ export const setSolutionLike = async (req: any, res: any) => {
   }
 };
 
-export const voteForSolution = async (req: any, res: any) => {
+export const voteForSolution = async ({ qid, sid, value, userId }) => {
   try {
-    const { qid, sid, value } = req.body;
-    const { _id: userId } = req.user;
-
     const key = `votes.${userId}`;
     const question = await Question.findById(qid)
     let userVote = get(question.votes, userId, {})
@@ -201,9 +198,9 @@ export const voteForSolution = async (req: any, res: any) => {
       },
     );
 
-    res.send({ resolvedVote: userVote });
+    return userVote
   } catch (error: any) {
     console.error(error);
-    res.status(500).send({ error: error.message });
+    return null
   }
 }

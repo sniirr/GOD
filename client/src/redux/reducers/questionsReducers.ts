@@ -71,10 +71,11 @@ export const questionsSlice = createSlice({
       const question = get(state, questionId) as QuestionSchema;
       question.status = 'active'
     },
-    setVoteCounters: (state, action: PayloadAction<any>) => {
-      const { payload: { qid, voteCounters } } = action
+    setVotes: (state, action: PayloadAction<any>) => {
+      const { payload: { qid, voteCounters, votes } } = action
       const question = get(state, qid) as QuestionSchema;
       question.voteCounters = voteCounters
+      question.votes = votes
     },
     setUserVote: (state, action: PayloadAction<any>) => {
       const { payload: { uid, qid, userVotes } } = action
@@ -97,14 +98,14 @@ export const getQuestionsVotes = (qid: string) => async (dispatch: any) => {
   try {
     const res = await axios.post('/questions/get-votes', { qid })
 
-    const voteCounters = res.data
+    const { voteCounters, votes } = res.data
 
     const sumVotes = reduce(voteCounters, (_sum, { options }) => {
       return _sum + sum(options)
     }, 0)
 
-    console.log({ voteCounters, sumVotes })
-    dispatch(questionsSlice.actions.setVoteCounters({ qid, voteCounters }))
+    console.log({ voteCounters, sumVotes, votes })
+    dispatch(questionsSlice.actions.setVotes({ qid, voteCounters, votes }))
   }
   catch (e) {
     console.error(e)
@@ -173,20 +174,10 @@ export const likeSolution = (qid: string, sid: string, userId: string, vote: boo
   }
 };
 
-export const vote = (qid: string, sid: string, uid: string, value: number) => async (dispatch: any) => {
-  try {
-    const { data } = await axios.post('/questions/vote', { qid, sid, value });
-
-    dispatch(getQuestionsVotes(qid))
-    dispatch(questionsSlice.actions.setUserVote({
-      uid,
-      qid,
-      userVotes: data.resolvedVote,
-    }))
-  } catch (error) {
-    console.error(error);
-  }
-};
+export const onQuestionVote = (qid: string, uid: string, userVotes: any) => (dispatch: any) => {
+  dispatch(getQuestionsVotes(qid))
+  dispatch(questionsSlice.actions.setUserVote({ uid, qid, userVotes }))
+}
 
 // selectors
 export const questionsSelector = (state: RootState) => values(state.questions);

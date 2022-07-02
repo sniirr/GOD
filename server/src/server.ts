@@ -3,7 +3,6 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const jwt = require("jwt-simple");
 const path = require("path");
-const { forEach } = require("lodash");
 require("dotenv").config();
 const app = express();
 const http = require("http").createServer(app);
@@ -15,6 +14,7 @@ import questionRoutes from "./routes/questionRoute";
 import discussionRoutes from "./routes/discussionRoute";
 
 //controls
+import { voteForSolution } from "./controlers/questionCtrl";
 import { addMessage } from "./controlers/discussionCtrl";
 
 require("./controlers/auth"); // get google authentication
@@ -127,6 +127,12 @@ io.on("connection", (socket) => {
 
     if (res && socketRoom){
       io.to(socketRoom).emit("chat-message", res);}
+  });
+
+  socket.on(`question-vote`, async ({ qid, sid, value, userId }) => {
+    const userVotes = await voteForSolution({ qid, sid, value, userId });
+    if (userVotes){
+      io.to(qid).emit("question-vote", userVotes);}
   });
 });
 
