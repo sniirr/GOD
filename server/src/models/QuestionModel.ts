@@ -5,10 +5,17 @@ import { UserSchema } from "./UserModel";
 const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId
 
+const STATUSES = ['draft', 'pending', 'active', 'suggestions', 'vote', 'closed', 'deleted']
+
 const FileSchema = new Schema({
   fileName: String,
   fileUrl: String,
 });
+
+const ConfigScheme = new Schema({
+  maxForVotes: Number,
+  maxAgainstVotes: Number,
+}, { _id: false })
 
 export const QuestionSchema = new Schema({
   title: { type: String, required: true },
@@ -19,13 +26,10 @@ export const QuestionSchema = new Schema({
   creatorId: { type: String, required: true },
   admins: [UserSchema],
   image: Map,
-  status: {
-    type: String,
-    enum: ['draft', 'pending', 'active', 'suggestions', 'vote', 'closed', 'deleted'],
-    default: 'draft',
-  },
+  status: { type: String, enum: STATUSES, default: 'draft' },
   solutions: [{ type: ObjectId, ref: "Solution" }],
-  votes: { type: Map, of: String, default: new Map() },
+  votes: { type: Object, default: {} },
+  config: { type: ConfigScheme, default: { maxForVotes: 1, maxAgainstVotes: 1 } }
 });
 
 export const Question = mongoose.model("Question", QuestionSchema);

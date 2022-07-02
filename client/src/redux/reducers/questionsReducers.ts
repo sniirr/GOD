@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { get, set, findIndex, keyBy, values, mapValues, sum } from 'lodash';
+import { get, set, findIndex, keyBy, values, mapValues, sum, reduce } from 'lodash';
 import { Solution } from 'types';
 import { QuestionSchema } from './createQuestionReducer';
 import type { RootState } from '../store';
@@ -71,15 +71,15 @@ export const questionsSlice = createSlice({
       const question = get(state, questionId) as QuestionSchema;
       question.status = 'active'
     },
-    setVotes: (state, action: PayloadAction<any>) => {
-      const { payload: { qid, votes } } = action
+    setVoteCounters: (state, action: PayloadAction<any>) => {
+      const { payload: { qid, voteCounters } } = action
       const question = get(state, qid) as QuestionSchema;
-      question.voteCounters = votes
+      question.voteCounters = voteCounters
     },
     setUserVote: (state, action: PayloadAction<any>) => {
-      const { payload: { uid, qid, sid } } = action
+      const { payload: { uid, qid, userVotes } } = action
       const question = get(state, qid) as QuestionSchema;
-      set(question.votes, uid, sid)
+      set(question.votes, uid, userVotes)
     }
   },
   extraReducers: (builder) => {
@@ -99,11 +99,12 @@ export const getQuestionsVotes = (qid: string) => async (dispatch: any) => {
 
     const voteCounters = res.data
 
-    const sumVotes = sum(values(voteCounters))
-    const votes = mapValues(voteCounters, (count) => ({ count, percent: (count / sumVotes) * 100 }))
+    const sumVotes = reduce(voteCounters, (_sum, { options }) => {
+      return _sum + sum(options)
+    }, 0)
 
-    console.log({ voteCounters, sumVotes, votes })
-    dispatch(questionsSlice.actions.setVotes({ qid, votes }))
+    console.log({ voteCounters, sumVotes })
+    dispatch(questionsSlice.actions.setVoteCounters({ qid, voteCounters }))
   }
   catch (e) {
     console.error(e)
@@ -172,15 +173,15 @@ export const likeSolution = (qid: string, sid: string, userId: string, vote: boo
   }
 };
 
-export const vote = (qid: string, sid: string, uid: string) => async (dispatch: any) => {
+export const vote = (qid: string, sid: string, uid: string, value: number) => async (dispatch: any) => {
   try {
-    const { data } = await axios.post('/questions/vote', { qid, sid });
+    const { data } = await axios.post('/questions/vote', { qid, sid, value });
 
     dispatch(getQuestionsVotes(qid))
     dispatch(questionsSlice.actions.setUserVote({
-      qid,
-      sid: data.resolvedVote,
       uid,
+      qid,
+      userVotes: data.resolvedVote,
     }))
   } catch (error) {
     console.error(error);

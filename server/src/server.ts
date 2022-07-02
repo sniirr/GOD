@@ -54,12 +54,12 @@ app.get(
   }),
   async (req, res) => {
     try {
-      console.log({ USER: req.user })
+      // console.log({ USER: req.user })
       const user = req.user;
 
       user.role = "public";
       user.last_entered = new Date();
-      console.log(`user ${user.displayName} logged in`);
+      // console.log(`user ${user.displayName} logged in`);
 
       // Try to update user
       let userDB = await User.findOneAndUpdate({ email: user.email }, user);
@@ -92,14 +92,14 @@ app.get("/logout", (req: any, res: any) => {
 
 //socket io
 io.on("connection", (socket) => {
-  console.log(socket.rooms);
-  console.log("a user connected");
+  // console.log(socket.rooms);
+  // console.log("a user connected");
 
   let socketRoom = null;
 
   socket.on("disconnect", () => {
     socketRoom = null;
-    console.log("user disconnected");
+    // console.log("user disconnected");
   });
 
   socket.on("message", (msg) => {
@@ -112,13 +112,13 @@ io.on("connection", (socket) => {
     socket.join(roomId); //the client is now in that room
 
     socketRoom = roomId;
-    console.log("join room", roomId, '--------------------------------------------');
+    // console.log("join room", roomId, '--------------------------------------------');
   });
 
   socket.on("leave-room", (roomId) => {
     socket.leave(roomId); //the client is now in that room
     socketRoom = null;
-    console.log("leave room", roomId);
+    // console.log("leave room", roomId);
   });
 
   socket.on(`chat-message`, async (msgObj) => {

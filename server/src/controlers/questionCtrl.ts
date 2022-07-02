@@ -1,7 +1,7 @@
 import Question from '../models/QuestionModel';
 import User from '../models/UserModel';
 import Solution from '../models/SuggestionModel';
-import { get, countBy, groupBy, identity, omit } from 'lodash'
+import _, { get, omit, reduce, isEmpty } from 'lodash'
 
 const ObjectId = require('mongoose').Types.ObjectId;
 
@@ -73,8 +73,18 @@ export async function getQuestionVotes(req: any, res: any): Promise<void> {
   try {
     const { qid } = req.body
     const question = await Question.findById(qid)
-    const votes = Object.fromEntries(question.votes);
-    const counters = countBy(votes, identity)
+
+    const counters = _.reduce(question.votes, (counters, userVotes) => {
+      _.forEach(userVotes, (value, sid) => {
+        const i = value === -1 ? 0 : 1
+        counters[sid].total += value
+        counters[sid].options[i]++
+      })
+      return counters
+    }, _.zipObject(question.solutions, _.map(question.solutions, () => ({
+      total: 0,
+      options: [0, 0],
+    }))))
 
     res.send(omit(counters, null));
   } catch (error: any) {
@@ -161,25 +171,37 @@ export const setSolutionLike = async (req: any, res: any) => {
 
 export const voteForSolution = async (req: any, res: any) => {
   try {
-    const { qid, sid } = req.body;
+    const { qid, sid, value } = req.body;
     const { _id: userId } = req.user;
 
     const key = `votes.${userId}`;
-
     const question = await Question.findById(qid)
-    const userVote = question.votes.get(userId)
-    const resolvedVote = userVote === sid ? null : sid
+    let userVote = get(question.votes, userId, {})
+
+    if (get(userVote, sid) === value) {
+      userVote = _.omit(userVote, sid)
+    }
+    else {
+      const currValueVote = reduce(userVote, (vote, _value, _sid) => {
+        if (!isEmpty(vote)) return vote
+        return _value === value ? _sid : ''
+      }, '')
+      if (!isEmpty(currValueVote) && currValueVote !== sid) {
+        userVote = _.omit(userVote, currValueVote)
+      }
+      userVote[sid] = value
+    }
 
     await Question.updateOne(
       { _id: qid },
       {
         $set: {
-          [key]: resolvedVote,
+          [key]: userVote,
         },
       },
     );
 
-    res.send({ resolvedVote });
+    res.send({ resolvedVote: userVote });
   } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });

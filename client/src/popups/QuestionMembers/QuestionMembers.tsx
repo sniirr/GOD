@@ -18,7 +18,6 @@ interface QuestionMembersProps {
 
 const QuestionMembers: FC<QuestionMembersProps> = ({ isOpen, close, questionId }) => {
   const question = useAppSelector(questionByIdSelector(questionId))
-  console.log({ question })
   const [emails, setEmails] = useState<string[]>([])
 
   const dispatch = useAppDispatch()
