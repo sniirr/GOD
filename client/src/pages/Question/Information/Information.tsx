@@ -23,12 +23,7 @@ function QuestionInfo(props: QuestionInfoProps) {
       <div className="description">{description}</div>
       <div className="section-title">Suggested solutions</div>
       {status !== 'fulfilled' || size(question.solutions) > 0
-        ? (
-          <>
-            <SuggestButton questionId={question._id} />
-            {map(question.solutions, (solution, i: number) => (<SolutionCard key={`solution-${i}`} solution={solution} number={i + 1} questionId={question._id} />))}
-          </>
-        )
+        ? map(question.solutions, (solution, i: number) => (<SolutionCard key={`solution-${i}`} solution={solution} number={i + 1} questionId={question._id} />))
         : (<div className="no-suggestions-text">No one suggested a solution yet</div>)
       }
       <SuggestButton questionId={question._id} />

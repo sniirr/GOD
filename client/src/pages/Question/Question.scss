@@ -58,6 +58,7 @@
       }
     }
   }
+
   .internal-page {
     flex: auto;
     overflow-y: auto;
@@ -68,6 +69,15 @@
   .solution-card {
     margin-top: 20px;
   }
+
+  .suggest-button {
+    position: fixed;
+    bottom: 15px;
+    width: 100%;
+    transform: translateX(-50%);
+    left: 50%;
+  }
+
   .bottom-bar {
     display: flex;
     flex-direction: column;
@@ -83,7 +93,7 @@
       width: revert;
       display: flex;
       align-items: center;
-      margin: 4px 15px;
+      margin: 4px 10px;
       height: 40px;
       justify-content: center;
 
@@ -93,18 +103,23 @@
         max-width: 75ch;
         border-radius: 10px;
         height: 32px;
-        border: solid 1px $light_gray;
         padding: 0 10px;
+        border: none;
+        outline: none !important;
       }
 
       button[type="submit"] {
         margin-left: 10px;
         border: none;
-        background-color: $light_blue;
-        color: white;
+        background-color: white;
+        color: $light_blue;
         border-radius: 8px;
         width: 34px;
         height: 34px;
+
+        svg {
+          margin-top: 5px;
+        }
       }
     }
     .bottom-nav {

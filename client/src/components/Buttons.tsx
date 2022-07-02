@@ -11,14 +11,14 @@ export const SuggestButton = ({ questionId }: SuggestButtonProps) => {
   const history = useHistory();
 
   return (
-    <div className="centered-button">
+    <div className="suggest-button centered-button">
       <Button
         className="inline"
         onClick={() => {
           history.push(`/question/${questionId}/add-solution`);
         }}
       >
-        <AddIcon /> Suggest a Solution
+        <AddIcon /> Add Solution
       </Button>
     </div>
   );
