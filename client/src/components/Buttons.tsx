@@ -3,22 +3,18 @@ import Button from 'components/Button';
 import AddIcon from '@mui/icons-material/Add';
 import { useHistory } from 'react-router-dom';
 
-export interface SuggestButtonProps {
-  questionId: string;
+export interface AddButtonProps {
+  itemName: string;
+  path: string;
 }
 
-export const SuggestButton = ({ questionId }: SuggestButtonProps) => {
+export const AddButton = ({ path, itemName }: AddButtonProps) => {
   const history = useHistory();
 
   return (
-    <div className="suggest-button centered-button">
-      <Button
-        className="inline"
-        onClick={() => {
-          history.push(`/question/${questionId}/add-solution`);
-        }}
-      >
-        <AddIcon /> Add Solution
+    <div className="link-button centered-button">
+      <Button className="inline" onClick={() => history.push(path)}>
+        <AddIcon /> Add {itemName}
       </Button>
     </div>
   );

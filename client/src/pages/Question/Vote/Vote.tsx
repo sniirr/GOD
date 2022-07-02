@@ -10,7 +10,7 @@ import { User, userSelector } from "redux/reducers/userReducer";
 import classNames from "classnames";
 import Parser from 'html-react-parser';
 import { apiSelector } from "redux/modules/api";
-import { SuggestButton } from "components/Buttons";
+import { AddButton } from "components/Buttons";
 import { vote } from "utils/socket";
 
 export interface QuestionInfoProps {
@@ -86,7 +86,7 @@ function Vote(props: QuestionInfoProps) {
           : (
             <>
               <div className="no-suggestions-text">No one suggested a solution yet</div>
-              <SuggestButton questionId={question._id} />
+              <AddButton path={`/question/${question._id}/add-solution`} itemName="Solution" />
             </>
           )}
       </div>

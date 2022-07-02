@@ -126,6 +126,32 @@ h2 {
   line-height: 1.35rem;
 }
 
+.link-button {
+  position: fixed;
+  bottom: 15px;
+  width: 100%;
+  transform: translateX(-50%);
+  left: 50%;
+}
+
+.tabs {
+  .tabs-header {
+    .tab-header {
+      color: $dark_gray;
+
+      &.active {
+        color: $turquoise;
+        border-color: $turquoise;
+      }
+    }
+  }
+
+  .active-tab {
+    flex-grow: 2;
+    position: relative;
+  }
+}
+
 //components
 .wrapper {
   margin: 0 2rem;

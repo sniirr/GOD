@@ -1,11 +1,15 @@
+@import "style/vars";
+
 .button-app-bar {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
   position: fixed;
   bottom: 0;
-  height: 55px;
+  height: 50px;
   width: 100%;
   background-color: white;
+  border-top: solid 1px $border_gray;
 }
 
 .nav-links {

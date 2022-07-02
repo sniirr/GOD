@@ -8,6 +8,7 @@ import { getMemberQuestionsThunk, questionsSelector } from 'redux/reducers/quest
 import ButtonAppBar from 'components/ButtonAppBar/ButtonAppBar';
 import ApiData from 'components/ApiData/ApiData';
 import Tabs from 'components/Tabs';
+import { AddButton } from "../../components/Buttons";
 
 const Questions: FC = () => {
   const dispatch = useAppDispatch();
@@ -40,6 +41,7 @@ const Questions: FC = () => {
           ]}
         />
       </div>
+      <AddButton path="/create_question" itemName="Question" />
       <ButtonAppBar />
     </div>
   );

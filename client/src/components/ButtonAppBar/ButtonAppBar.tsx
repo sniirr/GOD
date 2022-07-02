@@ -4,8 +4,8 @@ import { NavLink } from 'react-router-dom';
 // material-ui styles
 import { Button } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
-import PublicIcon from '@mui/icons-material/Public';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import PersonIcon from '@mui/icons-material/Person';
 import { styled } from '@mui/styles';
 
 const MyButton = styled(Button)({
@@ -31,11 +31,10 @@ const MyButton = styled(Button)({
 
 const ButtonAppBar: FC = () => (
   <div className="button-app-bar">
-    <NavLink to="/about" className="nav-links" exact>
+    <NavLink to="/notifications" className="nav-links">
       <MyButton>
-        <PublicIcon style={{ margin: '0 auto' }} />
-        {' '}
-        About
+        <NotificationsIcon style={{ margin: '0 auto' }} />
+        Notifications
       </MyButton>
     </NavLink>
 
@@ -47,10 +46,11 @@ const ButtonAppBar: FC = () => (
       </MyButton>
     </NavLink>
 
-    <NavLink to="/notifications" className="nav-links">
+    <NavLink to="/profile" className="nav-links" exact>
       <MyButton>
-        <NotificationsIcon style={{ margin: '0 auto' }} />
-        Notifications
+        <PersonIcon style={{ margin: '0 auto' }} />
+        {' '}
+        Profile
       </MyButton>
     </NavLink>
   </div>
