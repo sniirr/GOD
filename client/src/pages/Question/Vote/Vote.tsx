@@ -73,7 +73,7 @@ function Vote(props: QuestionInfoProps) {
                   <div className="option-votes">
                     <div>{optionVotes[1]}</div>
                   </div>
-                  <Button className={classNames({ secondary: solutionUserVote !== 1 })} onClick={() => voteForSolution(solution, 1)}>
+                  <Button className={classNames({ secondary: solutionUserVote !== 1, invert: solutionUserVote === 1 })} onClick={() => voteForSolution(solution, 1)}>
                     <ThumbUpIcon />
                   </Button>
                 </div>
