@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 import { UserSchema } from "./UserModel";
 
+
 // Define a schema
 const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId
