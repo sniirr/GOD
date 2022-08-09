@@ -2,7 +2,7 @@
   "name": "god-root",
   "version": "1.0.0",
   "description": "",
-  "main": "server/src/server.js",
+  "main": "src/server.js",
   "scripts": {
     "start": "cd server && npm start"
   },
