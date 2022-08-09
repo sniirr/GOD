@@ -4,7 +4,7 @@
   "description": "",
   "main": "server/src/server.js",
   "scripts": {
-    "start": "cs server && npm start"
+    "start": "cd server && npm start"
   },
   "keywords": [],
   "author": "",
