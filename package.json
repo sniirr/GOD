@@ -1,12 +1,12 @@
 {
-  "name": "GOD Root",
+  "name": "god-root",
   "version": "1.0.0",
   "description": "",
   "main": "server/src/server.js",
   "scripts": {
-    "start": "cs server && npm start",
+    "start": "cs server && npm start"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "ISC"
 }
